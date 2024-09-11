@@ -1,0 +1,27 @@
+@import "bootstrap/scss/bootstrap";
+@import 'fonts';
+
+$primary-color: #DF253A;
+$black-color: #000814;
+$white-color: #FFF7F0;
+
+body {
+    font-family: "Roc Grotesk";
+    font-size: 16px;
+    background-color: $white-color;
+    color: $black-color;
+}
+
+.btn-primary {
+    border: none;
+    background-color: $primary-color;
+}
+
+.nav-link {
+    color: $black-color;
+}
+
+.my-100 {
+    margin-left: 100px;
+    margin-right: 100px;
+}
