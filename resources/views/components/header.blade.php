@@ -14,16 +14,16 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">Accueil</a>
+                    <a class="nav-link {{ Request::is('/') ? 'bold-text' : '' }}" href="#">Accueil</a>
                 </li>
                 <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">À propos</a>
+                    <a class="nav-link {{ Request::is('/a-propos') ? 'bold-text' : '' }}" href="#">À propos</a>
                 </li>
                 <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">Projets</a>
+                    <a class="nav-link {{ Request::is('/projets') ? 'bold-text' : '' }}" href="#">Projets</a>
                 </li>
                 <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link {{ Request::is('/contact') ? 'bold-text' : '' }}" href="#">Contact</a>
                 </li>
             </ul>
             {{--CTA button--}}
