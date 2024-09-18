@@ -7,7 +7,7 @@
 body {
     font-family: "Roc Grotesk";
     font-size: 16px;
-    background-color: greenyellow;
+    background-color: $white-color;
     color: $black-color;
 }
 
@@ -34,4 +34,25 @@ body {
 .my-100 {
     margin-left: 100px;
     margin-right: 100px;
+}
+
+.grand-titre {
+    font-family: "Joly Headline";
+    font-weight: bold;
+    font-size: 64px;
+}
+
+.petit-titre {
+    font-family: "Joly Headline";
+    font-weight: bold;
+    font-size: 48px;
+}
+
+@media (max-width: 991px) {
+    .grand-titre {
+        font-size: 58px;
+    }
+    .petit-titre {
+        font-size: 42px;
+    }
 }
