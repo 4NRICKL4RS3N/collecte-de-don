@@ -24,8 +24,7 @@
                 <div class="col-md-8 offset-md-2">
                     <h1 class="display-4 grand-titre"><span class="bold-text">Participez</span> à notre mission
                         d'évangélisation</h1>
-                    <a class="btn btn-primary btn-lg" href="#cta-link" role="button">Faites une différence
-                        aujourd'hui</a>
+                    <x-button background-color="primaire" lien="#" content="Faites une différence aujourd'hui"/>
                 </div>
             </div>
         </div>
@@ -234,8 +233,7 @@
                                 <h1 class="fw-medium text-white mb-3">
                                     Votre <span class="fw-bolder">générosité</span> fait la différence.
                                 </h1>
-                                <button class="btn btn-light fs-5 py-2 px-4" type="button">Faire un don maintenant
-                                </button>
+                                <x-button background-color="blanc" lien="#" content="Faire un don maintenant"/>
                             </div>
                         </div>
                     </div>

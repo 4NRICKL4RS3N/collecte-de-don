@@ -27,7 +27,7 @@
                 </li>
             </ul>
             {{--CTA button--}}
-            <a class="btn btn-primary my-2 my-lg-0" href="#">Faire un don</a>
+            <x-button background-color="primaire" lien="#" content="Faire un don" />
         </div>
 
     </nav>
