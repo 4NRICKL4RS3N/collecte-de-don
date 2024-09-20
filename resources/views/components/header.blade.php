@@ -11,23 +11,23 @@
         </button>
 
         {{--menu items--}}
-        <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
+        <div class="collapse navbar-collapse justify-content-between fullscreen-menu" id="navbarMenu">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">Accueil</a>
+                <li class="nav-item mx-sm-2 mx-lg-4 {{ Request::is('/') ? '' : 'menu-lien' }}">
+                    <a class="nav-link {{ Request::is('/') ? 'bold-text' : '' }}" href="#">Accueil</a>
                 </li>
-                <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">À propos</a>
+                <li class="nav-item mx-sm-2 mx-lg-4 menu-lien {{ Request::is('/') ? '' : 'menu-lien' }}">
+                    <a class="nav-link {{ Request::is('/a-propos') ? 'bold-text' : '' }}" href="#">À propos</a>
                 </li>
-                <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">Projets</a>
+                <li class="nav-item mx-sm-2 mx-lg-4 menu-lien {{ Request::is('/') ? '' : 'menu-lien' }}">
+                    <a class="nav-link {{ Request::is('/projets') ? 'bold-text' : '' }}" href="#">Projets</a>
                 </li>
-                <li class="nav-item mx-sm-2 mx-lg-4">
-                    <a class="nav-link" href="#">Contact</a>
+                <li class="nav-item mx-sm-2 mx-lg-4 menu-lien {{ Request::is('/') ? '' : 'menu-lien' }}">
+                    <a class="nav-link {{ Request::is('/contact') ? 'bold-text' : '' }}" href="#">Contact</a>
                 </li>
             </ul>
             {{--CTA button--}}
-            <a class="btn btn-primary my-2 my-lg-0" href="#">Faire un don</a>
+            <x-button background-color="primaire" lien="#" content="Faire un don" />
         </div>
 
     </nav>
