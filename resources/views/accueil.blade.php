@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="col-md-8" style="position: relative">
                                         <h5 class="quote">“</h5>
-                                        <div class="card-body">
+                                        <div class="card-body pt-4">
                                             <p class="card-text quote-text">Suscipianturverear proin legere definitiones
                                                 gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea cetero
                                                 labores singulis dolor definiebas porta nunc decore magnis pericula
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="col-md-8" style="position: relative">
                                         <h5 class="quote">“</h5>
-                                        <div class="card-body">
+                                        <div class="card-body pt-4">
                                             <p class="card-text quote-text">Suscipianturverear proin legere definitiones
                                                 gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea cetero
                                                 labores singulis dolor definiebas porta nunc decore magnis pericula
@@ -164,7 +164,7 @@
                                     </div>
                                     <div class="col-md-8" style="position: relative">
                                         <h5 class="quote">“</h5>
-                                        <div class="card-body">
+                                        <div class="card-body pt-4">
                                             <p class="card-text quote-text">Suscipianturverear proin legere definitiones
                                                 gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea cetero
                                                 labores singulis dolor definiebas porta nunc decore magnis pericula
@@ -184,7 +184,7 @@
                                     </div>
                                     <div class="col-md-8" style="position: relative">
                                         <h5 class="quote">“</h5>
-                                        <div class="card-body">
+                                        <div class="card-body pt-4">
                                             <p class="card-text quote-text">Suscipianturverear proin legere definitiones
                                                 gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea cetero
                                                 labores singulis dolor definiebas porta nunc decore magnis pericula
