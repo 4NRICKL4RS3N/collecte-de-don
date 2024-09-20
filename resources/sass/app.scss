@@ -1,8 +1,15 @@
+$enable-spacers: true;
+
 @import "bootstrap/scss/bootstrap";
-@import 'fonts';
-@import "accueil";
-@import "header";
-@import "variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/functions";
+@import 'base/fonts';
+@import "pages/accueil";
+@import "layout/header";
+@import "layout/footer";
+@import "abstracts/variables";
+@import "@splidejs/splide/dist/css/splide.min.css";
 
 body {
     font-family: "Roc Grotesk";
@@ -39,20 +46,29 @@ body {
 .grand-titre {
     font-family: "Joly Headline";
     font-weight: bold;
-    font-size: 64px;
+    font-size: $big-title-size;
 }
 
 .petit-titre {
     font-family: "Joly Headline";
     font-weight: bold;
-    font-size: 48px;
+    font-size: $little-title-size;
 }
 
 @media (max-width: 991px) {
     .grand-titre {
-        font-size: 58px;
+        font-size: calc($big-title-size - 10px);
     }
     .petit-titre {
-        font-size: 42px;
+        font-size: calc($little-title-size - 10px);
+    }
+}
+
+@media (max-width: 420px) {
+    .grand-titre {
+        font-size: calc($big-title-size - 20px);
+    }
+    .petit-titre {
+        font-size: calc($little-title-size - 10px);
     }
 }
