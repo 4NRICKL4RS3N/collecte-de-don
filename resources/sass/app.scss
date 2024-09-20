@@ -1,32 +1,15 @@
-$enable-spacers: true;
-
 @import "bootstrap/scss/bootstrap";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/functions";
-@import 'base/fonts';
-@import "pages/accueil";
-@import "layout/header";
-@import "layout/footer";
-@import "abstracts/variables";
-@import "@splidejs/splide/dist/css/splide.min.css";
+@import 'fonts';
+
+$primary-color: #DF253A;
+$black-color: #000814;
+$white-color: #FFF7F0;
 
 body {
     font-family: "Roc Grotesk";
     font-size: 16px;
     background-color: $white-color;
     color: $black-color;
-}
-
-.bold-text {
-    font-weight: bolder;
-}
-
-.btn {
-    padding: 0.65rem 1.8rem;
-    &:hover {
-        background-color: darken($primary-color, 10%);
-    }
 }
 
 .btn-primary {
@@ -41,34 +24,4 @@ body {
 .my-100 {
     margin-left: 100px;
     margin-right: 100px;
-}
-
-.grand-titre {
-    font-family: "Joly Headline";
-    font-weight: bold;
-    font-size: $big-title-size;
-}
-
-.petit-titre {
-    font-family: "Joly Headline";
-    font-weight: bold;
-    font-size: $little-title-size;
-}
-
-@media (max-width: 991px) {
-    .grand-titre {
-        font-size: calc($big-title-size - 10px);
-    }
-    .petit-titre {
-        font-size: calc($little-title-size - 10px);
-    }
-}
-
-@media (max-width: 420px) {
-    .grand-titre {
-        font-size: calc($big-title-size - 20px);
-    }
-    .petit-titre {
-        font-size: calc($little-title-size - 10px);
-    }
 }
