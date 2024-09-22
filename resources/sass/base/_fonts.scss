@@ -1,34 +1,44 @@
 @font-face {
     font-family: 'Joly Headline';
-    src: url('/fonts/Joly Headline Black.otf') format('otf');
+    src: url('/fonts/Joly Headline Black.otf') format('otf'),
+    url('/fonts/Joly Headline Black.woff') format('woff'),
+    url('/fonts/Joly Headline Black.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Joly Headline';
-    src: url('/fonts/Joly Headline Medium.otf') format('otf');
+    src: url('/fonts/Joly Headline Medium.otf') format('otf'),
+    url('/fonts/Joly Headline Medium.woff') format('woff'),
+    url('/fonts/Joly Headline Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roc Grotesk';
-    src: url('/fonts/Roc Grotesk Bold.otf') format('otf');
+    src: url('/fonts/Roc Grotesk Bold.otf') format('otf'),
+    url('/fonts/Roc Grotesk Bold.woff') format('woff'),
+    url('/fonts/Roc Grotesk Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roc Grotesk';
-    src: url('/fonts/Roc Grotesk Medium.otf') format('otf');
+    src: url('/fonts/Roc Grotesk Medium.otf') format('otf'),
+    url('/fonts/Roc Grotesk Medium.woff') format('woff'),
+    url('/fonts/Roc Grotesk Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roc Grotesk';
-    src: url('/fonts/Roc Grotesk Regular.otf') format('otf');
+    src: url('/fonts/Roc Grotesk Regular.otf') format('otf'),
+    url('/fonts/Roc Grotesk Regular.woff') format('woff'),
+    url('/fonts/Roc Grotesk Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
 }
