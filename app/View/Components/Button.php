@@ -10,10 +10,12 @@ class Button extends Component
     public $content;
     public $lien;
     public $backgroundColor;
+    public $addClass;
 
-    public function __construct($content, $lien, $backgroundColor) {
+    public function __construct($content, $lien, $backgroundColor, $addClass='') {
         $this->content = $content;
         $this->lien = $lien;
+        $this->addClass = $addClass;
         if ($backgroundColor == 'blanc' || $backgroundColor == 'white') {
             $this->backgroundColor = 'btn-light';
         }
