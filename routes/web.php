@@ -15,3 +15,6 @@ Route::get('/projets', function () {
     return view('projets');
 });
 
+Route::get('/projets/titre', function () {
+    return view('projet-detail');
+});
