@@ -1,0 +1,28 @@
+.gallery-image {
+    transition: all 0.3s ease;
+    &:hover {
+        scale: 98%;
+        transition: all 0.3s ease;
+    }
+}
+
+.info-list {
+    font-size: large;
+    list-style-type: none;
+    li {
+        margin-bottom: 0.5rem;
+    }
+    i{
+        margin-right: 1rem;
+    }
+    span {
+        font-weight: bold;
+    }
+}
+
+.project-cta {
+    background-color: $black-color;
+    h1 {
+        color: white;
+    }
+}
