@@ -241,5 +241,7 @@
     <x-footer/>
 </footer>
 
+@vite('resources/js/slide.js')
+
 </body>
 </html>

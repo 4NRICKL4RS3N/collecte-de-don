@@ -17,7 +17,7 @@
         </div>
         <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
             {{--  project card  --}}
-            <a href="/accueil" style="text-decoration: none;">
+            <a href="projets/titre" style="text-decoration: none;">
                 <div class="project-card col">
                     <div class="card rounded-4">
                         <div class="titre d-flex justify-content-between align-content-center">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/accueil" style="text-decoration: none;">
+            <a href="projets/titre" style="text-decoration: none;">
                 <div class="project-card col">
                     <div class="card rounded-4">
                         <div class="titre d-flex justify-content-between align-content-center">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/accueil" style="text-decoration: none;">
+            <a href="projets/titre" style="text-decoration: none;">
                 <div class="project-card col">
                     <div class="card rounded-4">
                         <div class="titre d-flex justify-content-between align-content-center">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/accueil" style="text-decoration: none;">
+            <a href="projets/titre" style="text-decoration: none;">
                 <div class="project-card col">
                     <div class="card rounded-4">
                         <div class="titre d-flex justify-content-between align-content-center">
