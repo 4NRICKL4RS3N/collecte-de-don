@@ -38,7 +38,7 @@
         </div>
 
         <div class="row pswp-gallery pswp-gallery--single-column" id="project-gallery">
-            <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+            <div class="col-lg-4 col-md-12 mb-lg-0">
                 <a href="{{ asset('images/jumbotron-bg.jpg') }}"
                    data-pswp-width="2048"
                    data-pswp-height="2048"
@@ -62,7 +62,7 @@
                 </a>
             </div>
 
-            <div class="col-lg-4 mb-4 mb-lg-0">
+            <div class="col-lg-4 mb-lg-0">
                 <a href="{{ asset('images/section-1-image.jpg') }}"
                    data-pswp-width="2048"
                    data-pswp-height="2048"
@@ -86,7 +86,7 @@
                 </a>
             </div>
 
-            <div class="col-lg-4 mb-4 mb-lg-0">
+            <div class="col-lg-4 mb-lg-0">
                 <a href="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(18).webp"
                    data-pswp-width="2048"
                    data-pswp-height="2048"
@@ -118,8 +118,8 @@
                 <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                     <div>
                         <h1 class="fw-bold mb-3">Aidez nous à concrétiser ce projet</h1>
-                        <button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button">Contribuer au projet</button>
-                        <button class="btn btn-outline-light fs-5 py-2 px-4" type="button">Explorer d'autres projets</button>
+                        <x-button add-class="btn-primary" content="Contribuer au projet" lien="#"  />
+                        <x-button add-class="btn-outline-light mx-2" content="Explorer d'autres projets" lien="#"  />
                     </div>
                 </div>
             </div>

@@ -42,7 +42,8 @@ body {
 .btn-light {
     border: none;
     &:hover {
-        background-color: $yellow-color;
+        background-color: $black-color;
+        color: white;
     }
     --bs-btn-active-bg: white;
 }
