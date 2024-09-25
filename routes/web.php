@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\DonationController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PayPalController;
 
 Route::get('/', function () {
     return redirect('/accueil');
@@ -18,3 +18,8 @@ Route::get('/projets', function () {
 Route::get('/projets/titre', function () {
     return view('projet-detail');
 });
+
+Route::get('/donate', function () {
+    return view('donate');
+});
+Route::post('/donate', [DonationController::class, 'process'])->name('donate.process');
