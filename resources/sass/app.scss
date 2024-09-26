@@ -9,6 +9,7 @@ $enable-spacers: true;
 @import "pages/accueil";
 @import "pages/projet";
 @import "pages/projet-detail";
+@import "pages/donate";
 @import "layout/header";
 @import "layout/footer";
 @import "abstracts/variables";
@@ -85,4 +86,23 @@ body {
     .petit-titre {
         font-size: calc($little-title-size - 10px);
     }
+}
+
+.form-input {
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    border: solid 2px white;
+    transition: all 0.1s ease;
+    &:focus {
+        border: solid 2px $primary-color;
+        box-shadow: none;
+        transition: all 0.1s ease;
+    }
+}
+
+.form-input.focused {
+    border: solid 2px $primary-color;
+    box-shadow: none;
+    transition: all 0.1s ease;
 }

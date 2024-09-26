@@ -19,7 +19,5 @@ Route::get('/projets/titre', function () {
     return view('projet-detail');
 });
 
-Route::get('/donate', function () {
-    return view('donate');
-});
+Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
 Route::post('/donate', [DonationController::class, 'process'])->name('donate.process');

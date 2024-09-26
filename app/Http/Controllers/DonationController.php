@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Stripe\Stripe;
 use Stripe\Charge;
+use Stripe\Customer;
 use Illuminate\Support\Facades\Log;
 
 class DonationController extends Controller
 {
+    public function index(Request $request) {
+        $cb_svg = File::files(public_path('svg/cb'));
+
+        return view('donate', compact('cb_svg'));
+    }
+
     public function process(Request $request)
     {
         Log::info('Donation attempt', $request->except('stripeToken'));
@@ -20,14 +28,21 @@ class DonationController extends Controller
             'stripeToken' => 'required'
         ]);
 
-        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        Stripe::setApiKey(config('services.stripe.secret'));
+        Log::info('Stripe secret key', ['key' => config('services.stripe.secret')]);
+
+        $customer = Customer::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'source' => $request->input('stripeToken'),
+        ]);
 
         try {
             $charge = Charge::create([
-                'amount' => $request->amount * 100, // Amount in cents
-                'currency' => 'usd',
+                'amount' => $request->amount, // Amount in cents
+                'currency' => 'mga',
                 'description' => 'Donation',
-                'source' => $request->stripeToken,
+                'customer' => $customer->id,
                 'metadata' => [
                     'donor_name' => $request->name,
                     'donor_email' => $request->email
