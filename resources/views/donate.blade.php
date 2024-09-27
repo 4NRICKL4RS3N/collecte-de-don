@@ -12,18 +12,22 @@
 
 <main>
     <div class="container">
-        <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4">
-                <form id="donation-form" class="container mt-5 p-4 border-0 rounded">
+        <div class="row my-5">
+            <div class="col-lg-8 col-md-6 ">
+                <h1 class="grand-titre">Merci de contribuer au projet!</h1><z></z>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8 ">
+                <form id="donation-form" class="container p-4 border-0 rounded">
                     @csrf
                     <div class="form-group mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" name="name" class="form-control form-input" required placeholder="Enter your name">
+                        <input type="text" id="name" name="name" class="form-control form-input" required
+                               placeholder="Enter your name">
                     </div>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email" class="form-control form-input" required placeholder="Enter your email">
+                        <input type="email" id="email" name="email" class="form-control form-input" required
+                               placeholder="Enter your email">
                     </div>
                     <div class="form-group mb-3">
                         <label for="amount" class="form-label">Donation Amount</label>
@@ -32,27 +36,21 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Card Details</label>
-                        <div class="mb-3 input-container">
-                            <ul class="list-group list-group-horizontal cb-list">
-                                @foreach($cb_svg as $svg)
-                                    @php
-                                        $filename = basename($svg);
-                                    @endphp
-                                    <li class="list-group-item border-0 align-content-center">
-                                        <img src="{{ asset('svg/cb/' . $filename) }}" alt="{{ $filename }}" class="img-fluid" style="width: 30px;">
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <div id="card-number"></div>
-                        </div>
-                        <div class="mb-3">
+                        <ul class="list-group list-group-horizontal cb-list">
+                            @foreach($cb_svg as $svg)
+                                @php
+                                    $filename = basename($svg);
+                                @endphp
+                                <li class="list-group-item border-0 align-content-center">
+                                    <img src="{{ asset('svg/cb/' . $filename) }}" alt="{{ $filename }}"
+                                         class="img-fluid" style="width: 30px;">
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="input-group">
+                            <div id="card-number" class="form-control w-50"></div>
                             <div id="card-expiry" class="form-control"></div>
-                        </div>
-                        <div class="mb-3">
                             <div id="card-cvc" class="form-control"></div>
-                        </div>
-                        <div class="mb-3">
-                            <div id="card-zip" class="form-control"></div>
                         </div>
                         <div id="card-errors" class="text-danger mt-2" role="alert"></div>
                     </div>
@@ -74,7 +72,7 @@
         });
         const cardNumberElement = document.getElementById('card-number');
         const inputContainer = document.querySelector('.input-container');
-        cardNumber.on('focus', function() {
+        cardNumber.on('focus', function () {
             inputContainer.classList.add('focused');
         });
         cardNumber.mount('#card-number');
@@ -84,9 +82,6 @@
 
         var cardCvc = elements.create('cardCvc');
         cardCvc.mount('#card-cvc');
-
-        var cardZip = elements.create('postalCode');
-        cardZip.mount('#card-zip');
 
         var form = document.getElementById('donation-form');
         var resultMessage = document.getElementById('result-message');
