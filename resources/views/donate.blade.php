@@ -13,10 +13,10 @@
 <main>
     <div class="container">
         <div class="row my-5">
-            <div class="col-lg-8 col-md-6 ">
-                <h1 class="grand-titre">Merci de contribuer au projet!</h1><z></z>
+            <div class="col-lg-7 col-md-6 ">
+                <h1 class="grand-titre">Votre générosité est sur le point de créer un impact!</h1><z></z>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-8 ">
+            <div class="col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <form id="donation-form" class="container p-4 border-0 rounded">
                     @csrf
                     <div class="form-group mb-3">
@@ -54,7 +54,7 @@
                         </div>
                         <div id="card-errors" class="text-danger mt-2" role="alert"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Donate</button>
+                        <button type="submit" class="btn btn-primary w-50">Donate</button>
                 </form>
                 <div id="result-message" class="text-center mt-3"></div>
             </div>
