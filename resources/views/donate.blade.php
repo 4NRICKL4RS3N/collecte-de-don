@@ -17,125 +17,69 @@
                 <h1 class="grand-titre">Votre générosité est sur le point de créer un impact!</h1><z></z>
             </div>
             <div class="col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
-                <form id="donation-form" class="container p-4 border-0 rounded">
-                    @csrf
-                    <div class="form-group mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" name="name" class="form-control form-input" required
-                               placeholder="Enter your name">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email" class="form-control form-input" required
-                               placeholder="Enter your email">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="amount" class="form-label">Donation Amount</label>
-                        <input type="number" id="amount" name="amount" class="form-control form-input" required
-                               placeholder="Enter donation amount">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label">Card Details</label>
-                        <ul class="list-group list-group-horizontal cb-list">
-                            @foreach($cb_svg as $svg)
-                                @php
-                                    $filename = basename($svg);
-                                @endphp
-                                <li class="list-group-item border-0 align-content-center">
-                                    <img src="{{ asset('svg/cb/' . $filename) }}" alt="{{ $filename }}"
-                                         class="img-fluid" style="width: 30px;">
-                                </li>
-                            @endforeach
-                        </ul>
-                        <div class="input-group">
-                            <div id="card-number" class="form-control w-50"></div>
-                            <div id="card-expiry" class="form-control"></div>
-                            <div id="card-cvc" class="form-control"></div>
-                        </div>
-                        <div id="card-errors" class="text-danger mt-2" role="alert"></div>
-                    </div>
-                        <button type="submit" class="btn btn-primary w-50">Donate</button>
+                <form id="donation-form">
+                    <input value="anrickk" type="text" id="name" placeholder="Name" required>
+                    <input value="anrickk@gmail.com" type="email" id="email" placeholder="Email" required>
+                    <input value="10" type="number" id="amount" placeholder="Amount" required>
+                    <button type="submit" id="continue-btn">Continue</button>
                 </form>
-                <div id="result-message" class="text-center mt-3"></div>
+                <div id="payment-element" style="display: none;"></div>
+                <button id="submit-payment" style="display: none;">Pay Now</button>
+                <div id="card-errors" role="alert" class="text-center mt-3"></div>
             </div>
         </div>
     </div>
 
     <script>
-        var stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
-        var elements = stripe.elements();
+        const stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
+        let elements;
+        let paymentIntentId;
 
-        var cardNumber = elements.create('cardNumber', {
-            classes: {
-                base: 'form-control form-input',
-            }
+        document.getElementById('donation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const amount = document.getElementById('amount').value;
+
+            const response = await fetch('/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ name, email, amount })
+            });
+
+            const { clientSecret } = await response.json();
+            paymentIntentId = clientSecret.split('_secret')[0];
+
+            const appearance = {
+                theme: 'stripe',
+            };
+
+            elements = stripe.elements({ clientSecret, appearance });
+            const paymentElement = elements.create('payment');
+            paymentElement.mount('#payment-element');
+
+            document.getElementById('payment-element').style.display = 'block';
+            document.getElementById('submit-payment').style.display = 'block';
+            document.getElementById('donation-form').style.display = 'none';
         });
-        const cardNumberElement = document.getElementById('card-number');
-        const inputContainer = document.querySelector('.input-container');
-        cardNumber.on('focus', function () {
-            inputContainer.classList.add('focused');
-        });
-        cardNumber.mount('#card-number');
 
-        var cardExpiry = elements.create('cardExpiry');
-        cardExpiry.mount('#card-expiry');
-
-        var cardCvc = elements.create('cardCvc');
-        cardCvc.mount('#card-cvc');
-
-        var form = document.getElementById('donation-form');
-        var resultMessage = document.getElementById('result-message');
-
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            stripe.createToken(cardNumber).then(function (result) {
-                if (result.error) {
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    stripeTokenHandler(result.token);
+        document.getElementById('submit-payment').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: '{{ route('donate.thank-you') }}',
                 }
             });
+
+            if (error) {
+                console.error(error);
+                // Handle error (e.g., display to user)
+            }
         });
-
-        function stripeTokenHandler(token) {
-            var form = document.getElementById('donation-form');
-            var hiddenInput = document.createElement('input');
-            hiddenInput.setAttribute('type', 'hidden');
-            hiddenInput.setAttribute('name', 'stripeToken');
-            hiddenInput.setAttribute('value', token.id);
-            form.appendChild(hiddenInput);
-
-            // Submit the form
-            var formData = new FormData(form);
-            fetch('{{ route('donate.process') }}', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        resultMessage.textContent = `${data.message} Charge ID: ${data.charge_id}, Amount: $${data.amount}`;
-                        form.reset();
-                    } else {
-                        resultMessage.textContent = `Error: ${data.message}`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    resultMessage.textContent = 'An error occurred. Please try again.';
-                });
-        }
     </script>
 </main>
 
