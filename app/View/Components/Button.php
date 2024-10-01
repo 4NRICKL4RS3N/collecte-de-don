@@ -11,11 +11,13 @@ class Button extends Component
     public $lien;
     public $backgroundColor;
     public $addClass;
+    public $addAttribut;
 
-    public function __construct($content, $lien, $addClass='') {
+    public function __construct($content='bouton', $lien='#', $addClass='', $addAttribut='') {
         $this->content = $content;
         $this->lien = $lien;
         $this->addClass = $addClass;
+        $this->addAttribut = $addAttribut;
     }
 
     public function render(): View
