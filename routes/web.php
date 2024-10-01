@@ -20,7 +20,7 @@ Route::get('/projets/titre', function () {
 });
 
 Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
-Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent']);
+Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
 Route::post('/confirm-payment', [DonationController::class, 'process'])->name('confirmPayment');
 Route::get('/donate/thank-you', [DonationController::class, 'thankYou'])->name('donate.thank-you');
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
