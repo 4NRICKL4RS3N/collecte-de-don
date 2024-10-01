@@ -34,9 +34,11 @@ body {
 .btn-primary {
     border: none;
     background-color: $primary-color;
+
     &:hover {
         background-color: darken($primary-color, 10%);
     }
+
     --bs-btn-active-bg: #{$primary-color};
 }
 
@@ -59,10 +61,12 @@ body {
 
 .btn-light {
     border: none;
+
     &:hover {
         background-color: $black-color;
         color: white;
     }
+
     --bs-btn-active-bg: white;
 }
 
@@ -122,11 +126,55 @@ body {
         background-color: #ffced3 !important;
     }
 
-    /* Prevent autofill styles from sticking around */
     &:disabled:-webkit-autofill {
-        background-color: #ffced3 !important; /* Override with disabled background */
-        box-shadow: 0 0 0px 1000px #ffced3 inset !important; /* Reset autofill shadow */
+        background-color: #ffced3 !important;
+        box-shadow: 0 0 0px 1000px #ffced3 inset !important;
     }
+}
+
+.textarea {
+    border: none;
+    transition: all 0.1s ease;
+    outline: 0 solid white;
+
+    &:focus {
+        box-shadow: none;
+        transition: all 0.1s ease;
+        outline: 2px solid $primary-color;
+    }
+}
+
+.contact-icon::before {
+    vertical-align: middle;
+}
+
+.hover-underline-animation {
+    display: inline-block;
+    position: relative;
+}
+
+.hover-underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: $black-color;
+    transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+    transform: scaleX(1);
+}
+
+.hover-underline-animation.left::after {
+    transform-origin: bottom right;
+}
+
+.hover-underline-animation.left:hover::after {
+    transform-origin: bottom left;
 }
 
 //.form-input.focused {

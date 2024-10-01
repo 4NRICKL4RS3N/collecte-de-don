@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <x-head titre="Accueil"/>
+    <x-head titre="Faire un don"/>
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
