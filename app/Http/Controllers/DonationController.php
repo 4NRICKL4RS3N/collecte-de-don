@@ -66,9 +66,11 @@ class DonationController extends Controller
 
                 return response()->json(['success' => true]);
             } else {
+                Log::error('Payment not successful');
                 return response()->json(['error' => 'Payment not successful'], 400);
             }
         } catch (\Exception $e) {
+            Log::error('error', [$e->getMessage()]);
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
