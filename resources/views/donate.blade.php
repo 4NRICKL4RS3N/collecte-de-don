@@ -96,7 +96,7 @@
             const email = email_input.value;
             const amount = amount_input.value;
 
-            const response = await fetch('/create-payment-intent', {
+            const response = await fetch('{{route('createPaymentIntent')}}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
