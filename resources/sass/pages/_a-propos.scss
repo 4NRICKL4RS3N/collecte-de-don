@@ -1,0 +1,11 @@
+.a-propos-image-container {
+    background-size: cover;
+    background-position: center;
+    background-image: url('../images/jumbotron-bg.jpg');
+}
+
+@media (max-width: 769px) {
+    .a-propos-image-container {
+        height: 50vh !important;
+    }
+}
