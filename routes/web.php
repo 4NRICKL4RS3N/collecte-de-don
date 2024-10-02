@@ -19,6 +19,10 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+Route::get('/a-propos', function () {
+    return view('a-propos');
+});
+
 Route::get('/projets/titre', function () {
     return view('projet-detail');
 });
