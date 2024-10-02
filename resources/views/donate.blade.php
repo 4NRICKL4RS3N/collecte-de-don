@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <x-head titre="Accueil"/>
+    <x-head titre="Faire un don"/>
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -51,13 +51,21 @@
                                    placeholder="Montant" required>
                         </div>
                         <input type="hidden" name="amount" id="amount">
-                        <button class="btn btn-primary my-2 my-lg-0" type="submit" id="continue-btn">Continue</button>
-
+                        <button class="btn btn-primary my-2 my-lg-0" type="submit" id="continue-btn">
+                            <span class="btn-content">
+                                <span class="btn-text">Continuer</span>
+                                <span class="loader" id="loading-sprite-element"></span>
+                            </span>
+                        </button>
                     </form>
                     <div id="payment-element" style="display: none;"></div>
                     <div class="row">
                         <div class="col w-auto">
-                            <button class="btn btn-primary mt-3" id="submit-payment" style="display: none;">Confirmer
+                            <button class="btn btn-primary mt-3" id="submit-payment" style="display: none;">
+                                <span class="btn-content">
+                                    <span class="btn-text">Confirmer</span>
+                                    <span class="loader" id="loading-payment"></span>
+                                </span>
                             </button>
                         </div>
                         <div class="col w-auto">
@@ -81,11 +89,14 @@
         const email_input = document.getElementById('email');
         const amount_input = document.getElementById('amount');
         const continue_button = document.getElementById('continue-btn');
+        const continue_button_text = continue_button.querySelector('.btn-text');
         const submit_button = document.getElementById('submit-payment');
         const go_back_button = document.getElementById('go-back');
         const payment_element_container = document.getElementById('payment-element');
         const amountButtons = document.querySelectorAll(".amount-btn");
         const customAmountInput = document.getElementById("custom-amount");
+        const loadingContinue = document.getElementById('loading-sprite-element');
+        const loadingSubmit = document.getElementById('loading-payment');
         let paymentElement;
 
         const donation_form = document.getElementById('donation-form');
@@ -96,68 +107,79 @@
             const email = email_input.value;
             const amount = amount_input.value;
 
-            const response = await fetch('{{route('createPaymentIntent')}}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({name, email, amount})
-            });
+            continue_button_text.style.display = 'none';
+            loadingContinue.style.display = 'inline-block';
 
-            const {clientSecret} = await response.json();
-            paymentIntentId = clientSecret.split('_secret')[0];
+            try {
+                const response = await fetch('{{route('createPaymentIntent')}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({name, email, amount})
+                });
 
-            const appearance = {
-                theme: 'flat',
-                variables: {
-                    colorPrimary: '#DF253A',
-                    colorBackground: '#ffffff',
-                    colorText: '#30313d',
-                    colorDanger: '#B22222',
-                    fontFamily: 'Roc Grotesk',
-                    spacingUnit: '2px',
-                    borderRadius: '4px',
-                },
-                rules: {
-                    '.Label': {
+                const {clientSecret} = await response.json();
+                paymentIntentId = clientSecret.split('_secret')[0];
+
+                const appearance = {
+                    theme: 'flat',
+                    variables: {
+                        colorPrimary: '#DF253A',
+                        colorBackground: '#ffffff',
+                        colorText: '#30313d',
+                        colorDanger: '#B22222',
+                        fontFamily: 'Roc Grotesk',
+                        spacingUnit: '2px',
+                        borderRadius: '4px',
+                    },
+                    rules: {
+                        '.Label': {
+                            color: 'white',
+                        },
+                        '.Input': {
+                            transition: 'all 0.1s ease',
+                            outline: '0 solid white',
+                        },
+                        '.Input:focus': {
+                            boxShadow: 'none',
+                            transition: 'all 0.1s ease',
+                            outline: '2px solid #DF253A',
+                        },
+                        '.Tab:active': {
+                            boxShadow: 'none',
+                        }
+                    }
+                };
+                const style = {
+                    label: {
                         color: 'white',
                     },
-                    '.Input': {
-                        transition: 'all 0.1s ease',
-                        outline: '0 solid white',
-                    },
-                    '.Input:focus': {
-                        boxShadow: 'none',
-                        transition: 'all 0.1s ease',
-                        outline: '2px solid #DF253A',
-                    },
-                    '.Tab:active': {
-                        boxShadow: 'none',
-                    }
                 }
-            };
-            const style = {
-                label: {
-                    color: 'white',
-                },
+                elements = stripe.elements({clientSecret, appearance});
+                paymentElement = elements.create('payment', style);
+                paymentElement.mount('#payment-element');
+            } catch (e) {
+                console.error('Error:', error);
+            } finally {
+                payment_element_container.style.display = 'block';
+                submit_button.style.display = 'block';
+                go_back_button.style.display = 'block';
+                name_input.disabled = true;
+                email_input.disabled = true;
+                amount_input.disabled = true;
+                customAmountInput.disabled = true;
+                continue_button.hidden = true;
+                loadingContinue.style.display = 'none';
             }
-            elements = stripe.elements({clientSecret, appearance});
-            paymentElement = elements.create('payment', style);
-            paymentElement.mount('#payment-element');
-
-            payment_element_container.style.display = 'block';
-            submit_button.style.display = 'block';
-            go_back_button.style.display = 'block';
-            name_input.disabled = true;
-            email_input.disabled = true;
-            amount_input.disabled = true;
-            customAmountInput.disabled = true;
-            continue_button.hidden = true;
         }
 
         async function handlePaymentSubmit(e) {
             e.preventDefault();
+            submit_button.querySelector('.btn-text').style.display = 'none';
+            loadingSubmit.style.display = 'inline-block';
+
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
@@ -184,6 +206,7 @@
             amount_input.disabled = false;
             customAmountInput.disabled = false;
             continue_button.hidden = false;
+            continue_button_text.style.display = 'inline-block';
         }
 
         donation_form.addEventListener('submit', handleFormSubmit);
