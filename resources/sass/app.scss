@@ -43,6 +43,17 @@ body {
     --bs-btn-active-bg: #{$primary-color};
 }
 
+.btn-secondary {
+    border: none;
+    background-color: #cca1a4;
+
+    &:hover {
+        background-color: #cc6a74;
+    }
+
+    --bs-btn-active-bg: #{$primary-color};
+}
+
 .btn-outline-primary {
     --bs-btn-color: #{$primary-color};
     --bs-btn-border-color: #{$primary-color};
@@ -229,6 +240,17 @@ body {
     }
 }
 
+.link-secondary {
+    cursor: pointer;
+}
+
+.accordion {
+    --bs-accordion-active-color: $black-color;
+    --bs-accordion-active-bg: #ffc8ce;
+}
+.accordion-button:focus {
+    box-shadow: none;
+}
 //.form-input.focused {
 //    border: solid 2px $primary-color;
 //    box-shadow: none;
