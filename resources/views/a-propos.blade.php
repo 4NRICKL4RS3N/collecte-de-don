@@ -26,7 +26,7 @@
                     fames ubique ius autem ad pharetra nonumy quot feugait theophrastus solum quaerendum graeco
                     venenatis cetero viderer.
                 </p>
-                <x-button add-class="btn-primary" content="Nous cantacter" lien="/contact"/>
+                <x-button add-class="btn-primary" content="Nous contacter" lien="/contact"/>
             </div>
         </div>
     </div>
