@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\client;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
-use Stripe\Charge;
-use Stripe\Customer;
-use Illuminate\Support\Facades\Log;
 use Stripe\Webhook;
 
 class DonationController extends Controller

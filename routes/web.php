@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DonationController;
+use App\Http\Controllers\client\DonationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
