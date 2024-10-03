@@ -1,15 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <x-head titre="À propos"/>
-</head>
-<body>
+@extends('layouts.client')
 
-<header>
-    <x-header/>
-</header>
+@section('titre', 'À propos')
 
-<main>
+@section('content')
     <div class="container my-5">
         <div class="row text-center mb-sm-5 mb-2">
             <h1 class="grand-titre">À propos de nous</h1>
@@ -30,11 +23,4 @@
             </div>
         </div>
     </div>
-</main>
-
-<footer>
-    <x-footer/>
-</footer>
-
-</body>
-</html>
+@endsection

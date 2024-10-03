@@ -1,16 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <x-head titre="Faire un don"/>
+@extends('layouts.client')
+
+@section('titre', 'Faire un don')
+
+@push('scripts_head')
     <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
+@endpush
 
-<header>
-    <x-header/>
-</header>
-
-<main>
+@section('content')
     <div class="container">
         <div class="row my-5">
             <div class="col-lg-7 col-md-6 ">
@@ -79,7 +75,9 @@
             </div>
         </div>
     </div>
+@endsection
 
+@push('scripts')
     <script>
         {{--    stripe    --}}
         const stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
@@ -236,11 +234,4 @@
             });
         });
     </script>
-</main>
-
-<footer>
-    <x-footer/>
-</footer>
-
-</body>
-</html>
+@endpush

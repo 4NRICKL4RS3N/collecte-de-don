@@ -8,27 +8,27 @@ Route::get('/', function () {
 });
 
 Route::get('/accueil', function () {
-    return view('accueil');
+    return view('pages.client.accueil');
 });
 
 Route::get('/projets', function () {
-    return view('projets');
+    return view('pages.client.projets');
 });
 
 Route::get('/contact', function () {
-    return view('contact');
+    return view('pages.client.contact');
 });
 
 Route::get('/a-propos', function () {
-    return view('a-propos');
+    return view('pages.client.a-propos');
 });
 
 Route::get('/projets/titre', function () {
-    return view('projet-detail');
+    return view('pages.client.projet-detail');
 });
 
 Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
 Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
 Route::post('/confirm-payment', [DonationController::class, 'process'])->name('confirmPayment');
-Route::get('/donate/thank-you', [DonationController::class, 'thankYou'])->name('donate.thank-you');
+Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])->name('donate.thank-you');
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);

@@ -1,15 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <x-head titre="Titre Projet"/>
-</head>
-<body>
+@extends('layouts.client')
 
-<header>
-    <x-header/>
-</header>
+@section('titre', 'Tritre projet')
 
-<main>
+@section('content')
     <div class="container py-4 py-xl-5">
         <div class="row titre-container">
             <h1 class="grand-titre">Titre du projet</h1>
@@ -19,8 +12,8 @@
             <div class="col offset-md-1 offset-sm-0">
                 <ul class="info-list">
                     <li><i class="bi bi-geo-alt"></i><span>Antananarivo Madagascar</span></li>
-                    <li><i class="bi bi-cash"></i>Objectif: <span>8000$</span></li>
-                    <li><i class="bi bi-bank"></i>Récoltés: <span>2000$</span></li>
+                    <li><i class="bi bi-cash"></i>Objectif : <span>8000$</span></li>
+                    <li><i class="bi bi-bank"></i>Récoltés : <span>2000$</span></li>
                 </ul>
             </div>
         </div>
@@ -117,19 +110,12 @@
             <div class="row h-100">
                 <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                     <div>
-                        <h1 class="fw-bold mb-3">Aidez nous à concrétiser ce projet</h1>
-                        <x-button add-class="btn-primary" content="Contribuer au projet" lien="#"  />
-                        <x-button add-class="btn-outline-light mx-2" content="Explorer d'autres projets" lien="#"  />
+                        <h1 class="fw-bold mb-3">Aidez-nous à concrétiser ce projet</h1>
+                        <x-button add-class="btn-primary" content="Contribuer au projet" lien="/donate"  />
+                        <x-button add-class="btn-outline-light mx-2" content="Explorer d'autres projets" lien="/projets"  />
                     </div>
                 </div>
             </div>
         </div>
     </section>
-</main>
-
-<footer>
-    <x-footer/>
-</footer>
-
-</body>
-</html>
+@endsection

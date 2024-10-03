@@ -1,16 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <x-head titre="Projets"/>
-</head>
-<body>
+@extends('layouts.client')
 
-{{--  header  --}}
-<header>
-    <x-header/>
-</header>
+@section('titre', 'Projets')
 
-<main>
+@section('content')
     <div class="container py-4 py-xl-5">
         <div class="row titre-container">
             <h1 class="grand-titre">Nos projets d'évangélisation</h1>
@@ -100,11 +92,4 @@
 
         </div>
     </div>
-</main>
-
-<footer>
-    <x-footer/>
-</footer>
-
-</body>
-</html>
+@endsection
