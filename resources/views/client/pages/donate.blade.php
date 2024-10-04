@@ -1,4 +1,4 @@
-@extends('layouts.client')
+@extends('client.layouts.app')
 
 @section('titre', 'Faire un don')
 

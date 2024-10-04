@@ -1,4 +1,4 @@
-@extends('layouts.client')
+@extends('client.layouts.app')
 
 @section('titre', 'Tritre projet')
 
@@ -20,13 +20,23 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. Pellentesque commodo lacus at sodales sodales. Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
+                    Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae
+                    mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna
+                    interdum eu. Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. Pellentesque
+                    commodo lacus at sodales sodales. Quisque sagittis orci ut diam condimentum, vel euismod erat
+                    placerat.</p>
             </div>
             <div class="col-md-6">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
+                    Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae
+                    mattis tellus. Nullam quis imperdiet augue.</p>
             </div>
             <div class="col-md-6">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
+                    Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae
+                    mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna
+                    interdum eu.</p>
             </div>
         </div>
 
@@ -108,11 +118,13 @@
     <section class="py-4 py-xl-5 project-cta">
         <div class="container h-100">
             <div class="row h-100">
-                <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                <div
+                    class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                     <div>
                         <h1 class="fw-bold mb-3">Aidez-nous à concrétiser ce projet</h1>
-                        <x-button add-class="btn-primary" content="Contribuer au projet" lien="/donate"  />
-                        <x-button add-class="btn-outline-light mx-2" content="Explorer d'autres projets" lien="/projets"  />
+                        <x-button add-class="btn-primary" content="Contribuer au projet" lien="/donate"/>
+                        <x-button add-class="btn-outline-light mx-2" content="Explorer d'autres projets"
+                                  lien="/projets"/>
                     </div>
                 </div>
             </div>
