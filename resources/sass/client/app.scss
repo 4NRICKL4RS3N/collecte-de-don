@@ -1,10 +1,10 @@
 $enable-spacers: true;
 
-@import "bootstrap/scss/bootstrap";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/functions";
-@import "bootstrap-icons/font/bootstrap-icons.min.css";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 @import 'base/fonts';
 @import "pages/accueil";
 @import "pages/projet";
@@ -14,7 +14,7 @@ $enable-spacers: true;
 @import "layout/header";
 @import "layout/footer";
 @import "abstracts/variables";
-@import "@splidejs/splide/dist/css/splide.min.css";
+@import "../../../node_modules/@splidejs/splide/dist/css/splide.min.css";
 
 body {
     font-family: "Roc Grotesk";
