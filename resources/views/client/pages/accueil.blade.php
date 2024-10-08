@@ -237,7 +237,7 @@
                                     <h1 class="fw-medium text-white mb-3">
                                         Votre <span class="fw-bolder">générosité</span> fait la différence.
                                     </h1>
-                                    <x-button add-class="btn-light" lien="/donate" content="Faire un don maintenant"/>
+                                    <x-client.button add-class="btn-light" lien="/donate" content="Faire un don maintenant"/>
                                 </div>
                             </div>
                         </div>
