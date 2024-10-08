@@ -35,3 +35,7 @@ Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])-
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
 
 Route::get('/admin/projets', [ProjectController::class, 'index'])->name('admin.projets');
+Route::get('/admin/projets/{id}', [ProjectController::class, 'show'])->name('admin.projets.show');
+Route::post('/admin/projets', [ProjectController::class, 'store'])->name('admin.projets.store');
+Route::patch('/admin/projets/update/{id}', [ProjectController::class, 'update'])->name('admin.projets.update');
+Route::delete('/admin/projets/delete/{id}', [ProjectController::class, 'destroy'])->name('admin.projets.destroy');

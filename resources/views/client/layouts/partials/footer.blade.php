@@ -26,7 +26,7 @@
         <div
             class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
             <div class="fw-bold d-flex align-items-center mb-2">
-                <x-button add-class="btn-primary" lien="/donate" content="Faire un don"/>
+                <x-client.button add-class="btn-primary" lien="/donate" content="Faire un don"/>
             </div>
         </div>
     </div>

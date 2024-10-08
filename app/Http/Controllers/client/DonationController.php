@@ -15,11 +15,11 @@ class DonationController extends Controller
     public function index(Request $request) {
         $cb_svg = File::files(public_path('svg/cb'));
 
-        return view('pages.client.donate', compact('cb_svg'));
+        return view('client.pages.donate', compact('cb_svg'));
     }
 
     public function remerciement(Request $request) {
-        return view('pages.client.remerciement');
+        return view('client.pages.remerciement');
     }
 
     public function createPaymentIntent(Request $request) {
