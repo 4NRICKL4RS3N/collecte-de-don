@@ -11,7 +11,7 @@
                     <div class="col-md-8 offset-md-2">
                         <h1 class="display-4 grand-titre"><span class="bold-text">Participez</span> à notre mission
                             d'évangélisation</h1>
-                        <x-client.button add-class="btn-primary" lien="/donate" content="Faites une différence aujourd'hui"/>
+                        <x-button add-class="btn-primary" lien="/donate" content="Faites une différence aujourd'hui"/>
                     </div>
                 </div>
             </div>
