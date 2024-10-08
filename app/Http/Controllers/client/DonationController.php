@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\client;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
-use Stripe\Charge;
-use Stripe\Customer;
-use Illuminate\Support\Facades\Log;
 use Stripe\Webhook;
 
 class DonationController extends Controller
@@ -16,11 +15,11 @@ class DonationController extends Controller
     public function index(Request $request) {
         $cb_svg = File::files(public_path('svg/cb'));
 
-        return view('donate', compact('cb_svg'));
+        return view('client.pages.donate', compact('cb_svg'));
     }
 
-    public function thankYou(Request $request) {
-        return view('thanks');
+    public function remerciement(Request $request) {
+        return view('client.pages.remerciement');
     }
 
     public function createPaymentIntent(Request $request) {

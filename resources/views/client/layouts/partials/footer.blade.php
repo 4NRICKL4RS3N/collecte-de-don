@@ -26,7 +26,7 @@
         <div
             class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
             <div class="fw-bold d-flex align-items-center mb-2">
-                <x-button add-class="btn-primary" lien="#" content="Faire un don"/>
+                <x-client.button add-class="btn-primary" lien="/donate" content="Faire un don"/>
             </div>
         </div>
     </div>
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
@@ -191,7 +191,7 @@
                     exigences et conformes à la législation locale.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
@@ -337,7 +337,7 @@
                     droit pour garantir la conformité de votre politique de confidentialité.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>

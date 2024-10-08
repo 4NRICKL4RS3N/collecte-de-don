@@ -1,15 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <x-head titre="Nous contacter"/>
-</head>
-<body>
+@extends('client.layouts.app')
 
-<header>
-    <x-header/>
-</header>
+@section('titre', 'Nous contacter')
 
-<main>
+@section('content')
     <div class="container my-5">
         <div class="row">
             <div class="col-md-6 offset-md-1">
@@ -69,13 +62,13 @@
                     <h5>Appellez-nous</h5>
                     <div>
                         <i class="bi bi-telephone-fill align-middle fs-5 fw-bolder contact-icon"
-                          style="color: #DF253A;"></i>
+                           style="color: #DF253A;"></i>
                         <span
                             class="hover-underline-animation left align-middle ms-2 align-middle fs-5">034 12 123 12</span>
                     </div>
                     <div>
                         <i class="bi bi-telephone-fill align-middle fs-5 fw-bolder contact-icon"
-                          style="color: #DF253A;"></i>
+                           style="color: #DF253A;"></i>
                         <span
                             class="hover-underline-animation left align-middle ms-2 align-middle fs-5">034 12 345 67</span>
                     </div>
@@ -83,11 +76,4 @@
             </div>
         </div>
     </div>
-</main>
-
-<footer>
-    <x-footer/>
-</footer>
-
-</body>
-</html>
+@endsection
