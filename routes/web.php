@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\UploadMediaController;
 use App\Http\Controllers\client\DonationController;
 use App\Http\Controllers\admin\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,10 @@ Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
 
 Route::get('/admin/projets', [ProjectController::class, 'index'])->name('admin.projets');
 Route::get('/admin/projets/{id}', [ProjectController::class, 'show'])->name('admin.projets.show');
+Route::post('/admin/projets/{id}/process-upload', [ProjectController::class, 'processMedia'])->name('upload.process');
 Route::post('/admin/projets', [ProjectController::class, 'store'])->name('admin.projets.store');
 Route::patch('/admin/projets/update/{id}', [ProjectController::class, 'update'])->name('admin.projets.update');
 Route::delete('/admin/projets/delete/{id}', [ProjectController::class, 'destroy'])->name('admin.projets.destroy');
+
+Route::post('/upload-temp', [UploadMediaController::class, 'uploadTemporary'])->name('upload.temp');
+Route::delete('/remove-temp', [UploadMediaController::class, 'removeTemporary'])->name('remove.temp');

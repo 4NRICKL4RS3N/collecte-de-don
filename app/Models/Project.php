@@ -20,4 +20,16 @@ class Project extends Model
     {
         return $this->hasMany(Project_image::class);
     }
+
+    public function getStatus() {
+        if ($this->status == 0) {
+            return "en attente";
+        }
+        if ($this->status == 1) {
+            return "en cours";
+        }
+        if ($this->status == 2) {
+            return "terminé";
+        }
+    }
 }

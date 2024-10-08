@@ -91,7 +91,7 @@
                     </thead>
                     <tbody>
                     @foreach($projets as $projet)
-                        <tr>
+                        <tr data-url="/admin/projets/{{ $projet->id }}">
                             <td>{{ $projet->id }}</td>
                             <td>{{ $projet->title }}</td>
                             <td>{{ $projet->status }}</td>
@@ -479,6 +479,15 @@
         document.getElementById('submit-project').addEventListener('click', function (event) {
             event.preventDefault();
             saveProject();
+        });
+
+        const rows = document.querySelectorAll('#projectsTable tbody tr');
+
+        rows.forEach(row => {
+            row.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                window.location.href = url;
+            });
         });
     </script>
 @endpush

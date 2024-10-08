@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Project_objective;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -56,14 +57,10 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Form data and objectifs saved successfully!']);
     }
 
-    public function show(string $id)
+    public function show(Project $id)
     {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
+        $project = $id;
+        return view('admin.pages.projet-details', ['projet' => $project]);
     }
 
     public function update(Request $request, $id)
@@ -128,4 +125,21 @@ class ProjectController extends Controller
             return response()->json(['success' => false, 'message' => 'Erreur : projet introuvable']);
         }
     }
+
+    public function processMedia(Request $request, Project $id)
+    {
+        $files = json_decode($request->input('files'), true);
+        $processedFiles = [];
+
+        foreach ($files as $tempPath) {
+            if (Storage::exists($tempPath)) {
+                $newPath = 'public/uploads/' . basename($tempPath);
+                Storage::move($tempPath, $newPath);
+                $processedFiles[] = Storage::url($newPath);
+            }
+        }
+
+        return response()->json(['files' => $processedFiles]);
+    }
+
 }
