@@ -9,7 +9,7 @@
 </div>
 <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('admin') }}">
             <svg class="nav-icon">
                 <use xlink:href="/svg/coreui/free.svg#cil-speedometer"></use>
             </svg>
@@ -17,27 +17,13 @@
         </a>
     </li>
     <li class="nav-title">Entité</li>
-    <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+    <li class="nav-group">
+        <a class="nav-link" href="{{ route('admin.projets') }}">
             <svg class="nav-icon">
                 <use xlink:href="/svg/coreui/free.svg#cil-puzzle"></use>
             </svg>
-            Projets</a>
-        <ul class="nav-group-items compact">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Accordion
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Breadcrumb
-                </a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="base/cards.html"><span class="nav-icon"><span
-                            class="nav-icon-bullet"></span></span> Cards</a></li>
-        </ul>
+            Projets
+        </a>
     </li>
     <li class="nav-title">Pages</li>
     <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
