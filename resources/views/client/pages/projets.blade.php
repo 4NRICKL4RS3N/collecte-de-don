@@ -69,9 +69,7 @@
                             Maecenas vitae mattis tellus.</p>
 
                         <div class="objectives">
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum dolor sit
-                                amet dolor sit amet dolor sit amet
-                            </div>
+                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum dolor sit amet dolor sit amet dolor sit amet</div>
                             <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
                             <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
                         </div>

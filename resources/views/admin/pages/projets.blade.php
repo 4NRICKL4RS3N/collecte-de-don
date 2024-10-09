@@ -11,28 +11,28 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-12 col-lg-6">
                 <h1>Créer un nouveau projet</h1>
 
                 <form id="objectif-form" method="POST">
                     @csrf
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="title">Nom du projet</label>
                         <input type="text" name="title" id="title" class="form-control" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="description">Description</label>
                         <textarea name="description" id="description" class="form-control"></textarea>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="location">Lieu</label>
                         <input type="text" name="location" id="location" class="form-control" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-select" style="width: fit-content" required>
                             <option value="0" selected>en attente</option>
@@ -41,7 +41,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <div class="tags-input">
                             <label for="input-tag-container">Objectifs</label>
                             <ul id="tags"></ul>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="donation_target">Objectif de don</label>
                         <input type="number" name="donation_target" id="donation_target" class="form-control" required>
                     </div>
@@ -70,12 +70,12 @@
                     </div>
 
                     <div class="form-group">
-                        <button id="submit-project" type="submit" class="btn btn-primary">Create Project</button>
+                        <button id="submit-project" type="submit" class="mt-3 btn btn-primary">Créer le projet</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <div class="col">
                 <h1>Liste des projets</h1>
                 <table id="projectsTable" class="display">
@@ -84,8 +84,8 @@
                         <th>#</th>
                         <th>Titre</th>
                         <th>Statut</th>
-                        <th class="text-end">Objectif don</th>
-                        <th class="text-end">Don récolté</th>
+                        <th class="text-end">Objectif don (Ar)</th>
+                        <th class="text-end">Don récolté (Ar)</th>
                         <th class="text-end"></th>
                     </tr>
                     </thead>
@@ -140,22 +140,22 @@
                 <div class="modal__content" id="update-modal-content">
                     <form id="update-objectif-form" method="POST">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-title">Nom du projet</label>
                             <input type="text" name="title" id="update-title" class="form-control" required>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-description">Description</label>
                             <textarea name="description" id="update-description" class="form-control"></textarea>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-location">Lieu</label>
                             <input type="text" name="location" id="update-location" class="form-control" required>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-status">Status</label>
                             <select name="status" id="update-status" class="form-select" style="width: fit-content"
                                     required>
@@ -165,7 +165,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <div class="tags-input">
                                 <label for="update-input-tag-container">Objectifs</label>
                                 <ul id="update-tags"></ul>
@@ -174,7 +174,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-donation_target">Objectif de don</label>
                             <input type="number" name="donation_target" id="update-donation_target" class="form-control"
                                    required>

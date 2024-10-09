@@ -1,5 +1,58 @@
 @import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
-@import "../../../node_modules/@coreui/coreui/scss/coreui";
+
+@import "../../../node_modules/@coreui/coreui/scss/mixins/banner";
+// Configuration
+@import "../../../node_modules/@coreui/coreui/scss/functions";
+$primary: #050c26;
+@import "../../../node_modules/@coreui/coreui/scss/variables";
+@import "../../../node_modules/@coreui/coreui/scss/variables-dark";
+@import "../../../node_modules/@coreui/coreui/scss/maps";
+@import "../../../node_modules/@coreui/coreui/scss/mixins";
+@import "../../../node_modules/@coreui/coreui/scss/utilities";
+// Layout & components
+@import "../../../node_modules/@coreui/coreui/scss/root";
+@import "../../../node_modules/@coreui/coreui/scss/reboot";
+@import "../../../node_modules/@coreui/coreui/scss/type";
+@import "../../../node_modules/@coreui/coreui/scss/images";
+@import "../../../node_modules/@coreui/coreui/scss/containers";
+@import "../../../node_modules/@coreui/coreui/scss/grid";
+@import "../../../node_modules/@coreui/coreui/scss/tables";
+@import "../../../node_modules/@coreui/coreui/scss/forms";
+@import "../../../node_modules/@coreui/coreui/scss/buttons";
+@import "../../../node_modules/@coreui/coreui/scss/transitions";
+@import "../../../node_modules/@coreui/coreui/scss/dropdown";
+@import "../../../node_modules/@coreui/coreui/scss/button-group";
+@import "../../../node_modules/@coreui/coreui/scss/nav";
+@import "../../../node_modules/@coreui/coreui/scss/navbar";
+@import "../../../node_modules/@coreui/coreui/scss/card";
+@import "../../../node_modules/@coreui/coreui/scss/accordion";
+@import "../../../node_modules/@coreui/coreui/scss/breadcrumb";
+@import "../../../node_modules/@coreui/coreui/scss/pagination";
+@import "../../../node_modules/@coreui/coreui/scss/badge";
+@import "../../../node_modules/@coreui/coreui/scss/alert";
+@import "../../../node_modules/@coreui/coreui/scss/progress";
+@import "../../../node_modules/@coreui/coreui/scss/list-group";
+@import "../../../node_modules/@coreui/coreui/scss/close";
+@import "../../../node_modules/@coreui/coreui/scss/toasts";
+@import "../../../node_modules/@coreui/coreui/scss/modal";
+@import "../../../node_modules/@coreui/coreui/scss/tooltip";
+@import "../../../node_modules/@coreui/coreui/scss/popover";
+@import "../../../node_modules/@coreui/coreui/scss/carousel";
+@import "../../../node_modules/@coreui/coreui/scss/spinners";
+@import "../../../node_modules/@coreui/coreui/scss/offcanvas";
+@import "../../../node_modules/@coreui/coreui/scss/placeholders";
+
+@import "../../../node_modules/@coreui/coreui/scss/avatar";
+@import "../../../node_modules/@coreui/coreui/scss/callout";
+@import "../../../node_modules/@coreui/coreui/scss/footer";
+@import "../../../node_modules/@coreui/coreui/scss/header";
+@import "../../../node_modules/@coreui/coreui/scss/icon";
+@import "../../../node_modules/@coreui/coreui/scss/sidebar";
+// Helpers
+@import "../../../node_modules/@coreui/coreui/scss/helpers";
+// Utilities
+@import "../../../node_modules/@coreui/coreui/scss/utilities/api";
+
 @import "theme";
 @import "variables";
 @import "vendors/simplebar";
@@ -11,6 +64,8 @@
 @import "../../../node_modules/datatables.net-dt/css/dataTables.dataTables.min.css";
 
 @import "../../../node_modules/notyf/notyf.min.css";
+
+$primary: #060626;
 
 .dt-input {
     margin-right: 1rem;

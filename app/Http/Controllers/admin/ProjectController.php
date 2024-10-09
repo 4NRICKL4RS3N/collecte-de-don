@@ -119,7 +119,7 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         if ($project) {
-            $project->project_objectives->delete();
+            $project->deleteObjectives();
             $project->deleteImages();
             $project->delete();
             return response()->json(['success' => true]);

@@ -6,5 +6,11 @@
             <use xlink:href="/svg/coreui/free.svg#cil-menu"></use>
         </svg>
     </button>
+
     {{ Breadcrumbs::render() }}
+
+    <form method="post" action="{{ route('logout') }}" class="position-absolute" style="right: 1rem">
+        @csrf
+        <button class="btn btn-outline-danger" type="submit">Se déconnecter</button>
+    </form>
 </div>

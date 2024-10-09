@@ -35,6 +35,12 @@ class Project extends Model
         return "en attente";
     }
 
+    public function deleteObjectives() {
+        foreach ($this->project_objectives as $project_objective) {
+            $project_objective->delete();
+        }
+    }
+
     public function deleteImages() {
         foreach ($this->project_images as $project_image) {
             $path = str_replace('/storage', 'public', $project_image);

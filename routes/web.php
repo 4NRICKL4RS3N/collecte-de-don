@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\UploadMediaController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\client\DonationController;
 use App\Http\Controllers\admin\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -36,15 +37,23 @@ Route::post('/confirm-payment', [DonationController::class, 'process'])->name('c
 Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])->name('donate.thank-you');
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
 
-Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
-Route::get('/admin/projets', [ProjectController::class, 'index'])->name('admin.projets');
-Route::get('/admin/projets/{id}', [ProjectController::class, 'show'])->name('admin.projets.show');
-Route::post('/admin/projets/{id}/process-upload', [ProjectController::class, 'processMedia'])->name('upload.process');
-Route::post('/admin/projets', [ProjectController::class, 'store'])->name('admin.projets.store');
-Route::patch('/admin/projets/update/{id}', [ProjectController::class, 'update'])->name('admin.projets.update');
-Route::delete('/admin/projets/delete/{id}', [ProjectController::class, 'destroy'])->name('admin.projets.destroy');
-Route::delete('/admin/projets/media/delete/{id}', [ProjectController::class, 'destroyMedia'])->name('admin.projets.media.destroy');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('admin');
+        Route::get('/projets', [ProjectController::class, 'index'])->name('admin.projets');
+        Route::get('/projets/{id}', [ProjectController::class, 'show'])->name('admin.projets.show');
+        Route::post('/projets/{id}/process-upload', [ProjectController::class, 'processMedia'])->name('upload.process');
+        Route::post('/projets', [ProjectController::class, 'store'])->name('admin.projets.store');
+        Route::patch('/projets/update/{id}', [ProjectController::class, 'update'])->name('admin.projets.update');
+        Route::delete('/projets/delete/{id}', [ProjectController::class, 'destroy'])->name('admin.projets.destroy');
+        Route::delete('/projets/media/delete/{id}', [ProjectController::class, 'destroyMedia'])->name('admin.projets.media.destroy');
+    });
+});
 
 Route::post('/upload-temp', [UploadMediaController::class, 'uploadTemporary'])->name('upload.temp');
 Route::delete('/remove-temp', [UploadMediaController::class, 'removeTemporary'])->name('remove.temp');
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

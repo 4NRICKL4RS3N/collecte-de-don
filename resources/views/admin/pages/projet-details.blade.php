@@ -48,11 +48,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-4">
                 <label class="text-body-secondary mb-1">Objectifs <span class="fw-bold">({{ count($projet->project_objectives) }})</span></label>
                 <div>
                     @foreach($projet->project_objectives as $objectif)
-                        <span class="px-3 py-2 fs-6 fw-medium mb-4 badge rounded-pill text-bg-primary">{{ $objectif->objective }}</span>
+                        <span class="px-3 py-2 fs-6 fw-medium badge rounded-pill text-bg-primary">{{ $objectif->objective }}</span>
                     @endforeach
                 </div>
             </div>
@@ -69,7 +69,7 @@
                                         <video src="{{ asset($image->url) }}" controls></video>
                                     @endif
                                 </div>
-                                <button data-micromodal-trigger="delete-modal" data-delete-url="{{ asset($image->url) }}" data-delete-id="{{ $image->id }}" class="delete-button"><i class="bi bi-x-circle-fill"></i></button>
+                                <button data-micromodal-trigger="delete-modal" data-delete-type="{{ $image->type }}" data-delete-url="{{ asset($image->url) }}" data-delete-id="{{ $image->id }}" class="delete-button"><i class="bi bi-x-circle-fill"></i></button>
                             </div>
                         @endforeach
                     </div>
@@ -93,7 +93,6 @@
                 </header>
                 <div class="modal__content" id="delete-modal-content">
                     Êtes-vous sûr de vouloir supprimer l'image ?
-                    <img id="img-to-delete" class="w-100">
                 </div>
                 <footer class="modal__footer">
                     <button class="modal__btn" data-micromodal-close aria-label="Close this dialog">Annuler</button>
@@ -227,11 +226,21 @@
         // delete projet
         let imageIdToDelete;
         let imageUrlToDelete;
+        let deleteModelContent = document.getElementById('delete-modal-content');
         document.querySelectorAll('.delete-button').forEach(button => {
             button.addEventListener('click', function () {
                 imageIdToDelete = this.getAttribute('data-delete-id');
                 imageUrlToDelete = this.getAttribute('data-delete-url');
-                document.getElementById('img-to-delete').src = imageUrlToDelete;
+                let media = null;
+                if (this.getAttribute('data-delete-type') === 'image') {
+                    media = document.createElement('img');
+                } else {
+                    media = document.createElement('video');
+                    media.controls = true;
+                }
+                media.src = imageUrlToDelete;
+                media.classList.add('w-100');
+                deleteModelContent.append(media);
             });
         });
         document.getElementById('confirm-delete').addEventListener('click', async function () {
