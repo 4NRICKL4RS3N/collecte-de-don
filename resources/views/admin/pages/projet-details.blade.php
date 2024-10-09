@@ -12,10 +12,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 @endpush
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
             <div class="col-12">
                 <h1>{{ $projet->title }}</h1>
@@ -56,9 +57,49 @@
                 </div>
             </div>
             <div class="col-12">
+                <label class="text-body-secondary mb-1">Images</label>
+                <div class="existing-media">
+                    <div id="mediaGrid" class="row">
+                        @foreach($projet->project_images as $image)
+                            <div class="media-item col-lg-3 col-md-12 mb-4 mb-lg-3" data-media-id="{{ $image->id }}">
+                                <div class="bg-image hover-overlay ripple shadow-1-strong rounded">
+                                    @if($image->type === 'image')
+                                        <img class="rounded" src="{{ asset($image->url) }}" alt="{{ $image->filename }}">
+                                    @else
+                                        <video src="{{ asset($image->url) }}" controls></video>
+                                    @endif
+                                </div>
+                                <button data-micromodal-trigger="delete-modal" data-delete-url="{{ asset($image->url) }}" data-delete-id="{{ $image->id }}" class="delete-button"><i class="bi bi-x-circle-fill"></i></button>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
                 <input type="file" class="filepond" multiple>
                 @csrf
-                <button onclick="processUpload()" class="process-button">Process Upload</button>
+                <button onclick="processUpload()" class="process-button btn btn-primary">Confirmer les ajouts</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-danger micromodal-slide" id="delete-modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+                <header class="modal__header">
+                    <h2 class="modal__title" id="delete-modal-title">
+                        Confirmez la suppression
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal__content" id="delete-modal-content">
+                    Êtes-vous sûr de vouloir supprimer l'image ?
+                    <img id="img-to-delete" class="w-100">
+                </div>
+                <footer class="modal__footer">
+                    <button class="modal__btn" data-micromodal-close aria-label="Close this dialog">Annuler</button>
+                    <button class="modal__btn btn-danger" id="confirm-delete" aria-label="Close this dialog">Confirmer
+                    </button>
+                </footer>
             </div>
         </div>
     </div>
@@ -70,6 +111,9 @@
     <script src="https://unpkg.com/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script>
+        var notyf = new Notyf({
+            position: {x: 'center', y: 'top'},
+        });
         // Register plugins
         FilePond.registerPlugin(
             FilePondPluginFileValidateType,
@@ -126,19 +170,8 @@
                     }
                 }
             },
-            labelIdle: 'Drag & Drop your files or <span class="filepond--label-action">Browse</span>',
+            labelIdle: 'Glissez et déposez les fichiers ou <span class="filepond--label-action">Parcourir</span>',
             styleItemPanelAspectRatio: 0.5625, // 16:9 aspect ratio
-        });
-
-        pond.on('error', (error, file) => {
-            console.error('FilePond error:', error, file);
-        });
-
-        // Add successful upload handling
-        pond.on('processfile', (error, file) => {
-            if (!error) {
-                console.log('Upload successful:', file.serverId);
-            }
         });
 
         async function processUpload() {
@@ -157,16 +190,70 @@
                 });
 
                 const result = await response.json();
-                console.log('Processed files:', result);
-
-                // Clear FilePond after successful processing
                 pond.removeFiles();
 
-                alert('Files processed successfully!');
+                notyf.success('images ou vidéos ajoutées');
+                location.reload();
             } catch (error) {
-                console.error('Error processing files:', error);
-                alert('Error processing files. Please try again.');
+                notyf.error('Erreur lors du traitement des fichiers:'+error);
             }
         }
+
+        // async function deleteMedia(mediaId) {
+        //     try {
+        //         const response = await fetch(`/admin/projets/media/delete/${mediaId}`, {
+        //             method: 'DELETE',
+        //             headers: {
+        //                 'X-CSRF-TOKEN': csrfToken
+        //             }
+        //         });
+        //
+        //         if (!response.ok) {
+        //             throw new Error('Delete failed');
+        //         }
+        //
+        //         // Remove the media item from the grid
+        //         const mediaItem = document.querySelector(`.media-item[data-media-id="${mediaId}"]`);
+        //         if (mediaItem) {
+        //             mediaItem.remove();
+        //         }
+        //     } catch (error) {
+        //         console.error('Error deleting media:', error);
+        //         alert('Failed to delete media. Please try again.');
+        //     }
+        // }
+
+        MicroModal.init();
+        // delete projet
+        let imageIdToDelete;
+        let imageUrlToDelete;
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function () {
+                imageIdToDelete = this.getAttribute('data-delete-id');
+                imageUrlToDelete = this.getAttribute('data-delete-url');
+                document.getElementById('img-to-delete').src = imageUrlToDelete;
+            });
+        });
+        document.getElementById('confirm-delete').addEventListener('click', async function () {
+            console.log('deleting clicked')
+            try {
+                const response = await fetch(`/admin/projets/media/delete/${imageIdToDelete}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                });
+
+                if (!response.ok) {
+                    notyf.error('Suppression échouée');
+                }
+
+                notyf.success('Suppression effectuée');
+                location.reload();
+            } catch (error) {
+                console.error('Error deleting media:', error);
+                notyf.error('Suppression échouée');
+            }
+        });
     </script>
 @endpush

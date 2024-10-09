@@ -211,3 +211,54 @@
         color: white;
     }
 }
+
+.filepond--item {
+    width: calc(20% - 0.5em);
+}
+@media (max-width: 991px) {
+    .filepond--item {
+        width: calc(50% - 0.5em);
+    }
+}
+@media (max-width: 420px) {
+    .filepond--item {
+        width: calc(100% - 0.5em);
+    }
+}
+
+
+.filepond--panel-root {
+    border: 2px dashed black;
+}
+
+.existing-media {
+    margin-top: 10px;
+}
+
+.media-item:hover .delete-button {
+    opacity: 1;
+}
+
+.media-item img,
+.media-item video {
+    width: 100%;
+}
+
+.delete-button {
+    translate: 5px -40px;
+    font-size: 1.5rem;
+    position: absolute;
+    background: transparent;
+    opacity: 0;
+    color: #e74343;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.hover-underline:hover {
+    text-decoration: underline!important;
+}

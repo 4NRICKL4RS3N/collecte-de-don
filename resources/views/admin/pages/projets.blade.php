@@ -92,8 +92,8 @@
                     <tbody>
                     @foreach($projets as $projet)
                         <tr data-url="/admin/projets/{{ $projet->id }}">
-                            <td>{{ $projet->id }}</td>
-                            <td>{{ $projet->title }}</td>
+                            <td><a class="text-decoration-none text-black hover-underline" href="/admin/projets/{{ $projet->id }}">{{ $projet->id }}</a></td>
+                            <td><a class="text-decoration-none text-black hover-underline" href="/admin/projets/{{ $projet->id }}">{{ $projet->title }}</a></td>
                             <td>{{ $projet->status }}</td>
                             <td class="text-end">{{ number_format($projet->donation_target, 0, ',', ' ') }}</td>
                             <td class="text-end">{{ number_format($projet->donation_collected, 0, ',', ' ') }}</td>
@@ -306,6 +306,7 @@
                     updateTag.innerHTML += '<button type="button" class="delete-button"><i class="bi bi-x"></i></button>';
                     updateTags.append(updateTag);
                 }
+                debugger;
                 console.log(objectifsToUpdate);
             });
         });
@@ -479,15 +480,6 @@
         document.getElementById('submit-project').addEventListener('click', function (event) {
             event.preventDefault();
             saveProject();
-        });
-
-        const rows = document.querySelectorAll('#projectsTable tbody tr');
-
-        rows.forEach(row => {
-            row.addEventListener('click', function() {
-                const url = this.getAttribute('data-url');
-                window.location.href = url;
-            });
         });
     </script>
 @endpush

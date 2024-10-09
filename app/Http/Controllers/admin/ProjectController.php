@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Project_image;
 use App\Models\Project_objective;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -119,6 +120,7 @@ class ProjectController extends Controller
         $project = Project::find($id);
         if ($project) {
             $project->project_objectives->delete();
+            $project->deleteImages();
             $project->delete();
             return response()->json(['success' => true]);
         } else {
@@ -128,18 +130,42 @@ class ProjectController extends Controller
 
     public function processMedia(Request $request, Project $id)
     {
+        $project = $id;
         $files = json_decode($request->input('files'), true);
         $processedFiles = [];
 
         foreach ($files as $tempPath) {
             if (Storage::exists($tempPath)) {
-                $newPath = 'public/uploads/' . basename($tempPath);
+                $filename = basename($tempPath);
+                $newPath = 'public/project-uploads/' . $filename;
                 Storage::move($tempPath, $newPath);
-                $processedFiles[] = Storage::url($newPath);
+
+                $mimeType = Storage::mimeType($newPath);
+                $type = str_contains($mimeType, 'image') ? 'image' : 'video';
+                $media = Project_image::create([
+                    'project_id' => $project->id,
+                    'url' => Storage::url($newPath),
+                    'type' => $type,
+                    'filename' => $filename,
+                    'mime_type' => $mimeType
+                ]);
+
+                $processedFiles[] = $media;
             }
         }
 
         return response()->json(['files' => $processedFiles]);
+    }
+
+    public function destroyMedia(Project_image $id) {
+        $media = $id;
+        $path = str_replace('/storage', 'public', $media->url);
+        if (Storage::exists($path)) {
+            \Log::info("file deleted", [$path]);
+            Storage::delete($path);
+        }
+        $media->delete();
+        return response()->json(['success' => true]);
     }
 
 }

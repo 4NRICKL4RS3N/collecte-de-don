@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -30,6 +31,17 @@ class Project extends Model
         }
         if ($this->status == 2) {
             return "terminé";
+        }
+        return "en attente";
+    }
+
+    public function deleteImages() {
+        foreach ($this->project_images as $project_image) {
+            $path = str_replace('/storage', 'public', $project_image);
+            if (Storage::exists($path)) {
+                Storage::delete($path);
+            }
+            $project_image->delete();
         }
     }
 }

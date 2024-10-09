@@ -6,14 +6,5 @@
             <use xlink:href="/svg/coreui/free.svg#cil-menu"></use>
         </svg>
     </button>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb my-0">
-            <li class="breadcrumb-item active">
-                <span>Home</span>
-            </li>
-            <li class="breadcrumb-item">
-                <span>Home</span>
-            </li>
-        </ol>
-    </nav>
+    {{ Breadcrumbs::render() }}
 </div>
