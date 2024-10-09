@@ -11,6 +11,9 @@
 
     <form method="post" action="{{ route('logout') }}" class="position-absolute" style="right: 1rem">
         @csrf
-        <button class="btn btn-outline-danger" type="submit">Se déconnecter</button>
+        <button class="bg-transparent border-0" type="submit">
+            <i class="fs-6 me-1 bi bi-box-arrow-left"></i>
+            <span class="hover-underline">Se déconnecter</span>
+        </button>
     </form>
 </div>

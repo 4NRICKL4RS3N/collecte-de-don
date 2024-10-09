@@ -317,3 +317,9 @@ $primary: #060626;
 .hover-underline:hover {
     text-decoration: underline!important;
 }
+
+.badge-outline-primary {
+    background-color: transparent !important;
+    border: solid 2px $primary;
+    color: $primary !important;
+}

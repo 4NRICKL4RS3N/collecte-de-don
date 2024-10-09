@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-12">
                 <h1>{{ $projet->title }}</h1>
-                <span class="mb-4 badge rounded-pill text-bg-primary">{{ $projet->getStatus() }}</span>
+                <span class="mb-4 badge rounded-pill text-bg-primary badge-outline-primary">{{ $projet->getStatus() }}</span>
                 <div class="row">
                     <div class="col-md-4 col-auto">
                         <label class="text-body-secondary">Description</label>
@@ -52,7 +52,7 @@
                 <label class="text-body-secondary mb-1">Objectifs <span class="fw-bold">({{ count($projet->project_objectives) }})</span></label>
                 <div>
                     @foreach($projet->project_objectives as $objectif)
-                        <span class="px-3 py-2 fs-6 fw-medium badge rounded-pill text-bg-primary">{{ $objectif->objective }}</span>
+                        <span class="px-3 py-2 fs-6 fw-medium badge badge-outline-primary rounded-pill text-bg-primary">{{ $objectif->objective }}</span>
                     @endforeach
                 </div>
             </div>
