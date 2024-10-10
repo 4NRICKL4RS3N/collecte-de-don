@@ -22,6 +22,11 @@ class Project extends Model
         return $this->hasMany(Project_image::class);
     }
 
+    public function donations(): HasMany
+    {
+        return $this->hasMany(Donation::class);
+    }
+
     public function getStatus() {
         if ($this->status == 0) {
             return "en attente";

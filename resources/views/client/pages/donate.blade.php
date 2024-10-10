@@ -4,14 +4,14 @@
 
 @push('scripts_head')
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 @endpush
 
 @section('content')
     <div class="container">
         <div class="row my-5">
             <div class="col-lg-7 col-md-6 ">
-                <h1 class="grand-titre">Votre générosité est sur le point de créer un impact!</h1>
-                <z></z>
+                <h1 class="grand-titre">Votre générosité est sur le point de créer un impact !</h1>
             </div>
             <div class="col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
@@ -79,6 +79,9 @@
 
 @push('scripts')
     <script>
+        var notyf = new Notyf({
+            position: {x: 'center', y: 'top'},
+        });
         {{--    stripe    --}}
         const stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
         let elements;
@@ -98,16 +101,18 @@
         let paymentElement;
 
         const donation_form = document.getElementById('donation-form');
+        let urlParams = new URLSearchParams(window.location.search);
 
+        let donation = null;
         async function handleFormSubmit(e) {
             e.preventDefault();
             const name = name_input.value;
             const email = email_input.value;
             const amount = amount_input.value;
+            const project = urlParams.get('project');
 
             continue_button_text.style.display = 'none';
             loadingContinue.style.display = 'inline-block';
-
             try {
                 const response = await fetch('{{route('createPaymentIntent')}}', {
                     method: 'POST',
@@ -115,10 +120,11 @@
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({name, email, amount})
+                    body: JSON.stringify({name, email, amount, project})
                 });
 
-                const {clientSecret} = await response.json();
+                const { clientSecret, donation_id } = await response.json();
+                donation = donation_id;
                 paymentIntentId = clientSecret.split('_secret')[0];
 
                 const appearance = {
@@ -159,7 +165,25 @@
                 paymentElement = elements.create('payment', style);
                 paymentElement.mount('#payment-element');
             } catch (e) {
-                console.error('Error:', error);
+                //annuler le don
+                fetch(`/donate/failed/${donation}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            notyf.error('Don annulé');
+                            location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
             } finally {
                 payment_element_container.style.display = 'block';
                 submit_button.style.display = 'block';
@@ -192,6 +216,23 @@
         }
 
         function handleGoBack() {
+            fetch(`/donate/delete/${donation}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('donation deleted')
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
             if (paymentElement) {
                 paymentElement.unmount();
                 paymentElement = null;

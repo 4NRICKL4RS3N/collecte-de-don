@@ -35,6 +35,8 @@ Route::get('/donate', [DonationController::class, 'index'])->name('donate.affich
 Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
 Route::post('/confirm-payment', [DonationController::class, 'process'])->name('confirmPayment');
 Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])->name('donate.thank-you');
+Route::post('/donate/failed/{id}', [DonationController::class, 'donationFailed'])->name('donate.failed');
+Route::delete('/donate/delete/{id}', [DonationController::class, 'donationDestroy'])->name('donate.destroy');
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
 
 

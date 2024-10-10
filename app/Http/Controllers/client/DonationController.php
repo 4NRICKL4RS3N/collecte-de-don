@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailTesting;
+use App\Mail\PaymentSuccessful;
+use App\Models\Donation;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Stripe\PaymentIntent;
+use Stripe\PaymentMethod;
 use Stripe\Stripe;
 use Stripe\Webhook;
 
@@ -23,7 +30,7 @@ class DonationController extends Controller
     }
 
     public function createPaymentIntent(Request $request) {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
             'amount' => 'required|numeric|min:1',
@@ -31,20 +38,67 @@ class DonationController extends Controller
 
         Stripe::setApiKey(config('services.stripe.secret'));
 
+        //create user
+        $user = User::where('email', $validatedData['email'])->first();
+        if ($user) {
+            if ($user->name !== $validatedData['name']) {
+                $user->update([
+                    'name' => $validatedData['name'],
+                ]);
+            }
+        } else {
+            $user = User::create([
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'is_admin' => 0,
+            ]);
+        }
+        // create donation
+        $donation = Donation::create([
+            'project_id' => $request->project,
+            'user_id' => $user->id,
+            'donation_amount' => $validatedData['amount'] * 100,
+            'status' => 0,
+        ]);
+
         $paymentIntent = PaymentIntent::create([
-            'amount' => $request->amount * 100, // Convert to cents
+            'amount' => $validatedData['amount'] * 100, // Convert to cents
             'currency' => 'usd',
             'payment_method_types' => ['card', 'paypal'],
             'metadata' => [
-                'name' => $request->name,
-                'email' => $request->email,
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'donation_id' => $donation->id,
             ],
         ]);
-        Log::info('intent mande', [$paymentIntent->client_secret, $request->name, $request->email]);
+//        Log::info('intent made', [$paymentIntent->client_secret, $request->name, $request->email]);
 
         return response()->json([
             'clientSecret' => $paymentIntent->client_secret,
+            'donation_id' => $donation->id,
         ]);
+    }
+
+    public function donationFailed($id) {
+        $donation = Donation::find($id);
+        try {
+            $donation::update([
+                'status' => 2,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
+        return response()->json(['success' => true]);
+    }
+
+    public function donationDestroy($id) {
+        $donation = Donation::find($id);
+        try {
+            $donation->delete();
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
+        return response()->json(['success' => true]);
     }
 
     public function process(Request $request) {
@@ -54,13 +108,7 @@ class DonationController extends Controller
             $paymentIntent = PaymentIntent::retrieve($request->payment_intent);
 
             if ($paymentIntent->status === 'succeeded') {
-                // Save donation to database
-//                Donation::create([
-//                    'stripe_id' => $paymentIntent->id,
-//                    'amount' => $paymentIntent->amount / 100,
-//                    'email' => $paymentIntent->metadata->email,
-//                    'name' => $paymentIntent->metadata->name,
-//                ]);
+                // Save payment to database
                 Log::info('paymentmande', [$paymentIntent->id, $paymentIntent->amount, $paymentIntent->metadata]);
 
                 return response()->json(['success' => true]);
@@ -76,22 +124,21 @@ class DonationController extends Controller
 
     public function handleWebhook(Request $request) {
         Log::info("Webhook received");
-        Log::info('Stripe-Signature header: ' . $request->header('Stripe-Signature'));
         Stripe::setApiKey(config('services.stripe.secret'));
 
         $payload = $request->getContent();
         $sig_header = $request->header('Stripe-Signature');
         $endpoint_secret = config('services.stripe.webhook_secret');
-        Log::info('Webhook secret: ' . $endpoint_secret);
-        Log::info('Payload: ' . $payload);
-        Log::info('Signature: ' . $sig_header);
+
+//        Log::info('Webhook secret: ' . $endpoint_secret);
+//        Log::info('Payload: ' . $payload);
+//        Log::info('Signature: ' . $sig_header);
 
         $event = null;
         try {
             $event = Webhook::constructEvent(
-                    $payload, $sig_header, $endpoint_secret
+                $payload, $sig_header, $endpoint_secret
             );
-            Log::info('Event constructed successfully');
         } catch (\UnexpectedValueException $e) {
             Log::error('Invalid payload: ' . $e->getMessage());
             return response()->json(['error' => 'Invalid payload'], 400);
@@ -99,17 +146,61 @@ class DonationController extends Controller
             Log::error('Invalid signature: ' . $e->getMessage());
             return response()->json(['error' => 'Invalid signature'], 400);
         }
+
         Log::info('Event type: ' . $event->type);
-        if ($event->type == 'payment_intent.succeeded') {
-            $paymentIntent = $event->data->object;
-            Log::info('Payment Intent ID hehe: ' . $paymentIntent->id);
-            // Save donation to database
-//            Donation::create([
-//                'stripe_id' => $paymentIntent->id,
-//                'amount' => $paymentIntent->amount / 100,
-//                'email' => $paymentIntent->charges->data[0]->billing_details->email,
-//                'name' => $paymentIntent->charges->data[0]->billing_details->name,
-//            ]);
+        if ($event->type === 'charge.succeeded' || $event->type === 'charge.updated') {
+            $charge = $event->data->object;
+            $paymentIntent = PaymentIntent::retrieve($charge->payment_intent);
+            $donationId = $paymentIntent->metadata->donation_id;
+            $amount = $paymentIntent->amount;
+            // Get payment method details
+            $paymentMethod = $charge->payment_method_details->type ?? 'unknown';
+
+            $payment = Payment::updateOrCreate(
+                ['transaction_id' => $charge->payment_intent],
+                [
+                    'donation_id' => $donationId,
+                    'donation_amount' => $charge->amount,
+                    'method' => $paymentMethod,
+                    'status' => 0 // Default status
+                ]
+            );
+
+            switch ($event->type) {
+                case 'charge.succeeded':
+                    $payment->update(['status' => 1]);
+                    $donation = Donation::find($donationId);
+                    if ($donation) {
+                        $donation->update(['status' => 1]); // 1 for confirmed
+                    }
+
+                    // send email
+                    try {
+                        Mail::to($donation->user->email)->send(new PaymentSuccessful($donation, $payment));
+
+                        Log::info('Success email sent', [
+                            'user_email' => $donation->user->email,
+                            'donation_id' => $donation->id,
+                            'payment' => $payment->transaction_id,
+                        ]);
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send success email', [
+                            'error' => $e->getMessage(),
+                            'donation_id' => $donation->id
+                        ]);
+                    }
+
+                    Log::info('Payment and donation confirmed', [
+                        'payment_id' => $payment->id,
+                        'donation_id' => $donationId
+                    ]);
+                    break;
+
+                case 'charge.failed':
+                    $payment->update(['status' => 2]);
+                    Log::info('Payment failed', ['payment_id' => $payment->id]);
+                    break;
+            }
         }
 
         return response()->json(['success' => true]);
