@@ -16,7 +16,7 @@ class Donation extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function project(): HasOne {
-        return $this->hasOne(Project::class);
+    public function project() {
+        return $this->belongsTo(Project::class);
     }
 }
