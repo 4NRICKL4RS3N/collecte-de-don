@@ -57,6 +57,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::get('/', [TestimonyController::class, 'index'])->name('admin.temoignages');
             Route::post('/', [TestimonyController::class, 'store'])->name('admin.temoignages.store');
             Route::patch('/update/{id}', [TestimonyController::class, 'update'])->name('admin.temoignages.update');
+            Route::delete('/delete/{id}', [TestimonyController::class, 'destroy'])->name('admin.temoignages.destroy');
         });
     });
 });

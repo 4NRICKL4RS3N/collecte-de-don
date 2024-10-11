@@ -143,7 +143,7 @@
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <div class="modal__content" id="delete-modal-content">
-                    Êtes-vous sûr de vouloir supprimer le témoignage de <span id="delete-data-testifier-display"></span>
+                    Êtes-vous sûr de vouloir supprimer le témoignage de <span class="fw-bolder" id="delete-data-testifier-display"></span>
                 </div>
                 <footer class="modal__footer">
                     <button class="modal__btn" data-micromodal-close aria-label="Close this dialog">Annuler</button>
@@ -211,7 +211,7 @@
         });
 
 
-        {{-- update trigger --}}
+        {{-- process update --}}
         let temoignageIdToUpdate;
         const inputTestifierNameToUpdate = document.getElementById('update-testifier_name');
         const inputStatementToUpdate = document.getElementById('update-statement');
@@ -224,7 +224,77 @@
                 imageTestimony.src = this.getAttribute('update-data-image_url');
                 console.log(this.getAttribute('update-data-testifier_name'));
             });
-        })
+        });
+        document.getElementById('update-temoignage-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const files = pondUpdate.getFiles();
+            if (files.length > 0 && files[0].serverId) {
+                const file = files[0].serverId;
+                formData.append('image', file);
+            }
+            formData.append('_method', 'PATCH');
+            fetch(`/admin/temoignages/update/${temoignageIdToUpdate}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        notyf.success('Témoignage modifié');
+                        console.log(data.data)
+                        location.reload();
+                    } else {
+                        console.error('Error:', data.error);
+                        notyf.error('Témoignage non modifié: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    notyf.error('Témoignage non modifié: ' + error);
+                });
+        });
+
+        {{-- process delete --}}
+        let temoignageIdToDelete;
+        let auteurNameToDelete;
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                temoignageIdToDelete = this.getAttribute('delete-data-id');
+                auteurNameToDelete = this.getAttribute('delete-data-testifier_name');
+                document.getElementById('delete-data-testifier-display').textContent = auteurNameToDelete;
+            });
+        });
+        document.getElementById('confirm-delete').addEventListener('click', function () {
+            if (temoignageIdToDelete) {
+                console.log('deleting start')
+                fetch(`/admin/temoignages/delete/${temoignageIdToDelete}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            notyf.success('Témoignages supprimé');
+                            location.reload();
+                        } else {
+                            notyf.error(data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+        });
 
         {{-- datatable --}}
         new DataTable('#temoignagesTable', {
@@ -332,42 +402,6 @@
                 .catch(error => {
                     console.error('Error:', error);
                     notyf.error('Témoignage non inséré');
-                });
-        });
-
-        {{-- process update --}}
-        document.getElementById('update-temoignage-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            const files = pondUpdate.getFiles();
-            if (files.length > 0 && files[0].serverId) {
-                const file = files[0].serverId;
-                formData.append('image', file);
-            }
-            formData.append('_method', 'PATCH');
-            fetch(`/admin/temoignages/update/${temoignageIdToUpdate}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        notyf.success('Témoignage modifié');
-                        console.log(data.data)
-                        location.reload();
-                    } else {
-                        console.error('Error:', data.error);
-                        notyf.error('Témoignage non modifié: ' + data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    notyf.error('Témoignage non modifié: ' + error);
                 });
         });
     </script>

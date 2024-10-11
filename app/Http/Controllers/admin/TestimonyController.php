@@ -68,6 +68,16 @@ class TestimonyController extends Controller
             \Log::error("erreur update", [$e]);
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
+    }
 
+    public function destroy($id)
+    {
+        $testimony = Testimony::find($id);
+        if ($testimony) {
+            $testimony->delete();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'error' => 'projet introuvable']);
+        }
     }
 }
