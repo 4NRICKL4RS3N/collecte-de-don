@@ -33,6 +33,14 @@
             Témoignages
         </a>
     </li>
+    <li class="nav-group">
+        <a class="nav-link" href="{{ route('admin.impacts') }}">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-puzzle"></use>
+            </svg>
+            Impacts
+        </a>
+    </li>
     <li class="nav-title">Pages</li>
     <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">

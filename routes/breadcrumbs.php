@@ -20,3 +20,8 @@ Breadcrumbs::for('admin.temoignages', function ($trail) {
     $trail->parent('admin');
     $trail->push('Témoignages', route('admin.temoignages'));
 });
+
+Breadcrumbs::for('admin.impacts', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Impacts', route('admin.impacts'));
+});

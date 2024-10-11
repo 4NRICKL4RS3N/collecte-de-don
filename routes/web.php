@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\ImpactController;
 use App\Http\Controllers\admin\TestimonyController;
 use App\Http\Controllers\admin\UploadMediaController;
 use App\Http\Controllers\Auth\LoginController;
@@ -58,6 +59,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::post('/', [TestimonyController::class, 'store'])->name('admin.temoignages.store');
             Route::patch('/update/{id}', [TestimonyController::class, 'update'])->name('admin.temoignages.update');
             Route::delete('/delete/{id}', [TestimonyController::class, 'destroy'])->name('admin.temoignages.destroy');
+        });
+        Route::prefix('impacts')->group(function () {
+            Route::get('/', [ImpactController::class, 'index'])->name('admin.impacts');
+            Route::post('/', [ImpactController::class, 'store'])->name('admin.impacts.store');
+            Route::patch('/update/{id}', [ImpactController::class, 'update'])->name('admin.impacts.update');
+            Route::delete('/delete/{id}', [ImpactController::class, 'destroy'])->name('admin.impacts.destroy');
         });
     });
 });
