@@ -9,6 +9,8 @@ export default defineConfig({
                     'resources/js/slide.js',
                     'resources/js/admin-app.js',
                     'resources/sass/admin/app.scss',
+                    'resources/sass/admin/pages/projets.scss',
+                    'resources/sass/admin/pages/temoignages.scss',
             ],
             refresh: true,
         }),

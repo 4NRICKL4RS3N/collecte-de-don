@@ -6,6 +6,7 @@
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
     <link href="https://unpkg.com/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css" rel="stylesheet">
+    @vite(['resources/sass/admin/pages/projets.scss'])
 @endpush
 
 @push('scripts_head')
@@ -223,7 +224,7 @@
         // }
 
         MicroModal.init();
-        // delete projet
+        // delete image
         let imageIdToDelete;
         let imageUrlToDelete;
         let deleteModelContent = document.getElementById('delete-modal-content');

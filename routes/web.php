@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\TestimonyController;
 use App\Http\Controllers\admin\UploadMediaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\client\DonationController;
@@ -43,13 +44,20 @@ Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin');
-        Route::get('/projets', [ProjectController::class, 'index'])->name('admin.projets');
-        Route::get('/projets/{id}', [ProjectController::class, 'show'])->name('admin.projets.show');
-        Route::post('/projets/{id}/process-upload', [ProjectController::class, 'processMedia'])->name('upload.process');
-        Route::post('/projets', [ProjectController::class, 'store'])->name('admin.projets.store');
-        Route::patch('/projets/update/{id}', [ProjectController::class, 'update'])->name('admin.projets.update');
-        Route::delete('/projets/delete/{id}', [ProjectController::class, 'destroy'])->name('admin.projets.destroy');
-        Route::delete('/projets/media/delete/{id}', [ProjectController::class, 'destroyMedia'])->name('admin.projets.media.destroy');
+        Route::prefix('projets')->group(function () {
+            Route::get('/', [ProjectController::class, 'index'])->name('admin.projets');
+            Route::post('/', [ProjectController::class, 'store'])->name('admin.projets.store');
+            Route::get('/{id}', [ProjectController::class, 'show'])->name('admin.projets.show');
+            Route::post('/{id}/process-upload', [ProjectController::class, 'processMedia'])->name('upload.process');
+            Route::patch('/update/{id}', [ProjectController::class, 'update'])->name('admin.projets.update');
+            Route::delete('/delete/{id}', [ProjectController::class, 'destroy'])->name('admin.projets.destroy');
+            Route::delete('/media/delete/{id}', [ProjectController::class, 'destroyMedia'])->name('admin.projets.media.destroy');
+        });
+        Route::prefix('temoignages')->group(function () {
+            Route::get('/', [TestimonyController::class, 'index'])->name('admin.temoignages');
+            Route::post('/', [TestimonyController::class, 'store'])->name('admin.temoignages.store');
+            Route::patch('/update/{id}', [TestimonyController::class, 'update'])->name('admin.temoignages.update');
+        });
     });
 });
 

@@ -306,7 +306,6 @@
                     updateTag.innerHTML += '<button type="button" class="delete-button"><i class="bi bi-x"></i></button>';
                     updateTags.append(updateTag);
                 }
-                debugger;
                 console.log(objectifsToUpdate);
             });
         });

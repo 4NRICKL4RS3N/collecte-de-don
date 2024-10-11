@@ -1,0 +1,13 @@
+.filepond--item {
+    width: calc(20% - 0.5em);
+}
+@media (max-width: 991px) {
+    .filepond--item {
+        width: calc(50% - 0.5em);
+    }
+}
+@media (max-width: 420px) {
+    .filepond--item {
+        width: calc(100% - 0.5em);
+    }
+}

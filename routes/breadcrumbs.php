@@ -11,8 +11,12 @@ Breadcrumbs::for('admin.projets', function ($trail) {
     $trail->parent('admin');
     $trail->push('Projets', route('admin.projets'));
 });
-
 Breadcrumbs::for('admin.projets.show', function ($trail, $projet) {
     $trail->parent('admin.projets');
     $trail->push($projet->title, route('admin.projets.show', $projet->id));
+});
+
+Breadcrumbs::for('admin.temoignages', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Témoignages', route('admin.temoignages'));
 });

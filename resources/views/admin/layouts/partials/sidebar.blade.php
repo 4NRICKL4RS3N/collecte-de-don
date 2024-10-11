@@ -25,6 +25,14 @@
             Projets
         </a>
     </li>
+    <li class="nav-group">
+        <a class="nav-link" href="{{ route('admin.temoignages') }}">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-puzzle"></use>
+            </svg>
+            Témoignages
+        </a>
+    </li>
     <li class="nav-title">Pages</li>
     <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
