@@ -24,7 +24,8 @@
 
                     <div class="form-group mb-2">
                         <label for="description">Description</label>
-                        <textarea name="description" id="description" class="form-control"></textarea>
+{{--                        <textarea name="description" id="description" class="form-control"></textarea>--}}
+                        
                     </div>
 
                     <div class="form-group mb-2">

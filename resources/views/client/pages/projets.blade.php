@@ -9,101 +9,28 @@
         </div>
         <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
             {{--  project card  --}}
-            <a href="projets/titre" style="text-decoration: none;">
-                <div class="project-card col">
-                    <div class="card rounded-4">
-                        <div class="titre d-flex justify-content-between align-content-center">
-                            <h2 class="project-title">Titre du projet</h2>
-                            <div class="badge rounded-pill status-badge px-3 py-1">en cours</div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit
-                            urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                            Maecenas vitae mattis tellus.</p>
-
-                        <div class="objectives">
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum dolor sit
-                                amet dolor sit amet dolor sit amet
+            @foreach($projets as $projet)
+                <a href="{{ route('client.projets.details', $projet->id) }}" style="text-decoration: none;">
+                    <div class="project-card col">
+                        <div class="card rounded-4">
+                            <div class="titre d-flex justify-content-between align-content-center">
+                                <h2 class="project-title">{{ $projet->title }}</h2>
+                                <div class="badge rounded-pill status-badge px-3 py-1">{{ $projet->getStatus() }}</div>
                             </div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                        </div>
-                        <div class="badge-container">
-                            <div class="cta-badge">Soutenir</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="projets/titre" style="text-decoration: none;">
-                <div class="project-card col">
-                    <div class="card rounded-4">
-                        <div class="titre d-flex justify-content-between align-content-center">
-                            <h2 class="project-title">Titre du projet</h2>
-                            <div class="badge rounded-pill status-badge px-3 py-1">en cours</div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit
-                            urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                            Maecenas vitae mattis tellus.</p>
+                            <p>{{ $projet->description }}</p>
 
-                        <div class="objectives">
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum dolor sit
-                                amet dolor sit amet dolor sit amet
+                            <div class="objectives">
+                                @foreach($projet->project_objectives as $objective)
+                                    <div class="ms-3 objective-pill badge rounded-pill text-dark ">{{ $objective->objective }}</div>
+                                @endforeach
                             </div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                        </div>
-                        <div class="badge-container">
-                            <div class="cta-badge">Soutenir</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="projets/titre" style="text-decoration: none;">
-                <div class="project-card col">
-                    <div class="card rounded-4">
-                        <div class="titre d-flex justify-content-between align-content-center">
-                            <h2 class="project-title">Titre du projet</h2>
-                            <div class="badge rounded-pill status-badge px-3 py-1">en cours</div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit
-                            urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                            Maecenas vitae mattis tellus.</p>
-
-                        <div class="objectives">
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum dolor sit amet dolor sit amet dolor sit amet</div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                        </div>
-                        <div class="badge-container">
-                            <div class="cta-badge">Soutenir</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="projets/titre" style="text-decoration: none;">
-                <div class="project-card col">
-                    <div class="card rounded-4">
-                        <div class="titre d-flex justify-content-between align-content-center">
-                            <h2 class="project-title">Titre du projet</h2>
-                            <div class="badge rounded-pill status-badge px-3 py-1">en cours</div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit
-                            urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                            Maecenas vitae mattis tellus.</p>
-
-                        <div class="objectives">
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum dolor sit
-                                amet dolor sit amet dolor sit amet
+                            <div class="badge-container">
+                                <div class="cta-badge">Soutenir</div>
                             </div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                            <div class="objective-pill badge rounded-pill text-dark ">Objectif lorem ipsum</div>
-                        </div>
-                        <div class="badge-container">
-                            <div class="cta-badge">Soutenir</div>
                         </div>
                     </div>
-                </div>
-            </a>
-
+                </a>
+            @endforeach
         </div>
     </div>
 @endsection

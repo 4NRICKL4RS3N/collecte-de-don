@@ -63,33 +63,16 @@
             </div>
             <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                 {{--  card  --}}
-                <div class="col">
-                    <div class="card card-impacte">
-                        <div class="card-body p-4">
-                            <h4 class="card-title">Title</h4>
-                            <p class="card-text">Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis.
-                                Bibendum vulputate cras aenean.</p>
+                @foreach($impacts as $impact)
+                    <div class="col">
+                        <div class="card card-impacte">
+                            <div class="card-body p-4">
+                                <h4 class="card-title">{{ $impact->title }}</h4>
+                                <p class="card-text">{{ $impact->content }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card card-impacte">
-                        <div class="card-body p-4">
-                            <h4 class="card-title">Title</h4>
-                            <p class="card-text">Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis.
-                                Bibendum vulputate cras aenean.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card card-impacte">
-                        <div class="card-body p-4">
-                            <h4 class="card-title">Title</h4>
-                            <p class="card-text">Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis.
-                                Bibendum vulputate cras aenean.</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
 
@@ -105,120 +88,25 @@
                     <div class="splide__track">
                         <ul class="splide__list">
                             {{--  slide/témoignage  --}}
-                            <li class="splide__slide">
-                                <div class="card mb-3 slide-card " style="max-width: 540px;">
-                                    <div class="row g-0 ">
-                                        <div class="col-md-4 ">
-                                            <img src="{{ asset('images/une femme.jpg') }}" class="img-fluid"
-                                                 alt="...">
-                                        </div>
-                                        <div class="col-md-8" style="position: relative">
-                                            <h5 class="quote">“</h5>
-                                            <div class="card-body pt-4">
-                                                <p class="card-text quote-text">Suscipianturverear proin legere
-                                                    definitiones
-                                                    gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea
-                                                    cetero
-                                                    labores singulis dolor definiebas porta nunc decore magnis pericula
-                                                    dicunt. Electramdignissim eam.</p>
-                                                <p class="card-text"><small class="text-muted">Rakoto Jean</small></p>
+                            @foreach($temoignages as $temoignage)
+                                <li class="splide__slide">
+                                    <div class="card mb-3 slide-card " style="max-width: 540px;">
+                                        <div class="row g-0 ">
+                                            <div class="col-md-4 ">
+                                                <img src="{{ asset($temoignage->image_url) }}" class="img-fluid"
+                                                     alt="...">
+                                            </div>
+                                            <div class="col-md-8" style="position: relative">
+                                                <h5 class="quote">“</h5>
+                                                <div class="card-body pt-4">
+                                                    <p class="card-text quote-text">{{ $temoignage->statement }}</p>
+                                                    <p class="card-text"><small class="text-muted">{{ $temoignage->testifier_name }}</small></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mb-3 slide-card" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="{{ asset('images/une femme.jpg') }}"
-                                                 class="img-fluid rounded-start"
-                                                 alt="...">
-                                        </div>
-                                        <div class="col-md-8" style="position: relative">
-                                            <h5 class="quote">“</h5>
-                                            <div class="card-body pt-4">
-                                                <p class="card-text quote-text">Suscipianturverear proin legere
-                                                    definitiones
-                                                    gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea
-                                                    cetero
-                                                    labores singulis dolor definiebas porta nunc decore magnis pericula
-                                                    dicunt. Electramdignissim eam.</p>
-                                                <p class="card-text"><small class="text-muted">Rakoto Jean</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mb-3 slide-card" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="{{ asset('images/une femme.jpg') }}"
-                                                 class="img-fluid rounded-start"
-                                                 alt="...">
-                                        </div>
-                                        <div class="col-md-8" style="position: relative">
-                                            <h5 class="quote">“</h5>
-                                            <div class="card-body pt-4">
-                                                <p class="card-text quote-text">Suscipianturverear proin legere
-                                                    definitiones
-                                                    gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea
-                                                    cetero
-                                                    labores singulis dolor definiebas porta nunc decore magnis pericula
-                                                    dicunt. Electramdignissim eam.</p>
-                                                <p class="card-text"><small class="text-muted">Rakoto Jean</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mb-3 slide-card" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="{{ asset('images/une femme.jpg') }}"
-                                                 class="img-fluid rounded-start"
-                                                 alt="...">
-                                        </div>
-                                        <div class="col-md-8" style="position: relative">
-                                            <h5 class="quote">“</h5>
-                                            <div class="card-body pt-4">
-                                                <p class="card-text quote-text">Suscipianturverear proin legere
-                                                    definitiones
-                                                    gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea
-                                                    cetero
-                                                    labores singulis dolor definiebas porta nunc decore magnis pericula
-                                                    dicunt. Electramdignissim eam.</p>
-                                                <p class="card-text"><small class="text-muted">Rakoto Jean</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mb-3 slide-card" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="{{ asset('images/une femme.jpg') }}"
-                                                 class="img-fluid rounded-start"
-                                                 alt="...">
-                                        </div>
-                                        <div class="col-md-8" style="position: relative">
-                                            <h5 class="quote">“</h5>
-                                            <div class="card-body">
-                                                <p class="card-text quote-text">Suscipianturverear proin legere
-                                                    definitiones
-                                                    gravida nunc aeque faucibus ignota percipit. Eirmodintellegat ea
-                                                    cetero
-                                                    labores singulis dolor definiebas porta nunc decore magnis pericula
-                                                    dicunt. Electramdignissim eam.</p>
-                                                <p class="card-text"><small class="text-muted">Rakoto Jean</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </section>

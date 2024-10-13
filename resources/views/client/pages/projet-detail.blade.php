@@ -5,27 +5,22 @@
 @section('content')
     <div class="container py-4 py-xl-5">
         <div class="row titre-container">
-            <h1 class="grand-titre">Titre du projet</h1>
+            <h1 class="grand-titre">{{ $projet->title }}</h1>
         </div>
 
         <div class="row mb-4">
             <div class="col offset-md-1 offset-sm-0">
                 <ul class="info-list">
-                    <li><i class="bi bi-geo-alt"></i><span>Antananarivo Madagascar</span></li>
-                    <li><i class="bi bi-cash"></i>Objectif : <span>8000$</span></li>
-                    <li><i class="bi bi-bank"></i>Récoltés : <span>2000$</span></li>
+                    <li><i class="bi bi-geo-alt"></i><span>{{ $projet->location }}</span></li>
+                    <li><i class="bi bi-cash"></i>Objectif : <span>{{ $projet->donation_target }}$</span></li>
+                    <li><i class="bi bi-bank"></i>Récoltés : <span>{{ $projet->donation_collected }}$</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                    Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae
-                    mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna
-                    interdum eu. Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. Pellentesque
-                    commodo lacus at sodales sodales. Quisque sagittis orci ut diam condimentum, vel euismod erat
-                    placerat.</p>
+                <p>{{ $projet->description }}</p>
             </div>
             <div class="col-md-6">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
