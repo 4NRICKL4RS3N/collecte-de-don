@@ -270,7 +270,7 @@
             customAmountInput.addEventListener("input", function () {
                 if (this.value !== "") {
                     clearActiveButtons();
-                    hiddenAmountInput.value = this.value;
+                    amount_input.value = this.value;
                 }
             });
         });

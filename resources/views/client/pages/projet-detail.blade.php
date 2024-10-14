@@ -64,7 +64,7 @@
                     class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                     <div>
                         <h1 class="fw-bold mb-3">Aidez-nous à concrétiser ce projet</h1>
-                        <x-client.button add-class="btn-primary" content="Contribuer au projet" lien="/donate"/>
+                        <x-client.button add-class="btn-primary" content="Contribuer au projet" lien="/donate?project={{ $projet->id }}"/>
                         <x-client.button add-class="btn-outline-light mx-2" content="Explorer d'autres projets"
                                          lien="/projets"/>
                     </div>

@@ -7,6 +7,7 @@ use App\Mail\MailTesting;
 use App\Mail\PaymentSuccessful;
 use App\Models\Donation;
 use App\Models\Payment;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -130,10 +131,6 @@ class DonationController extends Controller
         $sig_header = $request->header('Stripe-Signature');
         $endpoint_secret = config('services.stripe.webhook_secret');
 
-//        Log::info('Webhook secret: ' . $endpoint_secret);
-//        Log::info('Payload: ' . $payload);
-//        Log::info('Signature: ' . $sig_header);
-
         $event = null;
         try {
             $event = Webhook::constructEvent(
@@ -147,13 +144,11 @@ class DonationController extends Controller
             return response()->json(['error' => 'Invalid signature'], 400);
         }
 
-        Log::info('Event type: ' . $event->type);
         if ($event->type === 'charge.succeeded' || $event->type === 'charge.updated') {
             $charge = $event->data->object;
             $paymentIntent = PaymentIntent::retrieve($charge->payment_intent);
             $donationId = $paymentIntent->metadata->donation_id;
             $amount = $paymentIntent->amount;
-            // Get payment method details
             $paymentMethod = $charge->payment_method_details->type ?? 'unknown';
 
             $payment = Payment::updateOrCreate(
@@ -167,14 +162,22 @@ class DonationController extends Controller
             );
 
             switch ($event->type) {
-                case 'charge.succeeded':
+                case 'charge.updated':
                     $payment->update(['status' => 1]);
                     $donation = Donation::find($donationId);
                     if ($donation) {
-                        $donation->update(['status' => 1]); // 1 for confirmed
+                        $donation->update(['status' => 1]);
                     }
-
-                    // send email
+                    // update donation collected of the project
+                    if ($donation->project_id) {
+                        $totalDonation = Payment::join('donations', 'payments.donation_id', '=', 'donations.id')
+                            ->where('donations.project_id', $donation->project_id)
+                            ->sum('payments.donation_amount') ?? 0;
+                        Project::find($donation->project_id)->update([
+                            'donation_collected' => $totalDonation,
+                        ]);
+                    }
+                    // send mail
                     try {
                         Mail::to($donation->user->email)->send(new PaymentSuccessful($donation, $payment));
 
