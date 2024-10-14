@@ -55,4 +55,26 @@ class Project extends Model
             $project_image->delete();
         }
     }
+
+    function getParagraphsDescription()
+    {
+        $content = preg_replace('/<p>\s*<\/p>/', '', $this->description);
+        preg_match_all('/<p>(.*?)<\/p>/s', $content, $matches);
+        $paragraphs = array_filter(array_map('trim', $matches[1]));
+        return $paragraphs;
+    }
+
+    function getImagesWidthHeight() {
+        $images = $this->project_images;
+        $widthHeight = [];
+        foreach ($images as $image) {
+            [$width, $height] = getimagesize(public_path($image->url));
+            $widthHeight[] = [
+                "width" => $width,
+                "height" => $height,
+            ];
+        }
+        return $widthHeight;
+    }
+
 }

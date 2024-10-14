@@ -24,7 +24,7 @@
 
                     <div class="form-group mb-2">
                         <label for="content">Contenue</label>
-                        <input type="text" name="content" id="content" class="form-control">
+                        <textarea name="content" id="content" class="form-control"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -94,7 +94,7 @@
 
                         <div class="form-group mb-2">
                             <label for="update-content">Contenue</label>
-                            <input type="text" name="content" id="update-content" class="form-control">
+                            <textarea name="content" id="update-content" class="form-control"></textarea>
                         </div>
                     </form>
                 </div>

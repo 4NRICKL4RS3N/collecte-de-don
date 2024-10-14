@@ -7,19 +7,18 @@ use App\Http\Controllers\admin\UploadMediaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\client\DonationController;
 use App\Http\Controllers\admin\ProjectController;
+use App\Http\Controllers\client\PagesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/accueil');
+    return redirect(\route('client.accueil'));
 });
 
-Route::get('/accueil', function () {
-    return view('client.pages.accueil');
-});
+Route::get('/accueil', [PagesController::class, 'accueil'])->name('client.accueil');
 
-Route::get('/projets', function () {
-    return view('client.pages.projets');
-});
+Route::get('/projets', [PagesController::class, 'projets'])->name('client.projets');
+
+Route::get('/projets/{id}', [PagesController::class, 'projets_details'])->name('client.projets.details');
 
 Route::get('/contact', function () {
     return view('client.pages.contact');
@@ -29,10 +28,6 @@ Route::get('/a-propos', function () {
     return view('client.pages.a-propos');
 });
 
-Route::get('/projets/titre', function () {
-    return view('client.pages.projet-detail');
-});
-
 Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
 Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
 Route::post('/confirm-payment', [DonationController::class, 'process'])->name('confirmPayment');
@@ -40,7 +35,6 @@ Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])-
 Route::post('/donate/failed/{id}', [DonationController::class, 'donationFailed'])->name('donate.failed');
 Route::delete('/donate/delete/{id}', [DonationController::class, 'donationDestroy'])->name('donate.destroy');
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
-
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {

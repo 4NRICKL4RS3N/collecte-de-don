@@ -199,30 +199,6 @@
             }
         }
 
-        // async function deleteMedia(mediaId) {
-        //     try {
-        //         const response = await fetch(`/admin/projets/media/delete/${mediaId}`, {
-        //             method: 'DELETE',
-        //             headers: {
-        //                 'X-CSRF-TOKEN': csrfToken
-        //             }
-        //         });
-        //
-        //         if (!response.ok) {
-        //             throw new Error('Delete failed');
-        //         }
-        //
-        //         // Remove the media item from the grid
-        //         const mediaItem = document.querySelector(`.media-item[data-media-id="${mediaId}"]`);
-        //         if (mediaItem) {
-        //             mediaItem.remove();
-        //         }
-        //     } catch (error) {
-        //         console.error('Error deleting media:', error);
-        //         alert('Failed to delete media. Please try again.');
-        //     }
-        // }
-
         MicroModal.init();
         // delete image
         let imageIdToDelete;
