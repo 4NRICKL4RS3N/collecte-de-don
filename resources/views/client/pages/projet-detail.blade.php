@@ -19,94 +19,41 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-6">
-                <p>{{ $projet->description }}</p>
-            </div>
-            <div class="col-md-6">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                    Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae
-                    mattis tellus. Nullam quis imperdiet augue.</p>
-            </div>
-            <div class="col-md-6">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-                    Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae
-                    mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna
-                    interdum eu.</p>
-            </div>
+            @foreach($projet->getParagraphsDescription() as $paragraph)
+                <div class="col-md-6">
+                    <p>{!! $paragraph !!}</p>
+                </div>
+            @endforeach
         </div>
 
         <div class="row pswp-gallery pswp-gallery--single-column" id="project-gallery">
-            <div class="col-lg-4 col-md-12 mb-lg-0">
-                <a href="{{ asset('images/jumbotron-bg.jpg') }}"
-                   data-pswp-width="2048"
-                   data-pswp-height="2048"
-                   target="_blank">
-                    <img
-                        src="{{ asset('images/jumbotron-bg.jpg') }}"
-                        class="w-100 shadow-1-strong rounded mb-4 gallery-image"
-                        alt="Boat on Calm Water"
-                    />
-                </a>
-
-                <a href="{{ asset('images/section-1-image.jpg') }}"
-                   data-pswp-width="2048"
-                   data-pswp-height="2048"
-                   target="_blank">
-                    <img
-                        src="{{ asset('images/section-1-image.jpg') }}"
-                        class="w-100 shadow-1-strong rounded mb-4 gallery-image"
-                        alt="Wintry Mountain Landscape"
-                    />
-                </a>
-            </div>
-
-            <div class="col-lg-4 mb-lg-0">
-                <a href="{{ asset('images/section-1-image.jpg') }}"
-                   data-pswp-width="2048"
-                   data-pswp-height="2048"
-                   target="_blank">
-                    <img
-                        src="{{ asset('images/section-1-image.jpg') }}"
-                        class="w-100 shadow-1-strong rounded mb-4 gallery-image"
-                        alt="Mountains in the Clouds"
-                    />
-                </a>
-
-                <a href="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
-                   data-pswp-width="2048"
-                   data-pswp-height="2048"
-                   target="_blank">
-                    <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
-                        class="w-100 shadow-1-strong rounded mb-4 gallery-image"
-                        alt="Boat on Calm Water"
-                    />
-                </a>
-            </div>
-
-            <div class="col-lg-4 mb-lg-0">
-                <a href="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(18).webp"
-                   data-pswp-width="2048"
-                   data-pswp-height="2048"
-                   target="_blank">
-                    <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(18).webp"
-                        class="w-100 shadow-1-strong rounded mb-4 gallery-image"
-                        alt="Waves at Sea"
-                    />
-                </a>
-
-                <a href="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain3.webp"
-                   data-pswp-width="2048"
-                   data-pswp-height="2048"
-                   target="_blank">
-                    <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain3.webp"
-                        class="w-100 shadow-1-strong rounded mb-4 gallery-image"
-                        alt="Yosemite National Park"
-                    />
-                </a>
-            </div>
+            @php
+                $images = $projet->project_images;
+                $widthHeight = $projet->getImagesWidthHeight();
+            @endphp
+            @for ($i = 0; $i < 3; $i++)
+                <!-- Loop through 3 columns -->
+                <div class="col-lg-4 col-md-12 mb-lg-0">
+                    @for ($j = $i; $j < count($images); $j += 3)
+                        <a href="{{ asset($images[$j]->url) }}"
+                           data-pswp-width="{{ $widthHeight[$j]['width'] }}"
+                           data-pswp-height="{{ $widthHeight[$j]['height'] }}"
+                           data-pswp-type="{{ $images[$j]->type }}">
+                            @if($images[$j]->type === 'image')
+                                <img src="{{ asset($images[$j]->url) }}"
+                                     class="w-100 shadow-1-strong rounded mb-4 gallery-image"
+                                     alt="{{ $images[$j]->filename }}">
+                            @else
+                                <video class="w-100 shadow-1-strong rounded mb-4 gallery-image"
+                                       src="{{ asset($images[$j]->url) }}" controls></video>
+                            @endif
+{{--                            <div class="hidden-caption-content">--}}
+{{--                                {{ $images[$j]->filename }}--}}
+{{--                            </div>--}}
+                        </a>
+                    @endfor
+                </div>
+            @endfor
         </div>
     </div>
 
@@ -119,7 +66,7 @@
                         <h1 class="fw-bold mb-3">Aidez-nous à concrétiser ce projet</h1>
                         <x-client.button add-class="btn-primary" content="Contribuer au projet" lien="/donate"/>
                         <x-client.button add-class="btn-outline-light mx-2" content="Explorer d'autres projets"
-                                  lien="/projets"/>
+                                         lien="/projets"/>
                     </div>
                 </div>
             </div>

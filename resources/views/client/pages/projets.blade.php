@@ -17,7 +17,7 @@
                                 <h2 class="project-title">{{ $projet->title }}</h2>
                                 <div class="badge rounded-pill status-badge px-3 py-1">{{ $projet->getStatus() }}</div>
                             </div>
-                            <p>{{ $projet->description }}</p>
+                            <p>{!! $projet->description !!}</p>
 
                             <div class="objectives">
                                 @foreach($projet->project_objectives as $objective)

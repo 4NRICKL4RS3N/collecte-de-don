@@ -308,3 +308,15 @@ $primary: #060626;
     border: solid 2px $primary;
     color: $primary !important;
 }
+
+.editor {
+    background-color: #fff;
+    border-radius: 0 0 0.375rem 0.375rem;
+    overflow: hidden;
+}
+
+.ql-toolbar {
+    background-color: #fff;
+    border-radius: 0.375rem 0.375rem 0 0;
+    overflow: hidden;
+}

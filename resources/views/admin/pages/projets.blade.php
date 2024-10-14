@@ -2,11 +2,16 @@
 
 @section('titre', 'admin | projets')
 
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+@endpush
+
 @push('scripts_head')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 @endpush
 
 @section('content')
@@ -23,9 +28,9 @@
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="description">Description</label>
-{{--                        <textarea name="description" id="description" class="form-control"></textarea>--}}
-                        
+                        <label for="editor">Description</label>
+                        <div id="editor" class="editor"></div>
+                        <input type="hidden" name="description" id="description">
                     </div>
 
                     <div class="form-group mb-2">
@@ -147,8 +152,9 @@
                         </div>
 
                         <div class="form-group mb-2">
-                            <label for="update-description">Description</label>
-                            <textarea name="description" id="update-description" class="form-control"></textarea>
+                            <label for="editor_update">Description</label>
+                            <div id="editor_update" class="editor"></div>
+                            <input type="hidden" name="description" id="update-description">
                         </div>
 
                         <div class="form-group mb-2">
@@ -290,7 +296,7 @@
             button.addEventListener('click', function () {
                 projectIdToUpdate = this.getAttribute('update-data-id');
                 inputTitleToUpdate.value = this.getAttribute('update-data-title');
-                inputDescriptionToUpdate.value = this.getAttribute('update-data-description');
+                quill_update.root.innerHTML = this.getAttribute('update-data-description');
                 inputLocationToUpdate.value = this.getAttribute('update-data-location');
                 inputStatusToUpdate.value = this.getAttribute('update-data-status');
                 inputDonationTargetToUpdate.value = this.getAttribute('update-data-donation_target');
@@ -321,6 +327,7 @@
 
         function updateProject() {
             const form = document.getElementById('update-objectif-form');
+            document.querySelector('#update-description').value = quill_update.root.innerHTML;
             const formData = new FormData(form);
             formData.append('objectifs', JSON.stringify(objectifsToUpdate));
             formData.append('_method', 'PATCH');
@@ -454,9 +461,9 @@
 
         {{-- insert projet --}}
         function saveProject() {
+            document.querySelector('#description').value = quill.root.innerHTML;
             const form = document.getElementById('objectif-form');
             const formData = new FormData(form);
-
             formData.append('objectifs', JSON.stringify(objectifs));
 
             fetch('{{ route('admin.projets.store') }}', {
@@ -480,6 +487,29 @@
         document.getElementById('submit-project').addEventListener('click', function (event) {
             event.preventDefault();
             saveProject();
+        });
+
+        {{-- text editor --}}
+        let quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                ],
+            },
+            placeholder: 'Description...',
+        });
+
+        let quill_update = new Quill('#editor_update', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                ],
+            },
+            placeholder: 'Description...',
         });
     </script>
 @endpush
