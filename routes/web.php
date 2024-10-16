@@ -39,6 +39,7 @@ Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin');
+        Route::get('/dashboard-data', [DashboardController::class, 'dashboardData'])->name('admin.data');
         Route::prefix('projets')->group(function () {
             Route::get('/', [ProjectController::class, 'index'])->name('admin.projets');
             Route::post('/', [ProjectController::class, 'store'])->name('admin.projets.store');
