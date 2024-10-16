@@ -4,6 +4,7 @@
 // Configuration
 @import "../../../node_modules/@coreui/coreui/scss/functions";
 $primary: #050c26;
+
 @import "../../../node_modules/@coreui/coreui/scss/variables";
 @import "../../../node_modules/@coreui/coreui/scss/variables-dark";
 @import "../../../node_modules/@coreui/coreui/scss/maps";
@@ -66,6 +67,43 @@ $primary: #050c26;
 @import "../../../node_modules/notyf/notyf.min.css";
 
 $primary: #060626;
+$blue: #7fe8ff;
+$red: #ff6060;
+
+.sidebar-nav {
+    --cui-sidebar-nav-link-hover-bg: #7fe8ff;
+    --cui-sidebar-nav-link-hover-color: black;
+    --cui-sidebar-nav-link-hover-icon-color: black;
+}
+.sidebar-dark {
+    --cui-body-color: rgba(255, 255, 255, 0.87);
+    --cui-body-bg: none;
+    --cui-emphasis-color: #fff;
+    --cui-secondary-color: rgba(255, 255, 255, 0.6);
+    --cui-secondary-bg: $blue;
+    --cui-tertiary-color: rgba(255, 255, 255, 0.38);
+    --cui-tertiary-bg: rgb(41.5, 48, 61);
+    //--cui-border-color: #dbdfe6;
+    --cui-border-color: none;
+    color: black;
+}
+
+.sidebar-nav .nav-link {
+    color: black;
+}
+.sidebar-nav .nav-link.active {
+    color: black;
+    background: $blue;
+}
+.sidebar-nav .nav-link.active .nav-icon {
+    color: black;
+}
+.sidebar-nav .nav-icon {
+    color: black;
+}
+.sidebar-nav .nav-title {
+    color: $red;
+}
 
 .dt-input {
     margin-right: 1rem;
@@ -319,4 +357,42 @@ $primary: #060626;
     background-color: #fff;
     border-radius: 0.375rem 0.375rem 0 0;
     overflow: hidden;
+}
+
+.card-graphs {
+    margin-bottom: 1rem;
+    .card-body {
+        padding-top: 0;
+    }
+    .card-header {
+        background-color: white;
+        border-bottom: none;
+    }
+}
+
+.card-info {
+    margin-bottom: 1rem;
+    padding-right: 1.5rem;
+    .card-header {
+        background-color: white;
+        border-bottom: none;
+    }
+    p {
+        margin-bottom: 0;
+        margin-left: .2rem;
+    }
+}
+
+.data {
+    font-weight: bolder;
+}
+
+.icon-circle {
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the background color as needed */
+    border-radius: 50%; /* Makes the background a circle */
+    padding: 15px; /* Adjust the size of the circle by changing padding */
+    font-size: 2rem; /* Adjust icon size */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }

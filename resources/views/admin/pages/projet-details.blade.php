@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-md-4 col-auto">
                         <label class="text-body-secondary">Description</label>
-                        <p>{{ $projet->description }}</p>
+                        <p>{!! $projet->description !!}</p>
                     </div>
                     <div class="col-auto">
                         <label class="text-body-secondary">Lieu</label>
