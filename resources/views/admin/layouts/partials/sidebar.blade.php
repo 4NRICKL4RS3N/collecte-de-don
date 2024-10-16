@@ -42,19 +42,13 @@
         </a>
     </li>
     <li class="nav-title">Pages</li>
-    <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+    <li class="nav-group">
+        <a class="nav-link" href="{{ route('admin.cms.accueil') }}">
             <svg class="nav-icon">
-                <use xlink:href="/svg/coreui/free.svg#cil-puzzle"></use>
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
             </svg>
-            Base</a>
-        <ul class="nav-group-items compact">
-            <li class="nav-item">
-                <a class="nav-link" href="base/accordion.html">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Accordion
-                </a>
-            </li>
-        </ul>
+            Accueil
+        </a>
     </li>
 </ul>
 <div class="sidebar-footer border-top d-none d-md-flex">

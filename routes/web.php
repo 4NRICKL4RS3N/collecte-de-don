@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\CMSController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ImpactController;
 use App\Http\Controllers\admin\TestimonyController;
@@ -60,6 +61,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::post('/', [ImpactController::class, 'store'])->name('admin.impacts.store');
             Route::patch('/update/{id}', [ImpactController::class, 'update'])->name('admin.impacts.update');
             Route::delete('/delete/{id}', [ImpactController::class, 'destroy'])->name('admin.impacts.destroy');
+        });
+        Route::prefix('cms')->group(function () {
+            Route::get('/accueil', [CMSController::class, 'accueil'])->name('admin.cms.accueil');
         });
     });
 });
