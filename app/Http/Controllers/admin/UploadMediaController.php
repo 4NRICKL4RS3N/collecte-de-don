@@ -22,19 +22,11 @@ class UploadMediaController extends Controller
     ];
     public function uploadTemporary(Request $request)
     {
-        \Log::info('Upload attempt', [
-            'mime' => $request->file('filepond')?->getMimeType(),
-            'extension' => $request->file('filepond')?->getClientOriginalExtension()
-        ]);
-
         $validator = validator($request->all(), [
             'filepond' => 'required|file|mimes:jpeg,jpg,png,gif,mp4,mov,avi,wmv|max:20480'
         ]);
 
         if ($validator->fails()) {
-            \Log::error('Validation failed', [
-                'errors' => $validator->errors()->toArray()
-            ]);
             return response()->json(['error' => $validator->errors()], 400);
         }
 
@@ -43,10 +35,6 @@ class UploadMediaController extends Controller
 
             // Double-check MIME type
             if (!in_array($file->getMimeType(), $this->allowedMimes)) {
-                \Log::error('Invalid MIME type', [
-                    'mime' => $file->getMimeType(),
-                    'filename' => $file->getClientOriginalName()
-                ]);
                 return response()->json(['error' => 'Invalid file type'], 400);
             }
 

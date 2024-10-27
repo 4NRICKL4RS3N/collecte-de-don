@@ -27,8 +27,7 @@
                 </li>
             </ul>
             {{--CTA button--}}
-            <x-client.button add-class="btn-primary" lien="/donate" content="Faire un don" />
+            <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['header.button']->content }}" />
         </div>
-
     </nav>
 </div>

@@ -21,13 +21,9 @@ Route::get('/projets', [PagesController::class, 'projets'])->name('client.projet
 
 Route::get('/projets/{id}', [PagesController::class, 'projets_details'])->name('client.projets.details');
 
-Route::get('/contact', function () {
-    return view('client.pages.contact');
-});
+Route::get('/contact', [PagesController::class, 'contact'])->name('client.contact');
 
-Route::get('/a-propos', function () {
-    return view('client.pages.a-propos');
-});
+Route::get('/a-propos', [PagesController::class, 'a_propos'])->name('client.a-propos');
 
 Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
 Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
@@ -63,6 +59,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
             Route::delete('/delete/{id}', [ImpactController::class, 'destroy'])->name('admin.impacts.destroy');
         });
         Route::prefix('cms')->group(function () {
+            Route::post('/save', [CMSController::class, 'save'])->name('admin.cms.save');
             Route::get('/accueil', [CMSController::class, 'accueil'])->name('admin.cms.accueil');
         });
     });

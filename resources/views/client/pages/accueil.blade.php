@@ -5,13 +5,12 @@
 @section('content')
     {{--  jumbotron  --}}
     <div id="accueil">
-        <section class="jumbotron">
+        <section class="jumbotron" style="background-image: url('{{ asset($page_elements['accueil.hero.bgImage']->content) }}')">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <h1 class="display-4 grand-titre"><span class="bold-text">Participez</span> à notre mission
-                            d'évangélisation</h1>
-                        <x-client.button add-class="btn-primary" lien="/donate" content="Faites une différence aujourd'hui"/>
+                        <h1 class="display-4 grand-titre">{{ $page_elements['accueil.hero.titre']->content }}</h1>
+                        <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['accueil.hero.button']->content }}"/>
                     </div>
                 </div>
             </div>
@@ -32,7 +31,7 @@
                 <div class="col-md-5 offset-0 offset-md-1 text-center text-sm-center text-md-end flex-fill"
                      style="transform: perspective(0px);">
                     <img class="img-fluid w-100 h-auto"
-                         src="{{ asset('images/section-1-image.jpg') }}"
+                         src="{{ asset($page_elements['accueil.section1.image']->content) }}"
                          style="border-radius: 10px;border-style: none;">
                 </div>
             </div>

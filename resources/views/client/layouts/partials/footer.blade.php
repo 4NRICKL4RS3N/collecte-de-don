@@ -3,15 +3,21 @@
         <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
             <h3 class="fs-6">Nous contacter</h3>
             <ul class="list-unstyled">
-                <li><a class="link-secondary" href="mailto: contact@gmail.com">contact@gmail.com</a></li>
+                @foreach(explode(',', $page_elements['footer.contacts']->content) as $contact)
+                    @if(substr($contact, 0, 1) === '0')
+                        <li class="text-secondary">{{ $contact }}</li>
+                    @else
+                        <li><a class="link-secondary" href="mailto: {{ $contact }}">{{ $contact }}</a></li>
+                    @endif
+                @endforeach
             </ul>
         </div>
         <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
             <h3 class="fs-6">Explorer</h3>
             <ul class="list-unstyled">
-                <li><a class="link-secondary" href="#">À propos</a></li>
-                <li><a class="link-secondary" href="#">Projets</a></li>
-                <li><a class="link-secondary" href="#">Contact</a></li>
+                <li><a class="link-secondary" href="{{ route('client.a-propos') }}">À propos</a></li>
+                <li><a class="link-secondary" href="{{ route('client.projets') }}">Projets</a></li>
+                <li><a class="link-secondary" href="{{ route('client.contact') }}">Contact</a></li>
             </ul>
         </div>
         <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
@@ -26,13 +32,13 @@
         <div
             class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
             <div class="fw-bold d-flex align-items-center mb-2">
-                <x-client.button add-class="btn-primary" lien="/donate" content="Faire un don"/>
+                <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['footer.button']->content }}"/>
             </div>
         </div>
     </div>
     <hr>
     <div class="d-flex justify-content-between align-items-center pt-3">
-        <p class="text-muted mb-0">Copyright © 2024 VDFI</p>
+        <p class="text-muted mb-0">© {{ $page_elements['footer.copyright']->content }}</p>
         <ul class="list-inline mb-0">
             <li class="list-inline-item">
                 <a href="#" class="link-dark">
