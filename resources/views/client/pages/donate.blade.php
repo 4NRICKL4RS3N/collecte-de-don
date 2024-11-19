@@ -130,7 +130,7 @@
                 const appearance = {
                     theme: 'flat',
                     variables: {
-                        colorPrimary: '#DF253A',
+                        colorPrimary: '#505cfd',
                         colorBackground: '#ffffff',
                         colorText: '#30313d',
                         colorDanger: '#B22222',

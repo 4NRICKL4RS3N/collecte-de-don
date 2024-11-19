@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <h1 class="display-4 grand-titre">{{ $page_elements['accueil.hero.titre']->content }}</h1>
+                        <h1 class="display-4 grand-titre" style="text-shadow: 2px 2px 10px black;">{{ $page_elements['accueil.hero.titre']->content }}</h1>
                         <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['accueil.hero.button']->content }}"/>
                     </div>
                 </div>

@@ -54,21 +54,19 @@
             <div class="col-md-4 ms-sm-5 ms-0 ps-lg-5 ps-md-0 ps-5 pt-5">
                 <div>
                     <h5>Envoyez-nous un email</h5>
-                    <i class="bi bi-envelope-fill align-middle fs-5 fw-bolder contact-icon" style="color: #DF253A;"></i>
+                    <i class="bi bi-envelope-fill align-middle fs-5 fw-bolder contact-icon"></i>
                     <a class="text-decoration-none text-black" href="mailto:contact@gmail.com"><span
                             class="hover-underline-animation left align-middle ms-2 align-middle fs-5">contact@gmail.com</span></a>
                 </div>
                 <div class="mt-4">
                     <h5>Appellez-nous</h5>
                     <div>
-                        <i class="bi bi-telephone-fill align-middle fs-5 fw-bolder contact-icon"
-                           style="color: #DF253A;"></i>
+                        <i class="bi bi-telephone-fill align-middle fs-5 fw-bolder contact-icon"></i>
                         <span
                             class="hover-underline-animation left align-middle ms-2 align-middle fs-5">034 12 123 12</span>
                     </div>
                     <div>
-                        <i class="bi bi-telephone-fill align-middle fs-5 fw-bolder contact-icon"
-                           style="color: #DF253A;"></i>
+                        <i class="bi bi-telephone-fill align-middle fs-5 fw-bolder contact-icon"></i>
                         <span
                             class="hover-underline-animation left align-middle ms-2 align-middle fs-5">034 12 345 67</span>
                     </div>

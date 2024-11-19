@@ -73,35 +73,27 @@
             <div class="modal-body">
                 <!-- FAQ Content Goes Here -->
                 <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                What is Lorem Ipsum?
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                             data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    @foreach(explode("|||", $page_elements['footer.faq']->content) as $faq)
+                        <div class="accordion-item">
+                            @php
+                                $exploded = explode("||", $faq);
+                                $question = $exploded[0];
+                                $response = $exploded[1];
+                            @endphp
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse{{ $loop->index }}" aria-expanded="true" aria-controls="collapseOne">
+                                    {{ $question }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                 data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    {{ $response }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Why do we use it?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                             data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                It is a long established fact that a reader will be distracted by the readable content
-                                of a page when looking at its layout.
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="modal-footer">
@@ -120,81 +112,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Dernière mise à jour : [Date]</p>
-                <p>Bienvenue sur [Nom du site ou de l'application]. Avant d'utiliser nos services, veuillez lire
-                    attentivement ces
-                    Conditions Générales d'Utilisation (CGU). En accédant ou en utilisant nos services, vous acceptez
-                    les présentes
-                    conditions.</p><h4>1. <strong>Acceptation des conditions</strong></h4>
-                <p>En accédant à ce site web ou en utilisant l’application, vous acceptez sans réserve les présentes
-                    CGU. Si vous
-                    n'acceptez pas ces termes, vous n'êtes pas autorisé à utiliser nos services.</p><h4>2. <strong>Accès
-                        aux
-                        services</strong></h4>
-                <p>Nos services sont accessibles à toute personne majeure ou disposant de l’autorisation légale de ses
-                    représentants
-                    légaux. Nous nous réservons le droit de refuser l’accès à nos services à tout moment et sans
-                    préavis, en
-                    particulier en cas de non-respect des présentes CGU.</p><h4>3. <strong>Compte utilisateur</strong>
-                </h4>
-                <p>Pour utiliser certains de nos services, vous devrez créer un compte utilisateur. Vous êtes
-                    responsable de la
-                    confidentialité de vos informations de connexion et de toutes les activités effectuées via votre
-                    compte. Vous
-                    acceptez de nous informer immédiatement de toute utilisation non autorisée de votre compte.</p><h4>
-                    4. <strong>Utilisation
-                        des services</strong></h4>
-                <p>Vous vous engagez à utiliser nos services conformément à la législation en vigueur et à respecter les
-                    droits des
-                    autres utilisateurs. Il est interdit d'utiliser les services pour :</p>
-                <ul>
-                    <li>Propager des contenus illégaux, diffamatoires ou haineux ;</li>
-                    <li>Violer la propriété intellectuelle de tiers ;</li>
-                    <li>Mener des activités frauduleuses ou abusives ;</li>
-                    <li>Accéder illégalement à d'autres systèmes informatiques.</li>
-                </ul>
-                <h4>5. <strong>Contenu généré par l'utilisateur</strong></h4>
-                <p>Vous conservez les droits de propriété intellectuelle sur tout contenu que vous publiez sur notre
-                    plateforme. En
-                    publiant du contenu, vous nous accordez une licence mondiale, non exclusive et gratuite pour
-                    utiliser,
-                    distribuer, modifier ou afficher ce contenu dans le cadre du fonctionnement de nos services.</p><h4>
-                    6. <strong>Propriété
-                        intellectuelle</strong></h4>
-                <p>Tous les éléments présents sur le site/app (textes, images, graphismes, logos, vidéos, etc.) sont
-                    protégés par
-                    les droits de propriété intellectuelle et sont la propriété exclusive de [Nom de l’entreprise].
-                    Toute
-                    reproduction, distribution, ou modification sans notre autorisation est strictement interdite.</p>
-                <h4>7.
-                    <strong>Limitation de responsabilité</strong></h4>
-                <p>Nous nous efforçons de maintenir les services disponibles et sécurisés, mais nous ne pouvons garantir
-                    un accès
-                    ininterrompu ou sans erreur. En aucun cas, nous ne saurions être tenus responsables des dommages
-                    directs ou
-                    indirects résultant de l'utilisation ou de l'incapacité à utiliser nos services.</p><h4>8. <strong>Modification
-                        des CGU</strong></h4>
-                <p>Nous nous réservons le droit de modifier les présentes CGU à tout moment. Toute modification sera
-                    notifiée via
-                    nos services ou par email, et prendra effet immédiatement. En continuant à utiliser nos services
-                    après
-                    notification, vous acceptez ces modifications.</p><h4>9. <strong>Résiliation</strong></h4>
-                <p>Nous nous réservons le droit de résilier ou suspendre votre accès aux services à tout moment et sans
-                    préavis, en
-                    cas de violation des présentes CGU.</p><h4>10. <strong>Droit applicable</strong></h4>
-                <p>Les présentes CGU sont régies et interprétées conformément aux lois en vigueur en [Nom du pays]. Tout
-                    litige
-                    relatif à ces conditions sera soumis à la compétence exclusive des tribunaux de [Ville ou
-                    région].</p><h4>11.
-                    <strong>Contact</strong></h4>
-                <p>Pour toute question relative à ces CGU, vous pouvez nous contacter à l’adresse suivante : [adresse
-                    email].</p>
-                <hr>
-                <p>Cet exemple est générique et peut être ajusté selon vos besoins. Si vous gérez une entreprise ou un
-                    service
-                    spécifique, il est conseillé de consulter un professionnel du droit pour rédiger des conditions
-                    adaptées à vos
-                    exigences et conformes à la législation locale.</p>
+                {!! $page_elements['footer.condition']->content !!}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -203,7 +121,7 @@
     </div>
 </div>
 
-{{-- cgu modal --}}
+{{-- pc modal --}}
 <div class="modal fade" id="pcModal" tabindex="-1" aria-labelledby="pcModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -212,135 +130,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Dernière mise à jour : [Date]</p>
-                <p>Chez [Nom de l'entreprise], nous accordons une grande importance à la confidentialité et à la
-                    protection des
-                    données personnelles de nos utilisateurs. Cette politique de confidentialité explique comment nous
-                    collectons,
-                    utilisons, partageons et protégeons vos informations personnelles lorsque vous utilisez nos
-                    services.</p><h4>1.
-                    <strong>Collecte des informations</strong></h4>
-                <p>Nous collectons différents types d’informations lorsque vous utilisez nos services, notamment :</p>
-                <ul>
-                    <li><strong>Informations que vous fournissez directement</strong> : lors de la création d’un compte,
-                        de
-                        l’inscription à une newsletter, ou de l’utilisation d’un formulaire de contact (ex. nom, adresse
-                        e-mail,
-                        numéro de téléphone).
-                    </li>
-                    <li><strong>Informations collectées automatiquement</strong> : lorsque vous naviguez sur notre site
-                        ou utilisez
-                        notre application, nous recueillons automatiquement certaines données, telles que votre adresse
-                        IP, le type
-                        de navigateur, les pages visitées, et les cookies.
-                    </li>
-                    <li><strong>Informations issues de tiers</strong> : dans certains cas, nous pouvons recevoir des
-                        informations
-                        vous concernant provenant de partenaires ou de services tiers intégrés à notre plateforme.
-                    </li>
-                </ul>
-                <h4>2. <strong>Utilisation des données</strong></h4>
-                <p>Nous utilisons vos données personnelles dans les buts suivants :</p>
-                <ul>
-                    <li>Fournir, maintenir et améliorer nos services ;</li>
-                    <li>Gérer votre compte utilisateur et répondre à vos demandes ;</li>
-                    <li>Envoyer des communications marketing, si vous avez donné votre consentement ;</li>
-                    <li>Analyser les comportements des utilisateurs pour améliorer l'expérience utilisateur et nos
-                        offres ;
-                    </li>
-                    <li>Assurer la sécurité de nos services et prévenir les activités frauduleuses ou illicites.</li>
-                </ul>
-                <h4>3. <strong>Partage des données</strong></h4>
-                <p>Nous ne vendons ni ne louons vos informations personnelles à des tiers. Cependant, nous pouvons
-                    partager vos
-                    données dans les situations suivantes :</p>
-                <ul>
-                    <li><strong>Avec des prestataires de services</strong> qui nous aident à exploiter et améliorer
-                        notre plateforme
-                        (par exemple, des services d'hébergement, d'analyse ou de marketing).
-                    </li>
-                    <li><strong>En cas de transaction commerciale</strong> (fusion, acquisition, ou vente d’actifs), vos
-                        données
-                        pourraient être transférées aux nouveaux propriétaires.
-                    </li>
-                    <li><strong>Pour se conformer à la loi</strong> ou répondre à une demande légale, comme une
-                        ordonnance du
-                        tribunal ou une enquête gouvernementale.
-                    </li>
-                </ul>
-                <h4>4. <strong>Protection des données</strong></h4>
-                <p>Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour
-                    protéger vos
-                    données contre toute perte, vol, utilisation abusive ou accès non autorisé. Malgré ces efforts,
-                    aucune méthode
-                    de transmission ou de stockage des données n'est totalement sécurisée, et nous ne pouvons garantir
-                    une sécurité
-                    absolue.</p><h4>5. <strong>Vos droits</strong></h4>
-                <p>En vertu de la législation en vigueur (par exemple, le RGPD pour les utilisateurs européens), vous
-                    disposez de
-                    plusieurs droits concernant vos données personnelles :</p>
-                <ul>
-                    <li><strong>Droit d’accès</strong> : vous pouvez demander une copie des données personnelles que
-                        nous détenons
-                        sur vous.
-                    </li>
-                    <li><strong>Droit de rectification</strong> : vous avez le droit de corriger des informations
-                        inexactes ou
-                        incomplètes.
-                    </li>
-                    <li><strong>Droit à l’effacement</strong> : vous pouvez demander la suppression de vos données
-                        personnelles.
-                    </li>
-                    <li><strong>Droit de limitation</strong> : vous pouvez demander la limitation du traitement de vos
-                        données dans
-                        certains cas.
-                    </li>
-                    <li><strong>Droit d’opposition</strong> : vous pouvez vous opposer au traitement de vos données à
-                        des fins de
-                        marketing direct.
-                    </li>
-                    <li><strong>Droit à la portabilité des données</strong> : vous avez le droit de recevoir vos données
-                        personnelles dans un format structuré et couramment utilisé, et de les transmettre à un autre
-                        responsable de
-                        traitement.
-                    </li>
-                </ul>
-                <p>Pour exercer vos droits, veuillez nous contacter à l'adresse suivante : [adresse e-mail].</p><h4>6.
-                    <strong>Cookies
-                        et technologies similaires</strong></h4>
-                <p>Nous utilisons des cookies et d’autres technologies de suivi pour améliorer votre expérience sur
-                    notre site. Vous
-                    pouvez gérer vos préférences en matière de cookies via les paramètres de votre navigateur ou notre
-                    bannière de
-                    gestion des cookies. Pour plus d’informations, consultez notre [Politique de Cookies].</p><h4>7.
-                    <strong>Conservation
-                        des données</strong></h4>
-                <p>Nous conservons vos données personnelles aussi longtemps que nécessaire pour fournir nos services ou
-                    pour se
-                    conformer aux obligations légales. Lorsque les informations ne sont plus nécessaires, nous les
-                    supprimons ou les
-                    anonymisons.</p><h4>8. <strong>Transfert international de données</strong></h4>
-                <p>Vos données personnelles peuvent être transférées et traitées dans des pays autres que celui où vous
-                    résidez.
-                    Nous nous engageons à nous assurer que tout transfert de données est effectué conformément à la
-                    législation en
-                    vigueur et que des mesures de sécurité appropriées sont en place pour protéger vos informations.</p>
-                <h4>9.
-                    <strong>Modification de la politique de confidentialité</strong></h4>
-                <p>Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Toute
-                    modification
-                    sera publiée sur cette page et, en cas de changements significatifs, vous serez notifié par e-mail
-                    ou via nos
-                    services.</p><h4>10. <strong>Contact</strong></h4>
-                <p>Si vous avez des questions concernant cette politique de confidentialité ou sur la manière dont nous
-                    traitons vos
-                    données, vous pouvez nous contacter à l’adresse suivante : [adresse e-mail].</p>
-                <hr>
-                <p>Cet exemple est générique et doit être adapté en fonction de la réglementation applicable (telle que
-                    le RGPD, la
-                    CCPA, etc.) et des pratiques spécifiques de votre entreprise. Il est conseillé de consulter un
-                    professionnel du
-                    droit pour garantir la conformité de votre politique de confidentialité.</p>
+                {!! $page_elements['footer.politique']->content !!}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md">
         {{--logo vdfi--}}
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('images/vdfi_logo.png') }}" height="46" alt="logo vdfi">
+            <img src="{{ asset('images/logo.png') }}" height="46" alt="logo vdfi">
         </a>
 
         {{--burger mobile view--}}

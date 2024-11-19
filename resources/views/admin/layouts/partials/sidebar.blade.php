@@ -1,7 +1,7 @@
 <div class="sidebar-header border-bottom">
     <div class="sidebar-brand">
 
-        <img src="/images/vdfi_logo.png" class="w-25 sidebar-brand-full">
+        <img src="/images/logo.png" class="w-50 sidebar-brand-full">
     </div>
     <button class="btn-close d-lg-none" type="button" data-coreui-dismiss="offcanvas" data-coreui-theme="dark"
             aria-label="Close"
@@ -13,7 +13,7 @@
             <svg class="nav-icon">
                 <use xlink:href="/svg/coreui/free.svg#cil-speedometer"></use>
             </svg>
-            Dashboard
+            Tableau de bord
         </a>
     </li>
     <li class="nav-title">Entité</li>
@@ -48,6 +48,46 @@
                 <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
             </svg>
             Accueil
+        </a>
+    </li>
+    <li class="nav-group">
+        <a class="nav-link" href="#">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
+            </svg>
+            À propos
+        </a>
+    </li>
+    <li class="nav-group">
+        <a class="nav-link" href="#">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
+            </svg>
+            Projets
+        </a>
+    </li>
+    <li class="nav-group">
+        <a class="nav-link" href="#">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
+            </svg>
+            Contact
+        </a>
+    </li>
+    <li class="nav-group">
+        <a class="nav-link" href="#">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
+            </svg>
+            Faire un don
+        </a>
+    </li>
+    <li class="nav-group">
+        <a class="nav-link" href="#">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
+            </svg>
+            Remerciement
         </a>
     </li>
 </ul>

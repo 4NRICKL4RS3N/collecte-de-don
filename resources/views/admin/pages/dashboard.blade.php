@@ -10,9 +10,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h1 class="fw-bolder">Dashboard</h1>
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="card border-0 card-info" style="background-color: #7fe8ff">
+                <div class="card border-0 card-info" style="background-color: #40a8f5">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-9 ">
@@ -27,7 +26,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="card border-0 card-info" style="background-color: #7fe8ff">
+                <div class="card border-0 card-info" style="background-color: #40a8f5">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-9 ">
@@ -42,7 +41,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="card border-0 card-info" style="background-color: #7fe8ff">
+                <div class="card border-0 card-info" style="background-color: #40a8f5">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-9 ">
@@ -57,7 +56,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="card border-0 card-info" style="background-color: #7fe8ff">
+                <div class="card border-0 card-info" style="background-color: #40a8f5">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-9 ">
@@ -120,6 +119,9 @@
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="card border-0 card-graphs">
+                    <div class="card-header">
+                        <h5>Les utilisateurs et leurs dons</h5>
+                    </div>
                     <div class="card-body">
                         <table id="users-table" class="display" style="width:100%">
                             <thead>
@@ -138,6 +140,9 @@
             </div>
             <div class="col-md-6 col-12">
                 <div class="card border-0 card-graphs">
+                    <div class="card-header">
+                        <h5>Dons des 15 derniers jours</h5>
+                    </div>
                     <div class="card-body">
                         <canvas id="donation_last"></canvas>
                     </div>

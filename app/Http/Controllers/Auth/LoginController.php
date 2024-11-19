@@ -28,12 +28,12 @@ class LoginController extends Controller
             // If not admin, logout and redirect back with error
             Auth::logout();
             return back()->withErrors([
-                'email' => 'Only administrators can login.',
+                'erreur' => 'Seuls les administrateurs peuvent se connecter',
             ]);
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'erreur' => 'Email ou mot de passe incorrect',
         ]);
     }
 

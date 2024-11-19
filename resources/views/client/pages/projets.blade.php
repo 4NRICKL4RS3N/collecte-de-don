@@ -10,26 +10,42 @@
         <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
             {{--  project card  --}}
             @foreach($projets as $projet)
-                <a href="{{ route('client.projets.details', $projet->id) }}" style="text-decoration: none;">
-                    <div class="project-card col">
-                        <div class="card rounded-4">
-                            <div class="titre d-flex justify-content-between align-content-center">
-                                <h2 class="project-title">{{ $projet->title }}</h2>
-                                <div class="badge rounded-pill status-badge px-3 py-1">{{ $projet->getStatus() }}</div>
-                            </div>
-                            <p>{!! $projet->description !!}</p>
+                <div class="project-card col">
+                    <div class="card rounded-4">
+                        {{-- Title --}}
+                        <div class="titre d-flex justify-content-between align-content-center">
+                            <h2 class="project-title">{{ $projet->title }}</h2>
+                        </div>
 
-                            <div class="objectives">
-                                @foreach($projet->project_objectives as $objective)
-                                    <div class="ms-3 objective-pill badge rounded-pill text-dark ">{{ $objective->objective }}</div>
-                                @endforeach
-                            </div>
-                            <div class="badge-container">
-                                <div class="cta-badge">Soutenir</div>
+                        {{-- Description --}}
+                        <p>{!! $projet->description !!}</p>
+
+                        {{-- Progress Bar --}}
+                        <p class="text-muted">{{ number_format($projet->donation_collected, 0, '.', ' ') }} Ar récoltés</p>
+                        <div class="progress mb-3">
+                            <div
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width: {{ $projet->progress }}%;"
+                                aria-valuenow="{{ $projet->progress }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100">
                             </div>
                         </div>
+
+                        {{-- Objectives --}}
+                        <div class="objectives">
+                            @foreach($projet->project_objectives as $objective)
+                                <div class="me-2 objective-pill badge rounded-pill text-dark ">{{ $objective->objective }}</div>
+                            @endforeach
+                        </div>
+
+                        {{-- "En savoir plus" Link --}}
+                        <div class="text-end">
+                            <a href="" class="text-primary fw-bold">En savoir plus</a>
+                        </div>
                     </div>
-                </a>
+                </div>
             @endforeach
         </div>
     </div>

@@ -21,6 +21,9 @@ class PagesController extends Controller
 
     public function projets() {
         $projets = Project::all();
+        foreach ($projets as $projet) {
+            $projet->progress = $projet->getProgress();
+        }
         return view('client.pages.projets', ['projets' => $projets]);
     }
 

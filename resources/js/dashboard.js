@@ -2,8 +2,8 @@ import Chart from 'chart.js/auto';
 
 Chart.defaults.borderColor = '#c6d1e3';
 Chart.defaults.color = '#000';
-const blue = '#7fe8ff';
-const transparentBlue = 'rgba(127,232,255,0.5)';
+const blue = '#40a8f5';
+const transparentBlue = 'rgba(64,168,245,0.5)';
 const red = '#ff6060';
 const transparentRed = 'rgba(255,96,96,0.5)';
 

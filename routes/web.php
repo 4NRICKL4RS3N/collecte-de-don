@@ -61,6 +61,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::prefix('cms')->group(function () {
             Route::post('/save', [CMSController::class, 'save'])->name('admin.cms.save');
             Route::get('/accueil', [CMSController::class, 'accueil'])->name('admin.cms.accueil');
+            Route::get('/a-propos', [CMSController::class, 'a_propos'])->name('admin.cms.a-propos');
         });
     });
 });

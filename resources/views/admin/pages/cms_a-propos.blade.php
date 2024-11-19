@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('titre', 'cms | accueil')
+@section('titre', 'cms | à propos')
 
 @push('scripts_head')
     <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
@@ -21,7 +21,7 @@
         <div class="row page">
             <div class="col-3">
                 <div class="form-floating">
-                    <input value="{{ $accueil->title}}" name="titrePage" type="text"
+                    <input value="{{ $a_propos->title}}" name="titrePage" type="text"
                            class="form-control border-black rounded-0 bg-white fs-5 mb-3"
                            id="titrePage" placeholder="Titre de la page">
                     <label for="titrePage" class="">Titre de la page</label>
@@ -40,69 +40,24 @@
             <fieldset class="border border-black p-3 mb-4">
                 <legend class="float-none w-auto px-3">Contenu</legend>
 
-                <fieldset class="border-black border p-3 mb-3">
-                    <legend class="float-none w-auto px-3 fs-5">Section Hero</legend>
-                    <div class="row">
-                        <div class="col-6">
-                            <textarea name="accueil.hero.titre" type="text"
-                                      class="form-control border-black rounded-0 bg-white fs-3 mb-3"
-                                      id="accueil.hero.titre"
-                                      placeholder="Grand titre">{{ $accueil_element['accueil.hero.titre']->content }}</textarea>
-                            <div class="form-floating col-8">
-                                <input value="{{ $accueil_element['accueil.hero.button']->content }}" name="accueil.hero.button" type="text" class="form-control border-0 rounded-0 bg-black text-white"
-                                       id="accueil.hero.button" placeholder="button">
-                                <label for="accueil.hero.button" class="text-white">Bouton</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <input type="file" class="filepondJumbotron h-100">
-                        </div>
-                    </div>
-                </fieldset>
+                <div class="col-12">
+                    <textarea name="apropos.titre" type="text"
+                              class="form-control border-black rounded-0 bg-white fs-3 mb-3"
+                              id="apropos.titre"
+                              placeholder="Titre principal">{{ $a_propos_element['apropos.titre']->content }}</textarea>
+                </div>
 
-                <fieldset class="border-black border p-3 mb-3">
-                    <legend class="float-none w-auto px-3 fs-5">Section 1</legend>
-                    <div class="row">
-                        <div class="col-6">
-                            <textarea type="text" class="form-control border-black rounded-0 bg-white fs-3 mb-3"
-                                      id="accueil.section1.titre" name="accueil.section1.titre" placeholder="Grand titre">{{ $accueil_element["accueil.section1.titre"]->content }}</textarea>
-                            <textarea type="text" class="form-control border-black rounded-0 bg-white fs-5"
-                                      id="accueil.section1.text" name="accueil.section1.text" placeholder="Text">{{ $accueil_element["accueil.section1.text"]->content }}</textarea>
-                        </div>
-                        <div class="col-6">
-                            <input type="file" class="filepondSection1 h-100">
-                        </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="file" class="filepondImage">
                     </div>
-                </fieldset>
 
-                <fieldset class="border-black border p-3 mb-3">
-                    <legend class="float-none w-auto px-3 fs-5">Section 2</legend>
-                    <div class="row">
-                        <div class="col-6">
-                            <textarea type="text" class="form-control border-black rounded-0 bg-white fs-3 mb-3"
-                                      id="accueil.section2.titre" name="accueil.section2.titre" placeholder="Grand titre">{{ $accueil_element["accueil.section2.titre"]->content }}</textarea>
-                            <textarea type="text" class="form-control border-black rounded-0 bg-white fs-5"
-                                      id="accueil.section2.text" name="accueil.section2.text" placeholder="Text">{{ $accueil_element["accueil.section2.text"]->content }}</textarea>
+                    <div class="col-6">
+                        <div id="contentEditor" class="editor">
+                            {!! $a_propos_element['apropos.content']->content !!}
                         </div>
                     </div>
-                </fieldset>
-
-                <fieldset class="border-black border p-3 mb-3">
-                    <legend class="float-none w-auto px-3 fs-5">Section CTA</legend>
-                    <div class="row">
-                        <div class="col-6">
-                            <textarea name="accueil.sectionCta.titre" type="text"
-                                      class="form-control border-black rounded-0 bg-white fs-3 mb-3"
-                                      id="accueil.sectionCta.titre"
-                                      placeholder="Grand titre">{{ $accueil_element['accueil.sectionCta.titre']->content }}</textarea>
-                            <div class="form-floating col-8">
-                                <input value="{{ $accueil_element['accueil.sectionCta.button']->content }}" name="accueil.sectionCta.button" type="text" class="form-control border-0 rounded-0 bg-black text-white"
-                                       id="accueil.sectionCta.button" placeholder="button">
-                                <label for="accueil.sectionCta.button" class="text-white">Bouton</label>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
+                </div>
 
             </fieldset>
 
@@ -251,6 +206,9 @@
         let cguQuill = new Quill('#cguEditor', {
             theme: 'snow',
         });
+        let contentQuill = new Quill('#contentEditor', {
+            theme: 'snow',
+        });
 
         const csrfToken = '{{csrf_token()}}';
         FilePond.registerPlugin(
@@ -258,7 +216,7 @@
             FilePondPluginImagePreview,
             FilePondPluginMediaPreview
         );
-        let filepondJumbotron = FilePond.create(document.querySelector('.filepondJumbotron'), {
+        let filepondImage = FilePond.create(document.querySelector('.filepondImage'), {
             stylePanelLayout: 'compact',
             styleLoadIndicatorPosition: 'center bottom',
             styleProgressIndicatorPosition: 'right bottom',
@@ -266,55 +224,6 @@
             styleButtonProcessItemPosition: 'right bottom',
             imagePreviewHeight: 170,
             imageCropAspectRatio: null,
-            imageResizeTargetWidth: 200,
-            imageResizeTargetHeight: 200,
-            acceptedFileTypes: [
-                'image/jpeg',
-                'image/jpg',
-                'image/png',
-                'image/gif'
-            ],
-            allowMultiple: false,
-            allowFileTypeValidation: true,
-            fileValidateTypeLabelExpectedTypesMap: {
-                'image/jpeg': '.jpg, .jpeg',
-                'image/png': '.png',
-                'image/gif': '.gif'
-            },
-            server: {
-                process: {
-                    url: '{{ route('upload.temp') }}',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    onload: (response) => {
-                        console.log('Upload successful:', response);
-                        return response;
-                    },
-                    onerror: (response) => {
-                        console.error('Upload error:', response);
-                        return response?.error || 'Upload failed';
-                    }
-                },
-                revert: {
-                    url: '/remove-temp',
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    }
-                }
-            },
-            labelIdle: 'Glissez et déposez une image ou <span class="filepond--label-action">Parcourir</span>',
-        });
-
-        let filepondSection1 = FilePond.create(document.querySelector('.filepondSection1'), {
-            stylePanelLayout: 'compact',
-            styleLoadIndicatorPosition: 'center bottom',
-            styleProgressIndicatorPosition: 'right bottom',
-            styleButtonRemoveItemPosition: 'left bottom',
-            styleButtonProcessItemPosition: 'right bottom',
-            imagePreviewHeight: 170,
-            imageCropAspectRatio: '1:1',
             imageResizeTargetWidth: 200,
             imageResizeTargetHeight: 200,
             acceptedFileTypes: [
@@ -449,17 +358,14 @@
         function saveUpdate() {
             const formData = collectInputsData();
 
-            const fileJumbotron = filepondJumbotron.getFiles().map(file => file.serverId)[0];
-            if (fileJumbotron) {
-                formData.append('accueil.hero.bgImage', fileJumbotron);
-            }
-
-            const fileSection1 = filepondSection1.getFiles().map(file => file.serverId)[0];
-            if (fileSection1) {
-                formData.append('accueil.section1.image', fileSection1);
+            const fileImage = filepondJumbotron.getFiles().map(file => file.serverId)[0];
+            if (fileImage) {
+                formData.append('apropos.image', fileImage);
             }
 
             formData.append('footer.contacts', getListContacts());
+
+            formData.append('apropos.content', document.getElementById('contentEditor').querySelector('.ql-editor').innerHTML)
 
             formData.append('footer.condition', document.getElementById('cguEditor').querySelector('.ql-editor').innerHTML)
 

@@ -77,4 +77,8 @@ class Project extends Model
         return $widthHeight;
     }
 
+    function getProgress() {
+        return ($this->donation_target > 0) ? round(($this->donation_collected / $this->donation_target) * 100, 2) : 0;
+    }
+
 }

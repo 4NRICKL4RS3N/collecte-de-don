@@ -135,12 +135,12 @@ body {
     }
 
     &:disabled {
-        background-color: #ffced3 !important;
+        background-color: $primary-light-color !important;
     }
 
     &:disabled:-webkit-autofill {
-        background-color: #ffced3 !important;
-        box-shadow: 0 0 0px 1000px #ffced3 inset !important;
+        background-color: $primary-light-color !important;
+        box-shadow: 0 0 0px 1000px $primary-light-color inset !important;
     }
 }
 
@@ -158,6 +158,10 @@ body {
 
 .contact-icon::before {
     vertical-align: middle;
+}
+
+.contact-icon {
+    color: $primary-color;
 }
 
 .hover-underline-animation {
