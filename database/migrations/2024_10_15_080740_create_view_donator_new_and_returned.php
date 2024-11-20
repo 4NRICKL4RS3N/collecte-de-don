@@ -13,11 +13,11 @@ return new class extends Migration
     {
         DB::statement("
             create view v_donator_new_and_returned as
-            (select 'new' as category, count(*) as donation_count
+            (select 'nouveaux' as category, count(*) as donation_count
             from v_users_donation_count
             where v_users_donation_count.donation_count = 1
             union all
-            select 'returned' as category, count(*) as donation_count
+            select 'revenus' as category, count(*) as donation_count
             from v_users_donation_count
             where v_users_donation_count.donation_count > 1)
         ");

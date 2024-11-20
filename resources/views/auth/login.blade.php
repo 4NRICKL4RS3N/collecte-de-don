@@ -17,11 +17,11 @@
                 <div class="card-group d-block d-md-flex row">
                     <div class="card col-md-7 p-4 mb-0">
                         <div class="card-body">
-                            <h1>Se connecter</h1>
+                            <h1>Connexion</h1>
                             <p class="text-body-secondary">Connectez-vous avec votre compte admin</p>
                             <form method="post" action="{{ route('login') }}">
                                 @csrf
-                                @error('email')
+                                @error('erreur')
                                     <span class="text-danger-emphasis">{{ $message }}</span>
                                 @enderror
                                 <div class="input-group mb-3"><span class="input-group-text">
@@ -34,14 +34,11 @@
                       <svg class="icon">
                         <use xlink:href="/svg/coreui/free.svg#cil-lock-locked"></use>
                       </svg></span>
-                                    <input name="password" class="form-control" type="password" placeholder="Password">
+                                    <input name="password" class="form-control" type="password" placeholder="Mot de passe">
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <button class="btn btn-primary px-4" type="submit">Login</button>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <button class="btn btn-link px-0" type="button">Forgot password?</button>
+                                        <button class="btn btn-primary px-4" type="submit">Se connecter</button>
                                     </div>
                                 </div>
                             </form>

@@ -22,7 +22,6 @@ class TestimonyController extends Controller
                 'statement' => 'required',
             ]);
             $file = $request->input('image');
-            \Log::info('files', [$request->input('image')]);
             if (Storage::exists($file)) {
                 $filename = basename($file);
                 $newPath = 'public/testimony-uploads/' . $filename;

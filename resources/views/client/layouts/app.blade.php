@@ -14,7 +14,7 @@
 <body>
 
 <header>
-    @include('client.layouts.partials.header')
+    <x-client.header/>
 </header>
 
 <main>
@@ -22,7 +22,7 @@
 </main>
 
 <footer>
-    @include('client.layouts.partials.footer')
+    <x-client.footer/>
 </footer>
 
 @stack('scripts')

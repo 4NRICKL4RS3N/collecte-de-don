@@ -19,7 +19,7 @@ return new class extends Migration
                          JOIN donations d ON p.donation_id = d.id
                 WHERE p.status = 1
                 UNION ALL
-                SELECT 'project'                                                                 AS type,
+                SELECT 'projet'                                                                 AS type,
                        SUM(CASE WHEN d.project_id IS NOT NULL THEN p.donation_amount ELSE 0 END) AS donation
                 FROM payments p
                          JOIN donations d ON p.donation_id = d.id

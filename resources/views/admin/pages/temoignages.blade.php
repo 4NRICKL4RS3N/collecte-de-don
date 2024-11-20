@@ -377,7 +377,6 @@
             e.preventDefault();
 
             const file = pond.getFiles().map(file => file.serverId)[0];
-            console.log(file);
             const formData = new FormData(this);
             formData.append('image', file);
             fetch('{{ route("admin.temoignages.store") }}', {

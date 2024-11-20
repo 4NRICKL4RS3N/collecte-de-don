@@ -19,6 +19,14 @@
             }
         }
     }
+
+    a {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
 }
 
 .titre {
@@ -47,7 +55,7 @@
 }
 
 .objective-pill {
-    padding: 15px 25px;
+    padding: 10px 20px;
     line-height: 1.2rem;
     font-size: 0.9rem;
     border: none;
@@ -76,7 +84,33 @@
         bottom: -15px;
         right: -15px;
     }
+
+    a {
+        text-decoration: none;
+        color: black;
+        padding: 5px 5px;
+    }
+
     bottom: 20px;
     right: 20px;
     font-size: 1.5rem;
+}
+
+.progress {
+    height: 8px;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background-color: $second-color;
+    border-radius: 4px;
+}
+
+.text-progress {
+    margin-bottom: 0;
+    span {
+        font-weight: bolder;
+    }
 }

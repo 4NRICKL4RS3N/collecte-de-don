@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md">
         {{--logo vdfi--}}
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('images/vdfi_logo.png') }}" height="46" alt="logo vdfi">
+            <img src="{{ asset('images/logo.png') }}" height="46" alt="logo vdfi">
         </a>
 
         {{--burger mobile view--}}
@@ -27,8 +27,7 @@
                 </li>
             </ul>
             {{--CTA button--}}
-            <x-client.button add-class="btn-primary" lien="/donate" content="Faire un don" />
+            <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['header.button']->content }}" />
         </div>
-
     </nav>
 </div>

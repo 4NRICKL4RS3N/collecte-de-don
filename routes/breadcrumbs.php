@@ -4,7 +4,7 @@ use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\ServiceProvider as BreadcrumbsServiceProvider;
 
 Breadcrumbs::for('admin', function ($trail) {
-    $trail->push('Accueil', route('admin'));
+    $trail->push('Tableau de bord', route('admin'));
 });
 
 Breadcrumbs::for('admin.projets', function ($trail) {
@@ -24,4 +24,13 @@ Breadcrumbs::for('admin.temoignages', function ($trail) {
 Breadcrumbs::for('admin.impacts', function ($trail) {
     $trail->parent('admin');
     $trail->push('Impacts', route('admin.impacts'));
+});
+
+Breadcrumbs::for('admin.cms.accueil', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('CMS Accueil', route('admin.cms.accueil'));
+});
+Breadcrumbs::for('admin.cms.a-propos', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('CMS À propos', route('admin.cms.a-propos'));
 });
