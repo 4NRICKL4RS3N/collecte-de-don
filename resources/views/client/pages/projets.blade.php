@@ -17,11 +17,11 @@
                             <h2 class="project-title">{{ $projet->title }}</h2>
                         </div>
 
-                        {{-- Description --}}
-                        <p>{!! $projet->description !!}</p>
+                        {{-- Resume --}}
+                        {!! $projet->description_resume !!}
 
                         {{-- Progress Bar --}}
-                        <p class="text-muted">{{ number_format($projet->donation_collected, 0, '.', ' ') }} Ar récoltés</p>
+                        <p class="text-progress"><span>{{ number_format($projet->donation_collected, 0, '.', ' ') }} Ar</span> récoltés</p>
                         <div class="progress mb-3">
                             <div
                                 class="progress-bar"
@@ -42,7 +42,7 @@
 
                         {{-- "En savoir plus" Link --}}
                         <div class="text-end">
-                            <a href="" class="text-primary fw-bold">En savoir plus</a>
+                            <a href="" class="fw-bold">En savoir plus</a>
                         </div>
                     </div>
                 </div>
