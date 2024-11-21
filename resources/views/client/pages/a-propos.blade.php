@@ -5,7 +5,7 @@
 @section('content')
     <div class="container my-5">
         <div class="row text-center mb-sm-5 mb-2">
-            <h1 class="grand-titre">À propos de nous</h1>
+            <h1 class="grand-titre">À propos de <span>nous</span></h1>
         </div>
         <div class="row mb-5">
             <div class="col-md-6 px-1">

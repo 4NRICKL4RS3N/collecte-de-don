@@ -35,6 +35,14 @@
     z-index: 2;
 }
 
+.jumbotron-titre {
+    text-shadow: 2px 2px 10px black;
+    font-size: $big-title-size;
+    font-family: "Joly Headline", serif;
+    font-weight: bold;
+    color: $white-color;
+}
+
 @media (max-width: 768px) {
     .jumbotron {
         .container-fluid {
@@ -89,9 +97,13 @@
 }
 
 .card-impacte {
-    background-color: $black-color;
+    position: relative;
+    background: $primary-color;
+    background: radial-gradient(circle at center, $primary-color, $primary-color, $second-color);
     color: $white-color;
     border: none;
+    transition: all 0.3s ease-out;
+    will-change: background;
 }
 
 @media (max-width: 769px) {
@@ -121,7 +133,10 @@
 }
 
 .section-cta {
-    background-color: $primary-color;
+    background: $primary-color;
+    background: radial-gradient(circle at center, $primary-color, $primary-color, $second-color);
+    transition: all 0.3s ease-out;
+    will-change: background;
 }
 
 .splide:not(.is-overflow) .splide__arrows {

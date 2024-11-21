@@ -19,14 +19,14 @@
             }
         }
     }
+}
 
-    a {
-        text-decoration: none;
-        color: #FFFFFF;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
+.project-card:hover ~ .contribute-cursor {
+    transform: translate(-50%, -50%) scale(1); /* Show on hover */
+}
+.project-card .project-link:hover ~ .contribute-cursor {
+    background: transparent; /* Make invisible when hovering the link */
+    transform: translate(-50%, -50%) scale(0); /* Reset scale */
 }
 
 .titre {
@@ -51,7 +51,8 @@
 }
 
 .objectives {
-    margin-top: 10px;
+    margin-top: .75rem;
+    margin-bottom: .75rem;
 }
 
 .objective-pill {
@@ -113,4 +114,34 @@
     span {
         font-weight: bolder;
     }
+}
+
+.project-link {
+    text-decoration: none;
+    color: #FFFFFF;
+    z-index: 2;
+}
+.project-link:hover {
+    text-decoration: underline;
+}
+
+.contribute-cursor {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: $second-color;
+    color: $black-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0); /* Start hidden */
+    transition: transform 0.3s ease, top 0.1s ease, left 0.1s ease;
+    z-index: 1; /* Below links */
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
 }

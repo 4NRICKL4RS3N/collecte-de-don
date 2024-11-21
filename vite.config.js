@@ -6,6 +6,7 @@ export default defineConfig({
         laravel({
             input: ['resources/sass/client/app.scss',
                     'resources/js/app.js',
+                    'resources/js/animateGradient.js',
                     'resources/js/slide.js',
                     'resources/js/admin-app.js',
                     'resources/js/dashboard.js',

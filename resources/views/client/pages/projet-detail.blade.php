@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('titre', 'Tritre projet')
+@section('titre', $projet->title)
 
 @section('content')
     <div class="container py-4 py-xl-5">
@@ -8,13 +8,25 @@
             <h1 class="grand-titre">{{ $projet->title }}</h1>
         </div>
 
-        <div class="row mb-4">
-            <div class="col offset-md-1 offset-sm-0">
-                <ul class="info-list">
-                    <li><i class="bi bi-geo-alt"></i><span>{{ $projet->location }}</span></li>
-                    <li><i class="bi bi-cash"></i>Objectif : <span>{{ $projet->donation_target }}$</span></li>
-                    <li><i class="bi bi-bank"></i>Récoltés : <span>{{ $projet->donation_collected }}$</span></li>
-                </ul>
+        <div class="row mb-4 projet-detail">
+            <div class="col-lg-5 col-sm-12 offset-lg-1 offset-sm-0">
+
+                {{-- Progress Bar --}}
+                <p class="recolte"><span>{{ number_format($projet->donation_collected, 0, ',', ' ') }} Ar</span> récoltés sur <span>{{ number_format($projet->donation_target, 0, ',', ' ') }} Ar</span></p>
+                <div class="progress mb-3">
+                    <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: {{ $projet->progress }}%;"
+                        aria-valuenow="{{ $projet->progress }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100">
+                    </div>
+                </div>
+
+                <div class="mt-4 mb-4 info-list">
+                    <i class="bi bi-geo-alt"></i><span>{{ $projet->location }}</span>
+                </div>
             </div>
         </div>
 
@@ -60,8 +72,7 @@
     <section class="py-4 py-xl-5 project-cta">
         <div class="container h-100">
             <div class="row h-100">
-                <div
-                    class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                     <div>
                         <h1 class="fw-bold mb-3">Aidez-nous à concrétiser ce projet</h1>
                         <x-client.button add-class="btn-primary" content="Contribuer au projet" lien="/donate?project={{ $projet->id }}"/>
@@ -73,3 +84,7 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/animateGradient.js'])
+@endpush

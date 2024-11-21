@@ -16,13 +16,34 @@
         margin-right: 1rem;
     }
     span {
-        font-weight: bold;
+        font-weight: normal;
     }
 }
 
 .project-cta {
-    background-color: $black-color;
+    background: radial-gradient(circle at center, rgba(4, 15, 22, 1), rgba(4, 15, 22, 1), rgba(45, 40, 141, 1));
     h1 {
         color: white;
+    }
+}
+
+.recolte {
+    span {
+        color: $primary-color;
+        font-size: xx-large;
+    }
+}
+
+.projet-detail {
+    .progress {
+        height: 12px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        background-color: $second-color;
+        border-radius: 10px;
     }
 }

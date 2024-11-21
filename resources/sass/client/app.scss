@@ -92,9 +92,17 @@ body {
 }
 
 .grand-titre {
-    font-family: "Joly Headline";
-    font-weight: bold;
+    //font-family: "Joly Headline";
+    //font-weight: bold;
     font-size: $big-title-size;
+    font-family: "Roc Grotesk", sans-serif;
+    font-weight: bold;
+    span {
+        color: $primary-color;
+        font-family: "Joly Headline", serif;
+        font-size: calc($big-title-size + 5px);
+        font-weight: lighter;
+    }
 }
 
 .petit-titre {

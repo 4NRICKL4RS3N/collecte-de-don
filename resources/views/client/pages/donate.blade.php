@@ -11,20 +11,20 @@
     <div class="container">
         <div class="row my-5">
             <div class="col-lg-7 col-md-6 ">
-                <h1 class="grand-titre">Votre générosité est sur le point de créer un impact !</h1>
+                <h1 class="grand-titre">Votre générosité est sur le point de <span>créer un impact !</span></h1>
             </div>
             <div class="col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
                     <form id="donation-form">
                         <div class="form-group mb-3">
                             <label for="name" class="mb-0 form-label">Nom</label>
-                            <input name="name" class="form-control form-input" type="text" id="name" placeholder="Name"
+                            <input name="name" class="form-control form-input" type="text" id="name" placeholder="Jean Rakoto"
                                    required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="email" class="mb-0 form-label">Email</label>
                             <input name="email" class="form-control form-input" type="email" id="email"
-                                   placeholder="Email"
+                                   placeholder="exemple@mail.com"
                                    required>
                         </div>
                         <label for="amount" class="mb-0 form-label">Montant</label>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="mb-3">
                             <input class="form-control form-input" name="custom-amount" type="number" id="custom-amount"
-                                   placeholder="Montant" required>
+                                   placeholder="Spécifiez le montant" required>
                         </div>
                         <input type="hidden" name="amount" id="amount">
                         <button class="btn btn-primary my-2 my-lg-0" type="submit" id="continue-btn">
@@ -56,16 +56,14 @@
                     </form>
                     <div id="payment-element" style="display: none;"></div>
                     <div class="row">
-                        <div class="col w-auto">
+                        <div class="col w-auto d-flex">
                             <button class="btn btn-primary mt-3" id="submit-payment" style="display: none;">
                                 <span class="btn-content">
                                     <span class="btn-text">Confirmer</span>
                                     <span class="loader" id="loading-payment"></span>
                                 </span>
                             </button>
-                        </div>
-                        <div class="col w-auto">
-                            <button class="btn btn-outline-primary mt-3" id="go-back" style="display: none;">
+                            <button class="btn btn-outline-primary mt-3 ms-3" id="go-back" style="display: none;">
                                 Retour
                             </button>
                         </div>
@@ -275,4 +273,5 @@
             });
         });
     </script>
+    @vite(['resources/js/animateGradient.js'])
 @endpush

@@ -9,8 +9,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <h1 class="display-4 grand-titre" style="text-shadow: 2px 2px 10px black;">{{ $page_elements['accueil.hero.titre']->content }}</h1>
-                        <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['accueil.hero.button']->content }}"/>
+                        <h1 class="display-4 jumbotron-titre">{{ $page_elements['accueil.hero.titre']->content }}</h1>
+                        <x-client.button add-class="btn-primary" lien="{{ route('client.projets') }}" content="{{ $page_elements['accueil.hero.button']->content }}"/>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         <div class="container section-1 text-sm-start mb-5">
             <div class="row gy-2">
                 <div class="col-md-6">
-                    <h1 class="grand-titre">Notre projet d'évangélisation</h1>
+                    <h1 class="grand-titre">Notre projet d'<span>évangélisation</span></h1>
                     <p class="mt-2 mt-xl-5">Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
                         Aliquam
                         in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices
@@ -63,8 +63,8 @@
             <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                 {{--  card  --}}
                 @foreach($impacts as $impact)
-                    <div class="col">
-                        <div class="card card-impacte">
+                    <div class="col d-flex">
+                        <div class="card card-impacte h-100">
                             <div class="card-body p-4">
                                 <h4 class="card-title">{{ $impact->title }}</h4>
                                 <p class="card-text">{{ $impact->content }}</p>
@@ -79,11 +79,11 @@
         <div class="container pt-2 mb-5">
             <div class="row">
                 <div class="col">
-                    <h1 class="grand-titre">Nos témoignages</h1>
+                    <h1 class="grand-titre">Nos <span>témoignages</span></h1>
                 </div>
             </div>
             <div class="row slide-container">
-                <section class="splide" aria-label="Splide Basic HTML Example">
+                <section class="splide" aria-label="Splide">
                     <div class="splide__track">
                         <ul class="splide__list">
                             {{--  slide/témoignage  --}}
@@ -136,5 +136,5 @@
 @endsection
 
 @push('scripts')
-    @vite('resources/js/slide.js')
+    @vite(['resources/js/animateGradient.js'])
 @endpush

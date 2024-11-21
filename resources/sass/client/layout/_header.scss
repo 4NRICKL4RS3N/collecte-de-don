@@ -12,6 +12,11 @@ header {
     }
 }
 
+.nav-active {
+    font-weight: bolder;
+    color: $primary-color !important;
+}
+
 .navbar-toggler {
     border: none;
 }
