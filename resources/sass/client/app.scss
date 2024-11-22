@@ -114,6 +114,9 @@ body {
 @media (max-width: 991px) {
     .grand-titre {
         font-size: calc($big-title-size - 10px);
+        span {
+            font-size: calc($big-title-size - 12px);
+        }
     }
     .petit-titre {
         font-size: calc($little-title-size - 10px);
@@ -123,6 +126,9 @@ body {
 @media (max-width: 420px) {
     .grand-titre {
         font-size: calc($big-title-size - 20px);
+        span {
+            font-size: calc($big-title-size - 22px);
+        }
     }
     .petit-titre {
         font-size: calc($little-title-size - 10px);

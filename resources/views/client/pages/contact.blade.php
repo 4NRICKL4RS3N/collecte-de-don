@@ -2,13 +2,17 @@
 
 @section('titre', 'Nous contacter')
 
+@push('scripts_head')
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+@endpush
+
 @section('content')
     <div class="container my-5">
         <div class="row">
-            <div class="col-md-7 offset-md-1 mb-3">
+            <div class="reveal-1 col-md-8 offset-md-1 mb-3">
                 <h1 class="grand-titre">Entrer en <span>contact</span></h1>
             </div>
-            <div class="col-md-6 offset-md-3">
+            <div class="reveal-2 col-md-6 offset-md-3">
                 <div class="p-4 border-0 rounded-4 donation_container">
                     <form>
                         <div class="row">
@@ -69,4 +73,18 @@
 
 @push('scripts')
     @vite(['resources/js/animateGradient.js'])
+    <script>
+        const option = {
+            distance: '50px',
+            delay: 100,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-1', option);
+        const option2 = {
+            distance: '50px',
+            delay: 200,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-2', option2);
+    </script>
 @endpush

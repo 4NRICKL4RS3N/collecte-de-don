@@ -9,7 +9,8 @@
         color: white;
         padding: 1.5rem;
         border: none;
-        background-color: $primary-color;
+        //background-color: $primary-color;
+        background: radial-gradient(circle at center, $primary-color, $primary-color, $second-color);
         transition: all 0.3s ease;
 
         &:hover {
@@ -144,4 +145,36 @@
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.contribute-button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: $second-color;
+    color: $black-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .contribute-button {
+        display: flex !important;
+    }
+}
+
+.select-filtre {
+    border: 0px solid $primary-color;
+    box-shadow: none;
+    margin-left: 0;
+    display: unset;
+    width: unset;
+}
+
+.project-search {
+    border: 0px solid $primary-color;
 }

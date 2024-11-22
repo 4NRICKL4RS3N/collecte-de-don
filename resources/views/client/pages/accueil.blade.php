@@ -2,12 +2,16 @@
 
 @section('titre', 'Accueil')
 
+@push('scripts_head')
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+@endpush
+
 @section('content')
     {{--  jumbotron  --}}
     <div id="accueil">
         <section class="jumbotron" style="background-image: url('{{ asset($page_elements['accueil.hero.bgImage']->content) }}')">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row reveal-0">
                     <div class="col-md-8 offset-md-2">
                         <h1 class="display-4 jumbotron-titre">{{ $page_elements['accueil.hero.titre']->content }}</h1>
                         <x-client.button add-class="btn-primary" lien="{{ route('client.projets') }}" content="{{ $page_elements['accueil.hero.button']->content }}"/>
@@ -38,7 +42,7 @@
         </div>
 
         {{--  section 2  --}}
-        <div class="container mb-2">
+        <div class="section-2 container mb-2">
             <div class="row">
                 <div class="col-sm-8 col-md-5 col-lg-4 offset-md-1 offset-lg-1">
                     <h1 class="petit-titre">Il est important parce que</h1>
@@ -54,7 +58,7 @@
         </div>
 
         {{--  section 3  --}}
-        <div class="container mb-5">
+        <div class="section-3 container mb-5">
             <div class="row mb-4">
                 <div class="col-sm-6 col-md-5 col-lg-4 offset-md-1 offset-lg-1">
                     <h1 class="petit-titre">Les impactes</h1>
@@ -76,7 +80,7 @@
         </div>
 
         {{--  section 4  --}}
-        <div class="container pt-2 mb-5">
+        <div class="section-4 container pt-2 mb-5">
             <div class="row">
                 <div class="col">
                     <h1 class="grand-titre">Nos <span>témoignages</span></h1>
@@ -136,5 +140,18 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/animateGradient.js'])
+    @vite(['resources/js/animateGradient.js', 'resources/js/slide.js'])
+    <script>
+        const option = {
+            distance: '50px',
+            delay: 100,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-0', option);
+        option.delay += 200;
+        ScrollReveal().reveal('.section-1', option);
+        ScrollReveal().reveal('.section-2', option);
+        ScrollReveal().reveal('.section-3', option);
+        ScrollReveal().reveal('.section-4', option);
+    </script>
 @endpush

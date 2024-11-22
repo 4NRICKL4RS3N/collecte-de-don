@@ -43,6 +43,12 @@
     color: $white-color;
 }
 
+@media (max-width: 576px) {
+    .jumbotron-titre {
+        font-size: calc($big-title-size - 15px);
+    }
+}
+
 @media (max-width: 768px) {
     .jumbotron {
         .container-fluid {

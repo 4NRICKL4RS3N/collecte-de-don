@@ -67,9 +67,14 @@ if (url === '/donate' || url === '/contact') {
 }
 
 //projet cta
-if (url.startsWith('/projet/')) {
+if (url.startsWith('/projets/')) {
     const card_projet = document.querySelector('.project-cta');
     const gradientTrackerProjet = new CursorGradient(card_projet)
+    const gradient = [
+        'rgba(4, 15, 22, 1)',
+        'rgba(4, 15, 22, 1)',
+        'rgba(45, 40, 141, 1)'
+    ];
     document.addEventListener('mousemove', (e) => {
         const rect = gradientTrackerProjet.element.getBoundingClientRect();
         const x = e.clientX - rect.left;

@@ -5,15 +5,16 @@
 @push('scripts_head')
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 @endpush
 
 @section('content')
     <div class="container">
         <div class="row my-5">
-            <div class="col-lg-7 col-md-6 ">
+            <div class="reveal-1 col-lg-7 col-md-6 ">
                 <h1 class="grand-titre">Votre générosité est sur le point de <span>créer un impact !</span></h1>
             </div>
-            <div class="col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
+            <div class="reveal-2 col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
                     <form id="donation-form">
                         <div class="form-group mb-3">
@@ -272,6 +273,20 @@
                 }
             });
         });
+
+        //reveal animation
+        const option = {
+            distance: '50px',
+            delay: 100,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-1', option);
+        const option2 = {
+            distance: '50px',
+            delay: 200,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-2', option2);
     </script>
     @vite(['resources/js/animateGradient.js'])
 @endpush
