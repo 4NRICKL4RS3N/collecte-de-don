@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
         ]);
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->validateCsrfTokens(except: [
+            '/stripe-webhook',
+        ]);
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

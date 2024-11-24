@@ -16,6 +16,9 @@
             </div>
             <div class="reveal-2 col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
+                    <div class="error-message text-danger" {{--style="display: none"--}}>
+                        Veuillez spécifier un montant supérieur à 2 400 MGA
+                    </div>
                     <form id="donation-form">
                         <div class="form-group mb-3">
                             <label for="name" class="mb-0 form-label">Nom</label>
@@ -30,17 +33,17 @@
                         </div>
                         <label for="amount" class="mb-0 form-label">Montant</label>
                         <div id="select-amount" class="mb-1">
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="5">
-                                $5
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="3000">
+                                3k MGA
                             </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="10">
-                                $10
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="5000">
+                                5k MGA
                             </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="20">
-                                $20
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="10000">
+                                10k MGA
                             </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="50">
-                                $50
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="20000">
+                                20k MGA
                             </button>
                         </div>
                         <div class="mb-3">
@@ -148,7 +151,7 @@
                         '.Input:focus': {
                             boxShadow: 'none',
                             transition: 'all 0.1s ease',
-                            outline: '2px solid #DF253A',
+                            outline: '2px solid #505cfd',
                         },
                         '.Tab:active': {
                             boxShadow: 'none',

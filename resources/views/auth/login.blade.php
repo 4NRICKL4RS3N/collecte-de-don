@@ -17,6 +17,9 @@
                 <div class="card-group d-block d-md-flex row">
                     <div class="card col-md-7 p-4 mb-0">
                         <div class="card-body">
+                            <div class="container d-flex mb-4">
+                                <img class="w-25 mx-auto" src="{{ asset('images/logo.png') }}">
+                            </div>
                             <h1>Connexion</h1>
                             <p class="text-body-secondary">Connectez-vous avec votre compte admin</p>
                             <form method="post" action="{{ route('login') }}">

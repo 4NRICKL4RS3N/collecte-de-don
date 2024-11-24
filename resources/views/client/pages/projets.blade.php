@@ -159,16 +159,18 @@
 
         //description
         const maxWords = 10; // Set the maximum number of words to display
-        const textElement = document.querySelector('.description');
-        const readMoreLink = document.querySelector('.project-link');
+        const textElements = document.querySelectorAll('.description');
+        const readMoreLinks = document.querySelectorAll('.project-link');
 
-        const originalText = textElement.innerText;
-        const words = originalText.split(' ');
+        textElements.forEach(function (textElement, i) {
+            const originalText = textElement.innerText;
+            const words = originalText.split(' ');
 
-        if (words.length > maxWords) {
-            const truncatedText = words.slice(0, maxWords).join(' ') + '...';
-            textElement.innerText = truncatedText;
-            readMoreLink.style.display = 'inline';
-        }
+            if (words.length > maxWords) {
+                textElement.innerText = words.slice(0, maxWords).join(' ') + '...';
+                readMoreLinks[i].style.display = 'inline';
+            }
+        });
+
     </script>
 @endpush

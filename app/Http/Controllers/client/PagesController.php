@@ -29,6 +29,7 @@ class PagesController extends Controller
 
     public function projets_details($id) {
         $projet = Project::find($id);
+        $projet->progress = $projet->getProgress();
         return view('client.pages.projet-detail', ['projet' => $projet]);
     }
 
@@ -37,6 +38,8 @@ class PagesController extends Controller
     }
 
     public function a_propos() {
-        return view('client.pages.a-propos');
+        $page = Page::find(4);
+        $page_elements = $page->get_page_elements();
+        return view('client.pages.a-propos', ['page' => $page, 'page_elements' => $page_elements]);
     }
 }

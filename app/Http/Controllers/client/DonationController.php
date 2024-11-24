@@ -17,9 +17,11 @@ use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
 use Stripe\Webhook;
+use GuzzleHttp\Client;
 
 class DonationController extends Controller
 {
+    protected $exchangeData;
     public function index(Request $request)
     {
         $cb_svg = File::files(public_path('svg/cb'));
@@ -34,6 +36,8 @@ class DonationController extends Controller
 
     public function createPaymentIntent(Request $request)
     {
+        $this->setExchangeData();
+
         $validatedData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -61,12 +65,13 @@ class DonationController extends Controller
         $donation = Donation::create([
             'project_id' => $request->project,
             'user_id' => $user->id,
-            'donation_amount' => $validatedData['amount'] * 100,
+            'donation_amount' => $validatedData['amount'],
             'status' => 0,
         ]);
 
+        $exchanged_amount = $this->convertMGAtoUSD($validatedData['amount']);
         $paymentIntent = PaymentIntent::create([
-            'amount' => $validatedData['amount'] * 100, // Convert to cents
+            'amount' => round($exchanged_amount * 100), // Convert to cents
             'currency' => 'usd',
             'payment_method_types' => ['card', 'paypal'],
             'metadata' => [
@@ -131,6 +136,7 @@ class DonationController extends Controller
 
     public function handleWebhook(Request $request)
     {
+        $this->setExchangeData();
         Log::info("Webhook received");
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -155,6 +161,7 @@ class DonationController extends Controller
             $charge = $event->data->object;
             $paymentIntent = PaymentIntent::retrieve($charge->payment_intent);
             $donationId = $paymentIntent->metadata->donation_id;
+            $donation = Donation::find($donationId);
             $amount = $paymentIntent->amount;
             $paymentMethod = $charge->payment_method_details->type ?? 'unknown';
 
@@ -162,7 +169,7 @@ class DonationController extends Controller
                 ['transaction_id' => $charge->payment_intent],
                 [
                     'donation_id' => $donationId,
-                    'donation_amount' => $charge->amount,
+                    'donation_amount' => $donation->donation_amount,
                     'method' => $paymentMethod,
                     'status' => 0 // Default status
                 ]
@@ -215,5 +222,29 @@ class DonationController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    function setExchangeData() {
+        $client = new Client();
+        $endpoint = "https://v6.exchangerate-api.com/v6/".config('services.exchangerate_api.key')."/latest/MGA";
+        $response = $client->get($endpoint);
+        $data = json_decode($response->getBody(), true);
+        $this->exchangeData = $data;
+    }
+
+    function convertMGAtoUSD($amountMGA) {
+        if (isset($this->exchangeData['conversion_rates']['USD'])) {
+            $rate = $this->exchangeData['conversion_rates']['USD'];
+            return $amountMGA * $rate;
+        }
+        return 0;
+    }
+
+    function convertUSDtoMGA($amountUSD) {
+        if (isset($this->exchangeData['conversion_rates']['USD'])) {
+            $rate = $this->exchangeData['conversion_rates']['USD'];
+            return $amountUSD / $rate;
+        }
+        return 0;
     }
 }

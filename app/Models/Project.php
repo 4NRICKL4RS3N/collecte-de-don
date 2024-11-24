@@ -27,19 +27,6 @@ class Project extends Model
         return $this->hasMany(Donation::class);
     }
 
-    public function getStatus() {
-        if ($this->status == 0) {
-            return "en attente";
-        }
-        if ($this->status == 1) {
-            return "en cours";
-        }
-        if ($this->status == 2) {
-            return "terminé";
-        }
-        return "en attente";
-    }
-
     public function deleteObjectives() {
         foreach ($this->project_objectives as $project_objective) {
             $project_objective->delete();
@@ -79,6 +66,17 @@ class Project extends Model
 
     function getProgress() {
         return ($this->donation_target > 0) ? round(($this->donation_collected / $this->donation_target) * 100, 2) : 0;
+    }
+
+    function getStatus() {
+        $now = now();
+        if ($now->lessThan($this->date_start)) {
+            return 'en attente';
+        } elseif ($now->between($this->date_start, $this->date_end)) {
+            return 'en cours';
+        } elseif ($now->greaterThan($this->date_end)) {
+            return 'terminé';
+        }
     }
 
 }

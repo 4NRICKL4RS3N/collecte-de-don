@@ -141,7 +141,15 @@
             <div class="col-md-6 col-12">
                 <div class="card border-0 card-graphs">
                     <div class="card-header">
-                        <h5>Dons des 15 derniers jours</h5>
+                        <h5>Dons entre</h5>
+                        <div class="d-flex align-items-center mt-2">
+                            <p class="mb-0 d-flex align-items-center">
+                                <input type="date" id="start-date" class="form-control me-2" style="max-width: 150px;">
+                                <span class="me-2">et</span>
+                                <input type="date" id="end-date" class="form-control me-2" style="max-width: 150px;">
+                                <button class="btn btn-primary">Valider</button>
+                            </p>
+                        </div>
                     </div>
                     <div class="card-body">
                         <canvas id="donation_last"></canvas>

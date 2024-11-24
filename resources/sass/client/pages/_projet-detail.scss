@@ -33,6 +33,20 @@
         font-size: xx-large;
     }
 }
+@media (max-width: 1200px) {
+    .recolte {
+        span {
+            font-size: x-large;
+        }
+    }
+}
+@media (max-width: 576px) {
+    .recolte {
+        span {
+            font-size: large;
+        }
+    }
+}
 
 .projet-detail {
     .progress {

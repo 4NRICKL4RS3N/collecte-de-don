@@ -143,10 +143,10 @@ async function initDashboard() {
     console.log(dashboardData.users)
     createCharts(dashboardData);
 
-    document.getElementById("total_donation").innerText = dashboardData.total_donation.amount
-    document.getElementById("total_donors").innerText = dashboardData.total_donors.count
-    document.getElementById("total_donation_count").innerText = dashboardData.total_donation_count.count
-    document.getElementById("users_donation").innerText = dashboardData.users_donation.name
+    document.getElementById("total_donation").innerText = new Intl.NumberFormat('en-US', { useGrouping: true }).format(dashboardData.total_donation.amount).replace(/,/g, ' ') + " MGA";
+    document.getElementById("total_donors").innerText = dashboardData.total_donors.count;
+    document.getElementById("total_donation_count").innerText = dashboardData.total_donation_count.count;
+    document.getElementById("users_donation").innerText = dashboardData.users_donation.name;
 
     const tableBody = document.querySelector('#users-table tbody');
     dashboardData.users.forEach(user => {

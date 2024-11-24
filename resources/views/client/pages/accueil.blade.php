@@ -9,28 +9,46 @@
 @section('content')
     {{--  jumbotron  --}}
     <div id="accueil">
-        <section class="jumbotron" style="background-image: url('{{ asset($page_elements['accueil.hero.bgImage']->content) }}')">
-            <div class="container-fluid">
-                <div class="row reveal-0">
-                    <div class="col-md-8 offset-md-2">
-                        <h1 class="display-4 jumbotron-titre">{{ $page_elements['accueil.hero.titre']->content }}</h1>
+        <div class="container hero reveal-0">
+            <div class="row align-items-center">
+                <div class="offset-md-1 col-12 col-md-8 col-xl-8 mb-lg-0 pb-5 py-md-6">
+                    <div class="lc-block mb-3 mb-md-3 lh-1">
+                        <div editable="rich">
+                            <h1 class="display-4 jumbotron-titre">{{ $page_elements['accueil.hero.titre']->content }}</h1>
+                        </div>
+                    </div>
+                    <div class="lc-block">
                         <x-client.button add-class="btn-primary" lien="{{ route('client.projets') }}" content="{{ $page_elements['accueil.hero.button']->content }}"/>
                     </div>
                 </div>
+                {{--RIGHT TEXT
+                <div class="col-12 col-md-6 col-xl-5">
+                    <div class="lc-block px-md-4 px-lg-5 lh-lg">
+                        <div editable="rich">
+                            <p class="rfs-7"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et metus id
+                                ligula malesuada placerat sit amet quis enim.</p>
+                        </div>
+                    </div>
+                </div>--}}
             </div>
-        </section>
+            <div class="row">
+                <div class="col-md-12 g-0">
+                    <div class="lc-block px-md-0 px-3">
+                        <img class="img-fluid w-100 rounded-3"
+                             src="{{ asset($page_elements['accueil.hero.bgImage']->content) }}"
+                             alt="" style="object-fit:cover;
+                             max-height:35vh">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{--  section 1  --}}
         <div class="container section-1 text-sm-start mb-5">
             <div class="row gy-2">
                 <div class="col-md-6">
                     <h1 class="grand-titre">Notre projet d'<span>évangélisation</span></h1>
-                    <p class="mt-2 mt-xl-5">Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-                        Aliquam
-                        in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices
-                        mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo,
-                        non
-                        suscipit magna interdum eu. Curabitur pellentesque nibh nibh, at maximus ante.</p>
+                    <p class="mt-2 mt-xl-5">{{ $page_elements['accueil.section1.text']->content }}</p>
                 </div>
                 <div class="col-md-5 offset-0 offset-md-1 text-center text-sm-center text-md-end flex-fill"
                      style="transform: perspective(0px);">
@@ -48,11 +66,7 @@
                     <h1 class="petit-titre">Il est important parce que</h1>
                 </div>
                 <div class="col-md-5 offset-md-6">
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.
-                        Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
-                        vitae
-                        mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna
-                        interdum eu. Curabitur pellentesque nibh nibh, at maximus ante.</p>
+                    <p>{{ $page_elements['accueil.section2.text']->content }}</p>
                 </div>
             </div>
         </div>
@@ -103,7 +117,9 @@
                                                 <h5 class="quote">“</h5>
                                                 <div class="card-body pt-4">
                                                     <p class="card-text quote-text">{{ $temoignage->statement }}</p>
-                                                    <p class="card-text"><small class="text-muted">{{ $temoignage->testifier_name }}</small></p>
+                                                    <p class="card-text"><small
+                                                            class="text-muted">{{ $temoignage->testifier_name }}</small>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,7 +144,8 @@
                                     <h1 class="fw-medium text-white mb-3">
                                         Votre <span class="fw-bolder">générosité</span> fait la différence.
                                     </h1>
-                                    <x-client.button add-class="btn-light" lien="/donate" content="Faire un don maintenant"/>
+                                    <x-client.button add-class="btn-light" lien="/donate"
+                                                     content="Faire un don maintenant"/>
                                 </div>
                             </div>
                         </div>

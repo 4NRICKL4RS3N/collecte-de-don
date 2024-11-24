@@ -64,8 +64,6 @@
                     <legend class="float-none w-auto px-3 fs-5">Section 1</legend>
                     <div class="row">
                         <div class="col-6">
-                            <textarea type="text" class="form-control border-black rounded-0 bg-white fs-3 mb-3"
-                                      id="accueil.section1.titre" name="accueil.section1.titre" placeholder="Grand titre">{{ $accueil_element["accueil.section1.titre"]->content }}</textarea>
                             <textarea type="text" class="form-control border-black rounded-0 bg-white fs-5"
                                       id="accueil.section1.text" name="accueil.section1.text" placeholder="Text">{{ $accueil_element["accueil.section1.text"]->content }}</textarea>
                         </div>
@@ -79,8 +77,6 @@
                     <legend class="float-none w-auto px-3 fs-5">Section 2</legend>
                     <div class="row">
                         <div class="col-6">
-                            <textarea type="text" class="form-control border-black rounded-0 bg-white fs-3 mb-3"
-                                      id="accueil.section2.titre" name="accueil.section2.titre" placeholder="Grand titre">{{ $accueil_element["accueil.section2.titre"]->content }}</textarea>
                             <textarea type="text" class="form-control border-black rounded-0 bg-white fs-5"
                                       id="accueil.section2.text" name="accueil.section2.text" placeholder="Text">{{ $accueil_element["accueil.section2.text"]->content }}</textarea>
                         </div>

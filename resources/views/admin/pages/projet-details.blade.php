@@ -53,7 +53,7 @@
                 <label class="text-body-secondary mb-1">Objectifs <span class="fw-bold">({{ count($projet->project_objectives) }})</span></label>
                 <div>
                     @foreach($projet->project_objectives as $objectif)
-                        <span class="px-3 py-2 fs-6 fw-medium badge badge-outline-primary rounded-pill text-bg-primary">{{ $objectif->objective }}</span>
+                        <span class="mt-2 px-3 py-2 fs-6 fw-medium badge badge-outline-primary rounded-pill text-bg-primary">{{ $objectif->objective }}</span>
                     @endforeach
                 </div>
             </div>

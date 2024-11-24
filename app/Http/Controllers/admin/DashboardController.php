@@ -21,7 +21,7 @@ class DashboardController extends Controller
             $item->payment_date = Carbon::parse($item->payment_date)->translatedFormat('j M Y');
         }
         $projects_classement = Project::select('id', 'title', 'donation_collected')
-            ->orderBy('donation_collected', 'desc')
+            ->orderBy('id', 'asc')
             ->get();
         $projects_donation_count = DB::select("select * from v_projects_donation_count");
         $projects_avg_donation = DB::select("select * from v_projects_avg_donation");

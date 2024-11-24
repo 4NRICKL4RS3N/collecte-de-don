@@ -4,6 +4,11 @@
     margin-bottom: 2rem;
 }
 
+.project-status-pill {
+    border: solid 2px $black-color;
+    color: $black-color;
+}
+
 .project-card {
     .card {
         color: white;

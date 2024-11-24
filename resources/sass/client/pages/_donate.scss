@@ -9,3 +9,18 @@
     background: radial-gradient(circle at center, rgba(4, 15, 22, 1), rgba(4, 15, 22, 1), rgba(45, 40, 141, 1));
     color: white;
 }
+
+#select-amount {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping when necessary */
+    justify-content: space-between; /* Distribute buttons evenly with equal spacing */
+    gap: 0;
+}
+
+.amount-btn {
+    flex: 1 1 calc(25% - 0.5rem); /* Dynamically resize buttons to take up equal space */
+    min-width: 100px; /* Set a minimum width for buttons */
+    text-align: center;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}

@@ -9,14 +9,21 @@
 @section('content')
     <div class="container">
         <div class="reveal-1 row titre-container">
-            <h1 class="grand-titre">{{ $projet->title }}</h1>
+            <div class="col">
+                <h1 class="grand-titre">{{ $projet->title }}</h1>
+                <span class="mb-4 badge rounded-pill project-status-pill">{{ $projet->getStatus() }}</span>
+            </div>
         </div>
 
         <div class="reveal-2 row mb-4 projet-detail">
-            <div class="col-lg-5 col-sm-12 offset-lg-1 offset-sm-0">
+            <div class="col-lg-6 col-sm-12 offset-lg-1 offset-sm-0">
 
                 {{-- Progress Bar --}}
-                <p class="recolte"><span>{{ number_format($projet->donation_collected, 0, ',', ' ') }} Ar</span> récoltés sur <span>{{ number_format($projet->donation_target, 0, ',', ' ') }} Ar</span></p>
+                <p class="recolte">
+                    <span>{{ number_format($projet->donation_collected, 0, ',', ' ') }} Ar</span>
+                    récoltés sur
+                    <span>{{ number_format($projet->donation_target, 0, ',', ' ') }} Ar</span>
+                </p>
                 <div class="progress mb-3">
                     <div
                         class="progress-bar"

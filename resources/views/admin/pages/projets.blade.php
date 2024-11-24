@@ -39,15 +39,6 @@
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="status">Status</label>
-                        <select name="status" id="status" class="form-select" style="width: fit-content" required>
-                            <option value="0" selected>en attente</option>
-                            <option value="1">en cours</option>
-                            <option value="2">terminé</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-2">
                         <div class="tags-input">
                             <label for="input-tag-container">Objectifs</label>
                             <ul id="tags"></ul>
@@ -100,7 +91,7 @@
                         <tr data-url="/admin/projets/{{ $projet->id }}">
                             <td><a class="text-decoration-none text-black hover-underline" href="/admin/projets/{{ $projet->id }}">{{ $projet->id }}</a></td>
                             <td><a class="text-decoration-none text-black hover-underline" href="/admin/projets/{{ $projet->id }}">{{ $projet->title }}</a></td>
-                            <td>{{ $projet->status }}</td>
+                            <td>{{ $projet->getStatus() }}</td>
                             <td class="text-end">{{ number_format($projet->donation_target, 0, ',', ' ') }}</td>
                             <td class="text-end">{{ number_format($projet->donation_collected, 0, ',', ' ') }}</td>
                             {{--                    <td class="text-end">{{ \Carbon\Carbon::parse($projet->date_start)->translatedFormat('d F Y') }}</td>--}}
@@ -160,16 +151,6 @@
                         <div class="form-group mb-2">
                             <label for="update-location">Lieu</label>
                             <input type="text" name="location" id="update-location" class="form-control" required>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <label for="update-status">Status</label>
-                            <select name="status" id="update-status" class="form-select" style="width: fit-content"
-                                    required>
-                                <option value="0" selected>en attente</option>
-                                <option value="1">en cours</option>
-                                <option value="2">terminé</option>
-                            </select>
                         </div>
 
                         <div class="form-group mb-2">
@@ -284,7 +265,6 @@
         let inputTitleToUpdate = document.getElementById('update-title');
         let inputDescriptionToUpdate = document.getElementById('update-description');
         let inputLocationToUpdate = document.getElementById('update-location');
-        let inputStatusToUpdate = document.getElementById('update-status');
         let inputDonationTargetToUpdate = document.getElementById('update-donation_target');
         let inputDateStartToUpdate = document.getElementById('update-date_start');
         let inputDateEndToUpdate = document.getElementById('update-date_end');
@@ -298,7 +278,6 @@
                 inputTitleToUpdate.value = this.getAttribute('update-data-title');
                 quill_update.root.innerHTML = this.getAttribute('update-data-description');
                 inputLocationToUpdate.value = this.getAttribute('update-data-location');
-                inputStatusToUpdate.value = this.getAttribute('update-data-status');
                 inputDonationTargetToUpdate.value = this.getAttribute('update-data-donation_target');
                 inputDateStartToUpdate.value = this.getAttribute('update-data-date_start');
                 inputDateEndToUpdate.value = this.getAttribute('update-data-date_end');

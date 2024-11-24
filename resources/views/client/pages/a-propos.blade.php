@@ -13,16 +13,10 @@
         </div>
         <div class="reveal-2 row mb-5">
             <div class="col-md-6 px-1">
-                <div class="a-propos-image-container rounded w-100 h-100"></div>
+                <div class="a-propos-image-container rounded w-100 h-100" style="background-image: url('{{ asset("images/a-propos.jpg") }}');"></div>
             </div>
-            <div class="col-md-6 px-5 py-md-5 py-3">
-                <h2 class="fw-bolder">Nous accomplissons la volonté de Dieu</h2>
-                <p>
-                    Oporteatludus adipisci nullam tractatos eloquentiam alienum gloriatur. Prodefinitionem posse.
-                    Ridenscursus ancillae signiferumque nibh solum propriae eum taciti. Suscipitreprimique lacus postea
-                    fames ubique ius autem ad pharetra nonumy quot feugait theophrastus solum quaerendum graeco
-                    venenatis cetero viderer.
-                </p>
+            <div class="col-md-6 px-5 py-md-5 py-3 contact-content">
+                {!! $page_elements['apropos.content']->content !!}
                 <x-client.button add-class="btn-primary" content="Nous contacter" lien="/contact"/>
             </div>
         </div>
