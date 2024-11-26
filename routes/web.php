@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('/accueil', [PagesController::class, 'accueil'])->name('client.accueil');
 
 Route::get('/projets', [PagesController::class, 'projets'])->name('client.projets');
+Route::get('/projets/search', [ProjectController::class, 'search'])->name('client.projets.search');
 
 Route::get('/projets/{id}', [PagesController::class, 'projets_details'])->name('client.projets.details');
 

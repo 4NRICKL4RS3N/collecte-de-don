@@ -183,3 +183,14 @@
 .project-search {
     border: 0px solid $primary-color;
 }
+
+.search-button {
+    padding: 0.375rem 0.75rem !important;
+}
+
+.search-pill {
+    padding: 0.375rem 0.75rem !important;
+    color: white;
+    border-radius: 20px;
+    background-color: $primary-color;
+}

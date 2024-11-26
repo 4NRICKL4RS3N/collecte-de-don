@@ -157,7 +157,8 @@ class ProjectController extends Controller
         return response()->json(['files' => $processedFiles]);
     }
 
-    public function destroyMedia(Project_image $id) {
+    public function destroyMedia(Project_image $id)
+    {
         $media = $id;
         $path = str_replace('/storage', 'public', $media->url);
         if (Storage::exists($path)) {
@@ -167,5 +168,53 @@ class ProjectController extends Controller
         $media->delete();
         return response()->json(['success' => true]);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $filter = $request->input('filter');
+
+        $projectsQuery = Project::query()
+            ->where('title', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%");
+
+        // Appliquer le filtre
+        switch ($filter) {
+            case 'fonds_leves':
+                $projectsQuery->orderBy('donation_collected', 'desc');
+                break;
+            case 'les_plus_proches_du_but':
+                // For this filter, you need to calculate the progress dynamically.
+                // Instead of getting the projects early, we will handle progress calculation after fetching the results.
+                break;
+            case 'les_plus_recents':
+                $projectsQuery->orderBy('created_at', 'desc');
+                break;
+            default:
+            case 'pertinence':
+                $projectsQuery->orderByRaw('
+                CASE
+                    WHEN date_start IS NOT NULL AND date_end IS NOT NULL AND NOW() BETWEEN date_start AND date_end THEN 1
+                    ELSE 2
+                END ASC
+            ')
+                    ->orderBy('id', 'asc');
+                break;
+        }
+
+        // Fetch the projects after applying filters
+        $projects = $projectsQuery->get();
+
+        // Apply progress calculation
+        $projects = $projects->map(function ($project) {
+            $project->progress = $project->getProgress();
+            $project->objectives = $project->project_objectives->pluck('objective');
+            return $project;
+        });
+
+
+        return response()->json($projects);
+    }
+
 
 }
