@@ -16,9 +16,7 @@
             </div>
             <div class="reveal-2 col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
-                    <div class="error-message text-danger" {{--style="display: none"--}}>
-                        Veuillez spécifier un montant supérieur à 2 400 MGA
-                    </div>
+                    <div class="error-message text-danger"></div>
                     <form id="donation-form">
                         <div class="form-group mb-3">
                             <label for="name" class="mb-0 form-label">Nom</label>
@@ -84,6 +82,7 @@
         var notyf = new Notyf({
             position: {x: 'center', y: 'top'},
         });
+
         {{--    stripe    --}}
         const stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
         let elements;
@@ -100,12 +99,14 @@
         const customAmountInput = document.getElementById("custom-amount");
         const loadingContinue = document.getElementById('loading-sprite-element');
         const loadingSubmit = document.getElementById('loading-payment');
+        const errorContainer = document.querySelector('.error-message');
         let paymentElement;
 
         const donation_form = document.getElementById('donation-form');
         let urlParams = new URLSearchParams(window.location.search);
 
         let donation = null;
+        //create payment intent
         async function handleFormSubmit(e) {
             e.preventDefault();
             const name = name_input.value;
@@ -113,90 +114,83 @@
             const amount = amount_input.value;
             const project = urlParams.get('project');
 
+            errorContainer.innerHTML = "";
             continue_button_text.style.display = 'none';
             loadingContinue.style.display = 'inline-block';
-            try {
-                const response = await fetch('{{route('createPaymentIntent')}}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({name, email, amount, project})
-                });
 
-                const { clientSecret, donation_id } = await response.json();
-                donation = donation_id;
-                paymentIntentId = clientSecret.split('_secret')[0];
-
-                const appearance = {
-                    theme: 'flat',
-                    variables: {
-                        colorPrimary: '#505cfd',
-                        colorBackground: '#ffffff',
-                        colorText: '#30313d',
-                        colorDanger: '#B22222',
-                        fontFamily: 'Roc Grotesk',
-                        spacingUnit: '2px',
-                        borderRadius: '4px',
-                    },
-                    rules: {
-                        '.Label': {
-                            color: 'white',
-                        },
-                        '.Input': {
-                            transition: 'all 0.1s ease',
-                            outline: '0 solid white',
-                        },
-                        '.Input:focus': {
-                            boxShadow: 'none',
-                            transition: 'all 0.1s ease',
-                            outline: '2px solid #505cfd',
-                        },
-                        '.Tab:active': {
-                            boxShadow: 'none',
+            fetch('{{route('createPaymentIntent')}}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({name, email, amount, project})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.success) {
+                        const clientSecret = data.clientSecret;
+                        paymentIntentId = data.clientSecret.split('_secret')[0];
+                        const appearance = {
+                            theme: 'flat',
+                            variables: {
+                                colorPrimary: '#505cfd',
+                                colorBackground: '#ffffff',
+                                colorText: '#30313d',
+                                colorDanger: '#B22222',
+                                fontFamily: 'Roc Grotesk',
+                                spacingUnit: '2px',
+                                borderRadius: '4px',
+                            },
+                            rules: {
+                                '.Label': {
+                                    color: 'white',
+                                },
+                                '.Input': {
+                                    transition: 'all 0.1s ease',
+                                    outline: '0 solid white',
+                                },
+                                '.Input:focus': {
+                                    boxShadow: 'none',
+                                    transition: 'all 0.1s ease',
+                                    outline: '2px solid #505cfd',
+                                },
+                                '.Tab:active': {
+                                    boxShadow: 'none',
+                                }
+                            }
+                        };
+                        const style = {
+                            label: {
+                                color: 'white',
+                            },
                         }
-                    }
-                };
-                const style = {
-                    label: {
-                        color: 'white',
-                    },
-                }
-                elements = stripe.elements({clientSecret, appearance});
-                paymentElement = elements.create('payment', style);
-                paymentElement.mount('#payment-element');
-            } catch (e) {
-                //annuler le don
-                fetch(`/donate/failed/${donation}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        elements = stripe.elements({clientSecret, appearance});
+                        paymentElement = elements.create('payment', style);
+                        paymentElement.mount('#payment-element');
+
+                        payment_element_container.style.display = 'block';
+                        submit_button.style.display = 'block';
+                        go_back_button.style.display = 'block';
+                        name_input.disabled = true;
+                        email_input.disabled = true;
+                        amount_input.disabled = true;
+                        customAmountInput.disabled = true;
+                        continue_button.hidden = true;
+                        loadingContinue.style.display = 'none';
+                    } else {
+                        console.log(data.message);
+                        errorContainer.innerHTML = data.message
+                        continue_button_text.style.display = 'block';
+                        loadingContinue.style.display = 'none';
                     }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            notyf.error('Don annulé');
-                            location.reload();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-
-            } finally {
-                payment_element_container.style.display = 'block';
-                submit_button.style.display = 'block';
-                go_back_button.style.display = 'block';
-                name_input.disabled = true;
-                email_input.disabled = true;
-                amount_input.disabled = true;
-                customAmountInput.disabled = true;
-                continue_button.hidden = true;
-                loadingContinue.style.display = 'none';
-            }
+                .catch(error => {
+                    console.log(error);
+                    continue_button_text.style.display = 'block';
+                    loadingContinue.style.display = 'none';
+                })
         }
 
         async function handlePaymentSubmit(e) {
@@ -218,23 +212,6 @@
         }
 
         function handleGoBack() {
-            fetch(`/donate/delete/${donation}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('donation deleted')
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
             if (paymentElement) {
                 paymentElement.unmount();
                 paymentElement = null;

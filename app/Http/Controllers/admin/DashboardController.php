@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -16,7 +17,7 @@ class DashboardController extends Controller
 
     public function dashboardData() {
         $donation_breakdown = DB::select("select * from v_donation_breakdown");
-        $donation_last = DB::select("call p_donation_summary(15)");
+        $donation_last = DB::select("call p_donation_summary(DATE_SUB(NOW(), INTERVAL 15 DAY), NOW())");
         foreach ($donation_last as $item) {
             $item->payment_date = Carbon::parse($item->payment_date)->translatedFormat('j M Y');
         }
@@ -56,6 +57,18 @@ class DashboardController extends Controller
             'users_donation' => $users_donation,
             'users' => $users,
         ]);
+    }
+
+    function donation_between_two_dates(Request $request) {
+        $start_date = $request->query('start_date');
+        $end_date = $request->query('end_date');
+
+        $data = DB::select("
+        CALL p_donation_summary(?, ?)", [$start_date, $end_date]);
+        foreach ($data as $item) {
+            $item->payment_date = Carbon::parse($item->payment_date)->translatedFormat('j M Y');
+        }
+        return response()->json($data);
     }
 
 }

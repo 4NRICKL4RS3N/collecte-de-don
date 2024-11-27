@@ -28,7 +28,6 @@ Route::get('/a-propos', [PagesController::class, 'a_propos'])->name('client.a-pr
 
 Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
 Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
-Route::post('/confirm-payment', [DonationController::class, 'process'])->name('confirmPayment');
 Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])->name('donate.thank-you');
 Route::post('/donate/failed/{id}', [DonationController::class, 'donationFailed'])->name('donate.failed');
 Route::delete('/donate/delete/{id}', [DonationController::class, 'donationDestroy'])->name('donate.destroy');
@@ -38,6 +37,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin');
         Route::get('/dashboard-data', [DashboardController::class, 'dashboardData'])->name('admin.data');
+        Route::get('/donation-between-dates', [DashboardController::class, 'donation_between_two_dates'])->name('admin.data.between2dates');
         Route::prefix('projets')->group(function () {
             Route::get('/', [ProjectController::class, 'index'])->name('admin.projets');
             Route::post('/', [ProjectController::class, 'store'])->name('admin.projets.store');

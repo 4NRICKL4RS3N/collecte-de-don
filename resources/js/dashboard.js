@@ -7,6 +7,20 @@ const transparentBlue = 'rgba(64,168,245,0.5)';
 const red = '#ff6060';
 const transparentRed = 'rgba(255,96,96,0.5)';
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Set the end-date to today's date (current date)
+    const endDate_date = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    document.getElementById('end-date').value = endDate_date;
+
+    // Set the start-date to 15 days before the current date
+    currentDate.setDate(currentDate.getDate() - 15);
+    const startDate_date = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    document.getElementById('start-date').value = startDate_date;
+});
+
 async function fetchDashboardData() {
     try {
         const response = await fetch('/admin/dashboard-data');
@@ -33,7 +47,7 @@ function createCharts(data) {
         }
     });
 
-    new Chart(document.getElementById('donation_last').getContext('2d'), {
+    const donationChart = new Chart(document.getElementById('donation_last').getContext('2d'), {
         type: 'line',
         options: {
             responsive: true,
@@ -48,6 +62,34 @@ function createCharts(data) {
             }]
         }
     });
+
+    function updateChart() {
+        const startDate = document.getElementById('start-date').value;
+        const endDate = document.getElementById('end-date').value;
+
+        if (!startDate || !endDate) {
+            return; // Do nothing if both dates are not selected
+        }
+
+        fetch(`/admin/donation-between-dates?start_date=${startDate}&end_date=${endDate}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update chart data
+                const labels = data.map(item => item.payment_date);
+                const donations = data.map(item => item.total_donation);
+
+                donationChart.data.labels = labels;
+                donationChart.data.datasets[0].data = donations;
+
+                donationChart.update(); // Re-render the chart
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                alert('Erreur lors de la récupération des données.');
+            });
+    }
+    document.getElementById('start-date').addEventListener('input', updateChart);
+    document.getElementById('end-date').addEventListener('input', updateChart);
 
     new Chart(document.getElementById('projects_classement').getContext('2d'), {
         type: 'bar',

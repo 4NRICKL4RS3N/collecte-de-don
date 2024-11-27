@@ -9,10 +9,12 @@ use App\Models\Donation;
 use App\Models\Payment;
 use App\Models\Project;
 use App\Models\User;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
@@ -21,7 +23,6 @@ use GuzzleHttp\Client;
 
 class DonationController extends Controller
 {
-    protected $exchangeData;
     public function index(Request $request)
     {
         $cb_svg = File::files(public_path('svg/cb'));
@@ -36,8 +37,6 @@ class DonationController extends Controller
 
     public function createPaymentIntent(Request $request)
     {
-        $this->setExchangeData();
-
         $validatedData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -61,31 +60,37 @@ class DonationController extends Controller
                 'is_admin' => 0,
             ]);
         }
-        // create donation
-        $donation = Donation::create([
-            'project_id' => $request->project,
-            'user_id' => $user->id,
-            'donation_amount' => $validatedData['amount'],
-            'status' => 0,
-        ]);
-
-        $exchanged_amount = $this->convertMGAtoUSD($validatedData['amount']);
-        $paymentIntent = PaymentIntent::create([
-            'amount' => round($exchanged_amount * 100), // Convert to cents
-            'currency' => 'usd',
-            'payment_method_types' => ['card', 'paypal'],
-            'metadata' => [
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'donation_id' => $donation->id,
-            ],
-        ]);
-//        Log::info('intent made', [$paymentIntent->client_secret, $request->name, $request->email]);
-
-        return response()->json([
-            'clientSecret' => $paymentIntent->client_secret,
-            'donation_id' => $donation->id,
-        ]);
+        $donation = $user->createDonation($request->project, $validatedData['amount']);
+        try {
+            $paymentIntent = $user->createPaymentIntent($request->project, $validatedData['amount']);
+            return response()->json([
+                'success' => true,
+                'clientSecret' => $paymentIntent->client_secret,
+                'donation_id' => $paymentIntent->metadata->donation_id,
+            ]);
+        } catch (GuzzleException $e) {
+            Log::error($e);
+            $donation->cancel();
+            return response()->json([
+                'success' => false,
+                'message' => "Erreur sur la conversion de devise"
+            ]);
+        } catch (ApiErrorException $e) {
+            Log::error($e);
+            $donation->cancel();
+            return response()->json([
+                'success' => false,
+                'message' => "Le montant spécifié est inférieur au montant minimum autorisé. Utilisez un montant plus élevé et réessayez.",
+            ]);
+        } catch (\Throwable $e) {
+            // Catch any other exceptions
+            Log::error($e); // Log the unexpected error for debugging
+            $donation->cancel();
+            return response()->json([
+                'success' => false,
+                'message' => 'Une erreur inattendue s\'est produite. Veuillez contacter les responsables.',
+            ]);
+        }
     }
 
     public function donationFailed($id)
@@ -112,31 +117,8 @@ class DonationController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function process(Request $request)
-    {
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        try {
-            $paymentIntent = PaymentIntent::retrieve($request->payment_intent);
-
-            if ($paymentIntent->status === 'succeeded') {
-                // Save payment to database
-                Log::info('paymentmande', [$paymentIntent->id, $paymentIntent->amount, $paymentIntent->metadata]);
-
-                return response()->json(['success' => true]);
-            } else {
-                Log::error('Payment not successful');
-                return response()->json(['error' => 'Payment not successful'], 400);
-            }
-        } catch (\Exception $e) {
-            Log::error('error', [$e->getMessage()]);
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
-
     public function handleWebhook(Request $request)
     {
-        $this->setExchangeData();
         Log::info("Webhook received");
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -224,27 +206,4 @@ class DonationController extends Controller
         return response()->json(['success' => true]);
     }
 
-    function setExchangeData() {
-        $client = new Client();
-        $endpoint = "https://v6.exchangerate-api.com/v6/".config('services.exchangerate_api.key')."/latest/MGA";
-        $response = $client->get($endpoint);
-        $data = json_decode($response->getBody(), true);
-        $this->exchangeData = $data;
-    }
-
-    function convertMGAtoUSD($amountMGA) {
-        if (isset($this->exchangeData['conversion_rates']['USD'])) {
-            $rate = $this->exchangeData['conversion_rates']['USD'];
-            return $amountMGA * $rate;
-        }
-        return 0;
-    }
-
-    function convertUSDtoMGA($amountUSD) {
-        if (isset($this->exchangeData['conversion_rates']['USD'])) {
-            $rate = $this->exchangeData['conversion_rates']['USD'];
-            return $amountUSD / $rate;
-        }
-        return 0;
-    }
 }

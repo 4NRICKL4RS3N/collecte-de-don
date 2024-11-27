@@ -167,6 +167,7 @@
                 projects.forEach(project => {
                     const card = document.createElement('div');
                     card.className = 'project-card col';
+                    card.setAttribute('data-id', project.id);
 
                     let link_projet = `/projets/${project.id}`
 

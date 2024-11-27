@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailTest;
 use App\Models\Impact;
 use App\Models\Page;
 use App\Models\Project;
@@ -41,5 +42,14 @@ class PagesController extends Controller
         $page = Page::find(4);
         $page_elements = $page->get_page_elements();
         return view('client.pages.a-propos', ['page' => $page, 'page_elements' => $page_elements]);
+    }
+
+    public function mail() {
+        try {
+            $response = \Mail::to("contact.anrick@gmail.com")->send(new MailTest("anrick"));
+            dd($response);
+        } catch (\Exception $e) {
+            \Log::error("unable to send mmessage", $e->getMessage());
+        }
     }
 }

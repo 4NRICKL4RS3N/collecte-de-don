@@ -13,10 +13,11 @@ return new class extends Migration
     {
         DB::statement("
             create view v_projects_donation_count as (
-                select projects.id, count(d.id) as count from projects
-                left join donations d on projects.id = d.project_id
-                left join v_valid_payments p on d.id = p.donation_id
-                group by projects.id
+                select d.project_id as id, count(d.project_id) as count from v_valid_payments p
+                join donations d on p.donation_id = d.id
+                where d.project_id is not null
+                group by d.project_id
+                order by d.project_id asc
         )");
     }
 

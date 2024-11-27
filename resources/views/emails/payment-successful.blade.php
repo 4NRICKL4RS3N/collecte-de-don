@@ -59,12 +59,12 @@
 <div class="container">
     <p>Cher <span class="highlight">{{ $donation->user->name }}</span>,</p>
 
-    <p>Nous vous remercions pour votre don généreux de <span class="highlight">${{ number_format($payment->donation_amount / 100, 2) }}</span>.
+    <p>Nous vous remercions pour votre don généreux de <span class="highlight">{{ number_format($payment->donation_amount, 2) }} MGA</span>.
         Votre contribution permettra de faire la différence.</p>
 
     <h2>Détails du don :</h2>
     <ul class="donation-details">
-        <li>Montant : ${{ number_format($payment->donation_amount / 100, 2) }}</li>
+        <li>Montant : {{ number_format($payment->donation_amount, 2) }} MGA</li>
         <li>Transaction ID : {{ $payment->transaction_id }}</li>
         <li>Date : {{ $payment->created_at->format('F j, Y') }}</li>
     </ul>
