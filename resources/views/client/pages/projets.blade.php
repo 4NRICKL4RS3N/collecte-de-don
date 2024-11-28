@@ -20,7 +20,7 @@
 
             <div class="col-md-6 text-md-end text-center mt-4 mt-md-0">
                 <p class="mb-0">
-                    <span class="me-2">Filtrer par</span>
+                    <span class="me-2">Trier par</span>
                     <select class="form-select select-filtre" name="filtre">
                         <option value="pertinence">Pertinence</option>
                         <option value="fonds_leves">Fonds levés</option>

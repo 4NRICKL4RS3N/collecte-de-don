@@ -288,8 +288,9 @@
                 let updateTag;
                 for (const objectif of objectifsToUpdate) {
                     updateTag = document.createElement('li');
+                    updateTag.classList.add('objectif-item');
                     updateTag.innerText = objectif;
-                    updateTag.innerHTML += '<button type="button" class="delete-button"><i class="bi bi-x"></i></button>';
+                    updateTag.innerHTML += '<button type="button" class="delete-button-objectif"><i class="bi bi-x"></i></button>';
                     updateTags.append(updateTag);
                 }
                 console.log(objectifsToUpdate);
@@ -347,11 +348,12 @@
                 event.preventDefault();
 
                 const tag = document.createElement('li');
+                tag.classList.add('objectif-item');
                 const tagContent = input.value.trim();
 
                 if (tagContent !== '') {
                     tag.innerText = tagContent;
-                    tag.innerHTML += '<button type="button" class="delete-button"><i class="bi bi-x"></i></button>';
+                    tag.innerHTML += '<button type="button" class="delete-button-objectif"><i class="bi bi-x"></i></button>';
                     tags.appendChild(tag);
                     input.value = '';
                     objectifs.push(tagContent);
@@ -369,7 +371,7 @@
         });
 
         function deleteObjective(event, objectifs) {
-            const deleteButton = event.target.closest('.delete-button');
+            const deleteButton = event.target.closest('.delete-button-objectif');
             if (deleteButton) {
                 const tag = deleteButton.parentNode;
                 const tagContent = tag.firstChild.textContent.trim();

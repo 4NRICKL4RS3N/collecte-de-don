@@ -487,6 +487,16 @@
         const faqList = document.getElementById('faq-list');
 
         let faqs = [];
+        document.addEventListener('DOMContentLoaded', function () {
+            const faqsString = '{{ $footer_element['footer.faq']->content }}';
+            let pairs = faqsString.split("|||");
+            pairs.forEach(pair => {
+                let [question, answer] = pair.split("||"); // Destructure question and answer
+                const faq = { question, answer }; // Create the faq object
+                faqs.push(faq); // Add to the faqs array
+            });
+            updateFaqList();
+        });
 
         function addFaq() {
             const question = questionInput.value.trim();

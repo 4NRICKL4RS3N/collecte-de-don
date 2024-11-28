@@ -63,6 +63,7 @@ class CMSController extends Controller
         })->values();
 
         $keys = $transformedData->pluck('key')->toArray();
+        \Log::info($keys);
 
         $pageElements = Page_element::whereIn('key', $keys)->get()->keyBy('key');
 
@@ -74,7 +75,7 @@ class CMSController extends Controller
 
                 if ($page_element->type === 'text') {
                     if ($page_element->content !== $element['value']) {
-                        \Log::info("updating", [$page_element]);
+                        \Log::info("updating", [$page_element, $element['value']]);
                         $page_element->update([
                             'content' => $element['value'],
                         ]);
