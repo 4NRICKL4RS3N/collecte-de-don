@@ -17,8 +17,8 @@ class DashboardController extends Controller
 
     public function dashboardData() {
         $donation_breakdown = DB::select("select * from v_donation_breakdown");
-        $donation_last = DB::select("call p_donation_summary(DATE_SUB(NOW(), INTERVAL 15 DAY), NOW())");
-        foreach ($donation_last as $item) {
+        $donation_per_day = DB::select("call p_donation_summary(DATE_SUB(NOW(), INTERVAL 15 DAY), NOW())");
+        foreach ($donation_per_day as $item) {
             $item->payment_date = Carbon::parse($item->payment_date)->translatedFormat('j M Y');
         }
         $projects_classement = Project::select('id', 'title', 'donation_collected')
@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'donation_breakdown' => $donation_breakdown,
-            'donation_last' => $donation_last,
+            'donation_per_day' => $donation_per_day,
             'projects_classement' => $projects_classement,
             'projects_donation_count' => $projects_donation_count,
             'projects_avg_donation' => $projects_avg_donation,

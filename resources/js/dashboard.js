@@ -47,16 +47,16 @@ function createCharts(data) {
         }
     });
 
-    const donationChart = new Chart(document.getElementById('donation_last').getContext('2d'), {
-        type: 'line',
+    const donationChart = new Chart(document.getElementById('donation_per_day').getContext('2d'), {
+        type: 'bar',
         options: {
             responsive: true,
         },
         data: {
-            labels: data.donation_last.map(item => item.payment_date),
+            labels: data.donation_per_day.map(item => item.payment_date),
             datasets: [{
                 label: 'Don',
-                data: data.donation_last.map(item => item.total_donation),
+                data: data.donation_per_day.map(item => item.total_donation),
                 backgroundColor: transparentBlue,
                 borderColor: blue
             }]
@@ -95,6 +95,15 @@ function createCharts(data) {
         type: 'bar',
         options: {
             responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: (ctx) => {
+                            return data.projects_classement[ctx[0].dataIndex].title;
+                        }
+                    }
+                },
+            },
             scales: {
                 y: {
                     type: 'linear',
@@ -124,7 +133,12 @@ function createCharts(data) {
             }
         },
         data: {
-            labels: data.projects_classement.map(item => item.title),
+            labels: data.projects_classement.map(item => {
+                const maxLength = 20; // Define maximum length before truncation
+                return item.title.length > maxLength
+                    ? item.title.substring(0, maxLength) + '...'
+                    : item.title;
+            }),
             datasets: [
                 {
                     label: 'Nombre de don',
@@ -149,12 +163,26 @@ function createCharts(data) {
         type: 'bar',
         options: {
             responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: (ctx) => {
+                            return data.projects_avg_donation[ctx[0].dataIndex].title;
+                        }
+                    }
+                },
+            }
         },
         data: {
-            labels: data.projects_avg_donation.map(item => item.title),
+            labels: data.projects_avg_donation.map(item => {
+                const maxLength = 20; // Define maximum length before truncation
+                return item.title.length > maxLength
+                    ? item.title.substring(0, maxLength) + '...'
+                    : item.title;
+            }),
             datasets: [
                 {
-                    label: 'Don collécté en moyenne',
+                    label: 'Montant',
                     data: data.projects_avg_donation.map(item => item.moyenne),
                     backgroundColor: transparentBlue,
                     borderRadius: 5,

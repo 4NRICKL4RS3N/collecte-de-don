@@ -151,7 +151,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <canvas id="donation_last"></canvas>
+                        <canvas id="donation_per_day"></canvas>
                     </div>
                 </div>
             </div>

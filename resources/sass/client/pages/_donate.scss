@@ -24,3 +24,9 @@
     padding-left: 1rem !important;
     padding-right: 1rem !important;
 }
+
+.min-amount {
+    background: linear-gradient(to right, #eee, $primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

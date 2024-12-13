@@ -46,7 +46,8 @@
                         </div>
                         <div class="mb-3">
                             <input class="form-control form-input" name="custom-amount" type="number" id="custom-amount"
-                                   placeholder="Spécifiez le montant" required>
+                                   placeholder="Spécifiez le montant" min="2400" required>
+                            <p class="fs-6 fw-light">*Montant minimum <span class="min-amount">&#8212; 2400 MGA</span></p>
                         </div>
                         <input type="hidden" name="amount" id="amount">
                         <button class="btn btn-primary my-2 my-lg-0" type="submit" id="continue-btn">
