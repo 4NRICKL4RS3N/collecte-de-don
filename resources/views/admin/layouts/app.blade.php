@@ -18,7 +18,7 @@
 </div>
 
 <div class="wrapper d-flex flex-column min-vh-100">
-    <header class="header header-sticky p-0 mb-4">
+    <header class="header header-sticky p-0 mb-4" style="background-color: #f3f4f7; border-bottom: 0px;">
         @include('admin.layouts.partials.header')
     </header>
 

@@ -4,47 +4,50 @@
 
 @push('scripts_head')
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 @endpush
 
 @section('content')
     <div class="container">
         <div class="row my-5">
-            <div class="col-lg-7 col-md-6 ">
-                <h1 class="grand-titre">Votre générosité est sur le point de créer un impact!</h1>
-                <z></z>
+            <div class="reveal-1 col-lg-7 col-md-6 ">
+                <h1 class="grand-titre">Votre générosité est sur le point de <span>créer un impact !</span></h1>
             </div>
-            <div class="col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
+            <div class="reveal-2 col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
+                    <div class="error-message text-danger"></div>
                     <form id="donation-form">
                         <div class="form-group mb-3">
                             <label for="name" class="mb-0 form-label">Nom</label>
-                            <input name="name" class="form-control form-input" type="text" id="name" placeholder="Name"
+                            <input name="name" class="form-control form-input" type="text" id="name" placeholder="Jean Rakoto"
                                    required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="email" class="mb-0 form-label">Email</label>
                             <input name="email" class="form-control form-input" type="email" id="email"
-                                   placeholder="Email"
+                                   placeholder="exemple@mail.com"
                                    required>
                         </div>
                         <label for="amount" class="mb-0 form-label">Montant</label>
                         <div id="select-amount" class="mb-1">
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="5">
-                                $5
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="3000">
+                                3k MGA
                             </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="10">
-                                $10
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="5000">
+                                5k MGA
                             </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="20">
-                                $20
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="10000">
+                                10k MGA
                             </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="50">
-                                $50
+                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="20000">
+                                20k MGA
                             </button>
                         </div>
                         <div class="mb-3">
                             <input class="form-control form-input" name="custom-amount" type="number" id="custom-amount"
-                                   placeholder="Montant" required>
+                                   placeholder="Spécifiez le montant" min="2400" required>
+                            <p class="fs-6 fw-light">*Montant minimum <span class="min-amount">&#8212; 2400 MGA</span></p>
                         </div>
                         <input type="hidden" name="amount" id="amount">
                         <button class="btn btn-primary my-2 my-lg-0" type="submit" id="continue-btn">
@@ -56,16 +59,14 @@
                     </form>
                     <div id="payment-element" style="display: none;"></div>
                     <div class="row">
-                        <div class="col w-auto">
+                        <div class="col w-auto d-flex">
                             <button class="btn btn-primary mt-3" id="submit-payment" style="display: none;">
                                 <span class="btn-content">
                                     <span class="btn-text">Confirmer</span>
                                     <span class="loader" id="loading-payment"></span>
                                 </span>
                             </button>
-                        </div>
-                        <div class="col w-auto">
-                            <button class="btn btn-outline-primary mt-3" id="go-back" style="display: none;">
+                            <button class="btn btn-outline-primary mt-3 ms-3" id="go-back" style="display: none;">
                                 Retour
                             </button>
                         </div>
@@ -79,6 +80,10 @@
 
 @push('scripts')
     <script>
+        var notyf = new Notyf({
+            position: {x: 'center', y: 'top'},
+        });
+
         {{--    stripe    --}}
         const stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
         let elements;
@@ -95,82 +100,98 @@
         const customAmountInput = document.getElementById("custom-amount");
         const loadingContinue = document.getElementById('loading-sprite-element');
         const loadingSubmit = document.getElementById('loading-payment');
+        const errorContainer = document.querySelector('.error-message');
         let paymentElement;
 
         const donation_form = document.getElementById('donation-form');
+        let urlParams = new URLSearchParams(window.location.search);
 
+        let donation = null;
+        //create payment intent
         async function handleFormSubmit(e) {
             e.preventDefault();
             const name = name_input.value;
             const email = email_input.value;
             const amount = amount_input.value;
+            const project = urlParams.get('project');
 
+            errorContainer.innerHTML = "";
             continue_button_text.style.display = 'none';
             loadingContinue.style.display = 'inline-block';
 
-            try {
-                const response = await fetch('{{route('createPaymentIntent')}}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({name, email, amount})
-                });
-
-                const {clientSecret} = await response.json();
-                paymentIntentId = clientSecret.split('_secret')[0];
-
-                const appearance = {
-                    theme: 'flat',
-                    variables: {
-                        colorPrimary: '#DF253A',
-                        colorBackground: '#ffffff',
-                        colorText: '#30313d',
-                        colorDanger: '#B22222',
-                        fontFamily: 'Roc Grotesk',
-                        spacingUnit: '2px',
-                        borderRadius: '4px',
-                    },
-                    rules: {
-                        '.Label': {
-                            color: 'white',
-                        },
-                        '.Input': {
-                            transition: 'all 0.1s ease',
-                            outline: '0 solid white',
-                        },
-                        '.Input:focus': {
-                            boxShadow: 'none',
-                            transition: 'all 0.1s ease',
-                            outline: '2px solid #DF253A',
-                        },
-                        '.Tab:active': {
-                            boxShadow: 'none',
+            fetch('{{route('createPaymentIntent')}}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({name, email, amount, project})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.success) {
+                        const clientSecret = data.clientSecret;
+                        paymentIntentId = data.clientSecret.split('_secret')[0];
+                        const appearance = {
+                            theme: 'flat',
+                            variables: {
+                                colorPrimary: '#505cfd',
+                                colorBackground: '#ffffff',
+                                colorText: '#30313d',
+                                colorDanger: '#B22222',
+                                fontFamily: 'Roc Grotesk',
+                                spacingUnit: '2px',
+                                borderRadius: '4px',
+                            },
+                            rules: {
+                                '.Label': {
+                                    color: 'white',
+                                },
+                                '.Input': {
+                                    transition: 'all 0.1s ease',
+                                    outline: '0 solid white',
+                                },
+                                '.Input:focus': {
+                                    boxShadow: 'none',
+                                    transition: 'all 0.1s ease',
+                                    outline: '2px solid #505cfd',
+                                },
+                                '.Tab:active': {
+                                    boxShadow: 'none',
+                                }
+                            }
+                        };
+                        const style = {
+                            label: {
+                                color: 'white',
+                            },
                         }
+                        elements = stripe.elements({clientSecret, appearance});
+                        paymentElement = elements.create('payment', style);
+                        paymentElement.mount('#payment-element');
+
+                        payment_element_container.style.display = 'block';
+                        submit_button.style.display = 'block';
+                        go_back_button.style.display = 'block';
+                        name_input.disabled = true;
+                        email_input.disabled = true;
+                        amount_input.disabled = true;
+                        customAmountInput.disabled = true;
+                        continue_button.hidden = true;
+                        loadingContinue.style.display = 'none';
+                    } else {
+                        console.log(data.message);
+                        errorContainer.innerHTML = data.message
+                        continue_button_text.style.display = 'block';
+                        loadingContinue.style.display = 'none';
                     }
-                };
-                const style = {
-                    label: {
-                        color: 'white',
-                    },
-                }
-                elements = stripe.elements({clientSecret, appearance});
-                paymentElement = elements.create('payment', style);
-                paymentElement.mount('#payment-element');
-            } catch (e) {
-                console.error('Error:', error);
-            } finally {
-                payment_element_container.style.display = 'block';
-                submit_button.style.display = 'block';
-                go_back_button.style.display = 'block';
-                name_input.disabled = true;
-                email_input.disabled = true;
-                amount_input.disabled = true;
-                customAmountInput.disabled = true;
-                continue_button.hidden = true;
-                loadingContinue.style.display = 'none';
-            }
+                })
+                .catch(error => {
+                    console.log(error);
+                    continue_button_text.style.display = 'block';
+                    loadingContinue.style.display = 'none';
+                })
         }
 
         async function handlePaymentSubmit(e) {
@@ -229,9 +250,24 @@
             customAmountInput.addEventListener("input", function () {
                 if (this.value !== "") {
                     clearActiveButtons();
-                    hiddenAmountInput.value = this.value;
+                    amount_input.value = this.value;
                 }
             });
         });
+
+        //reveal animation
+        const option = {
+            distance: '50px',
+            delay: 100,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-1', option);
+        const option2 = {
+            distance: '50px',
+            delay: 200,
+            duration: 1000
+        };
+        ScrollReveal().reveal('.reveal-2', option2);
     </script>
+    @vite(['resources/js/animateGradient.js'])
 @endpush

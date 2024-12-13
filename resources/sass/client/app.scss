@@ -19,9 +19,30 @@ $enable-spacers: true;
 body {
     font-family: "Roc Grotesk";
     font-size: 16px;
-    background-color: $white-color;
+    //background-color: $white-color;
+    background: radial-gradient(circle at top right, #a3f6ff, $white-color 25%);
+    background-size: 200% 200%;
+    height: 100vh;
+    animation: aurora 7s infinite ease-in-out;
     color: $black-color;
     max-width: 100vw;
+    transition: all 0.5s ease;
+}
+@media (max-width: 769px) {
+    body {
+        background: radial-gradient(circle at top right, #a3f6ff, $white-color 10%);
+    }
+}
+@keyframes aurora {
+    0% {
+        background-position: 75% 0%;
+    }
+    50% {
+        background-position: 40% 20%;
+    }
+    100% {
+        background-position: 75% 0%;
+    }
 }
 
 .bold-text {
@@ -92,9 +113,17 @@ body {
 }
 
 .grand-titre {
-    font-family: "Joly Headline";
-    font-weight: bold;
+    //font-family: "Joly Headline";
+    //font-weight: bold;
     font-size: $big-title-size;
+    font-family: "Roc Grotesk", sans-serif;
+    font-weight: bold;
+    span {
+        color: $primary-color;
+        font-family: "Joly Headline", serif;
+        font-size: calc($big-title-size + 5px);
+        font-weight: lighter;
+    }
 }
 
 .petit-titre {
@@ -106,6 +135,9 @@ body {
 @media (max-width: 991px) {
     .grand-titre {
         font-size: calc($big-title-size - 10px);
+        span {
+            font-size: calc($big-title-size - 12px);
+        }
     }
     .petit-titre {
         font-size: calc($little-title-size - 10px);
@@ -115,6 +147,9 @@ body {
 @media (max-width: 420px) {
     .grand-titre {
         font-size: calc($big-title-size - 20px);
+        span {
+            font-size: calc($big-title-size - 22px);
+        }
     }
     .petit-titre {
         font-size: calc($little-title-size - 10px);
@@ -135,12 +170,12 @@ body {
     }
 
     &:disabled {
-        background-color: #ffced3 !important;
+        background-color: $primary-light-color !important;
     }
 
     &:disabled:-webkit-autofill {
-        background-color: #ffced3 !important;
-        box-shadow: 0 0 0px 1000px #ffced3 inset !important;
+        background-color: $primary-light-color !important;
+        box-shadow: 0 0 0px 1000px $primary-light-color inset !important;
     }
 }
 
@@ -158,6 +193,10 @@ body {
 
 .contact-icon::before {
     vertical-align: middle;
+}
+
+.contact-icon {
+    color: $primary-color;
 }
 
 .hover-underline-animation {
@@ -251,8 +290,19 @@ body {
 .accordion-button:focus {
     box-shadow: none;
 }
-//.form-input.focused {
-//    border: solid 2px $primary-color;
-//    box-shadow: none;
-//    transition: all 0.1s ease;
-//}
+
+.pswp__video-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pswp__video-container video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

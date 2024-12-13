@@ -2,46 +2,43 @@
 
 @section('titre', 'admin | projets')
 
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+@endpush
+
 @push('scripts_head')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 @endpush
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-12 col-lg-6">
                 <h1>Créer un nouveau projet</h1>
 
                 <form id="objectif-form" method="POST">
                     @csrf
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="title">Nom du projet</label>
                         <input type="text" name="title" id="title" class="form-control" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea name="description" id="description" class="form-control"></textarea>
+                    <div class="form-group mb-2">
+                        <label for="editor">Description</label>
+                        <div id="editor" class="editor"></div>
+                        <input type="hidden" name="description" id="description">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="location">Lieu</label>
                         <input type="text" name="location" id="location" class="form-control" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select name="status" id="status" class="form-select" style="width: fit-content" required>
-                            <option value="0" selected>en attente</option>
-                            <option value="1">en cours</option>
-                            <option value="2">terminé</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <div class="tags-input">
                             <label for="input-tag-container">Objectifs</label>
                             <ul id="tags"></ul>
@@ -49,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label for="donation_target">Objectif de don</label>
                         <input type="number" name="donation_target" id="donation_target" class="form-control" required>
                     </div>
@@ -70,12 +67,12 @@
                     </div>
 
                     <div class="form-group">
-                        <button id="submit-project" type="submit" class="btn btn-primary">Create Project</button>
+                        <button id="submit-project" type="submit" class="mt-3 btn btn-primary">Créer le projet</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <div class="col">
                 <h1>Liste des projets</h1>
                 <table id="projectsTable" class="display">
@@ -84,17 +81,17 @@
                         <th>#</th>
                         <th>Titre</th>
                         <th>Statut</th>
-                        <th class="text-end">Objectif don</th>
-                        <th class="text-end">Don récolté</th>
+                        <th class="text-end">Objectif don (Ar)</th>
+                        <th class="text-end">Don récolté (Ar)</th>
                         <th class="text-end"></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($projets as $projet)
-                        <tr>
-                            <td>{{ $projet->id }}</td>
-                            <td>{{ $projet->title }}</td>
-                            <td>{{ $projet->status }}</td>
+                        <tr data-url="/admin/projets/{{ $projet->id }}">
+                            <td><a class="text-decoration-none text-black hover-underline" href="/admin/projets/{{ $projet->id }}">{{ $projet->id }}</a></td>
+                            <td><a class="text-decoration-none text-black hover-underline" href="/admin/projets/{{ $projet->id }}">{{ $projet->title }}</a></td>
+                            <td>{{ $projet->getStatus() }}</td>
                             <td class="text-end">{{ number_format($projet->donation_target, 0, ',', ' ') }}</td>
                             <td class="text-end">{{ number_format($projet->donation_collected, 0, ',', ' ') }}</td>
                             {{--                    <td class="text-end">{{ \Carbon\Carbon::parse($projet->date_start)->translatedFormat('d F Y') }}</td>--}}
@@ -140,32 +137,23 @@
                 <div class="modal__content" id="update-modal-content">
                     <form id="update-objectif-form" method="POST">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-title">Nom du projet</label>
                             <input type="text" name="title" id="update-title" class="form-control" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="update-description">Description</label>
-                            <textarea name="description" id="update-description" class="form-control"></textarea>
+                        <div class="form-group mb-2">
+                            <label for="editor_update">Description</label>
+                            <div id="editor_update" class="editor"></div>
+                            <input type="hidden" name="description" id="update-description">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-location">Lieu</label>
                             <input type="text" name="location" id="update-location" class="form-control" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="update-status">Status</label>
-                            <select name="status" id="update-status" class="form-select" style="width: fit-content"
-                                    required>
-                                <option value="0" selected>en attente</option>
-                                <option value="1">en cours</option>
-                                <option value="2">terminé</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <div class="tags-input">
                                 <label for="update-input-tag-container">Objectifs</label>
                                 <ul id="update-tags"></ul>
@@ -174,7 +162,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="update-donation_target">Objectif de don</label>
                             <input type="number" name="donation_target" id="update-donation_target" class="form-control"
                                    required>
@@ -277,7 +265,6 @@
         let inputTitleToUpdate = document.getElementById('update-title');
         let inputDescriptionToUpdate = document.getElementById('update-description');
         let inputLocationToUpdate = document.getElementById('update-location');
-        let inputStatusToUpdate = document.getElementById('update-status');
         let inputDonationTargetToUpdate = document.getElementById('update-donation_target');
         let inputDateStartToUpdate = document.getElementById('update-date_start');
         let inputDateEndToUpdate = document.getElementById('update-date_end');
@@ -289,9 +276,8 @@
             button.addEventListener('click', function () {
                 projectIdToUpdate = this.getAttribute('update-data-id');
                 inputTitleToUpdate.value = this.getAttribute('update-data-title');
-                inputDescriptionToUpdate.value = this.getAttribute('update-data-description');
+                quill_update.root.innerHTML = this.getAttribute('update-data-description');
                 inputLocationToUpdate.value = this.getAttribute('update-data-location');
-                inputStatusToUpdate.value = this.getAttribute('update-data-status');
                 inputDonationTargetToUpdate.value = this.getAttribute('update-data-donation_target');
                 inputDateStartToUpdate.value = this.getAttribute('update-data-date_start');
                 inputDateEndToUpdate.value = this.getAttribute('update-data-date_end');
@@ -302,8 +288,9 @@
                 let updateTag;
                 for (const objectif of objectifsToUpdate) {
                     updateTag = document.createElement('li');
+                    updateTag.classList.add('objectif-item');
                     updateTag.innerText = objectif;
-                    updateTag.innerHTML += '<button type="button" class="delete-button"><i class="bi bi-x"></i></button>';
+                    updateTag.innerHTML += '<button type="button" class="delete-button-objectif"><i class="bi bi-x"></i></button>';
                     updateTags.append(updateTag);
                 }
                 console.log(objectifsToUpdate);
@@ -320,6 +307,7 @@
 
         function updateProject() {
             const form = document.getElementById('update-objectif-form');
+            document.querySelector('#update-description').value = quill_update.root.innerHTML;
             const formData = new FormData(form);
             formData.append('objectifs', JSON.stringify(objectifsToUpdate));
             formData.append('_method', 'PATCH');
@@ -360,11 +348,12 @@
                 event.preventDefault();
 
                 const tag = document.createElement('li');
+                tag.classList.add('objectif-item');
                 const tagContent = input.value.trim();
 
                 if (tagContent !== '') {
                     tag.innerText = tagContent;
-                    tag.innerHTML += '<button type="button" class="delete-button"><i class="bi bi-x"></i></button>';
+                    tag.innerHTML += '<button type="button" class="delete-button-objectif"><i class="bi bi-x"></i></button>';
                     tags.appendChild(tag);
                     input.value = '';
                     objectifs.push(tagContent);
@@ -382,7 +371,7 @@
         });
 
         function deleteObjective(event, objectifs) {
-            const deleteButton = event.target.closest('.delete-button');
+            const deleteButton = event.target.closest('.delete-button-objectif');
             if (deleteButton) {
                 const tag = deleteButton.parentNode;
                 const tagContent = tag.firstChild.textContent.trim();
@@ -453,9 +442,9 @@
 
         {{-- insert projet --}}
         function saveProject() {
+            document.querySelector('#description').value = quill.root.innerHTML;
             const form = document.getElementById('objectif-form');
             const formData = new FormData(form);
-
             formData.append('objectifs', JSON.stringify(objectifs));
 
             fetch('{{ route('admin.projets.store') }}', {
@@ -479,6 +468,29 @@
         document.getElementById('submit-project').addEventListener('click', function (event) {
             event.preventDefault();
             saveProject();
+        });
+
+        {{-- text editor --}}
+        let quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                ],
+            },
+            placeholder: 'Description...',
+        });
+
+        let quill_update = new Quill('#editor_update', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                ],
+            },
+            placeholder: 'Description...',
         });
     </script>
 @endpush

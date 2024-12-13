@@ -4,8 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Project_image;
 use App\Models\Project_objective;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -22,7 +24,6 @@ class ProjectController extends Controller
                 'title' => 'required|max:255',
                 'description' => 'required',
                 'location' => 'nullable',
-                'status' => 'required',
                 'objectifs' => 'nullable',
                 'donation_target' => 'nullable',
                 'date_start' => 'nullable',
@@ -35,7 +36,6 @@ class ProjectController extends Controller
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
                 'location' => $validatedData['location'],
-                'status' => $validatedData['status'],
                 'donation_target' => $validatedData['donation_target'],
                 'donation_collected' => 0,
                 'date_start' => $validatedData['date_start'],
@@ -56,14 +56,10 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Form data and objectifs saved successfully!']);
     }
 
-    public function show(string $id)
+    public function show(Project $id)
     {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
+        $project = $id;
+        return view('admin.pages.projet-details', ['projet' => $project]);
     }
 
     public function update(Request $request, $id)
@@ -78,7 +74,6 @@ class ProjectController extends Controller
                 'title' => 'required|max:255',
                 'description' => 'required',
                 'location' => 'nullable',
-                'status' => 'required',
                 'objectifs' => 'nullable',
                 'donation_target' => 'nullable',
                 'date_start' => 'nullable',
@@ -89,7 +84,6 @@ class ProjectController extends Controller
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
                 'location' => $validatedData['location'],
-                'status' => $validatedData['status'],
                 'donation_target' => $validatedData['donation_target'],
                 'date_start' => $validatedData['date_start'],
                 'date_end' => $validatedData['date_end'],
@@ -121,11 +115,102 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         if ($project) {
-            $project->project_objectives->delete();
+            $project->deleteObjectives();
+            $project->deleteImages();
             $project->delete();
             return response()->json(['success' => true]);
         } else {
             return response()->json(['success' => false, 'message' => 'Erreur : projet introuvable']);
         }
     }
+
+    public function processMedia(Request $request, Project $id)
+    {
+        $project = $id;
+        $files = json_decode($request->input('files'), true);
+        $processedFiles = [];
+
+        foreach ($files as $tempPath) {
+            if (Storage::exists($tempPath)) {
+                $filename = basename($tempPath);
+                $newPath = 'public/project-uploads/' . $filename;
+                Storage::move($tempPath, $newPath);
+
+                $mimeType = Storage::mimeType($newPath);
+                $type = str_contains($mimeType, 'image') ? 'image' : 'video';
+                $media = Project_image::create([
+                    'project_id' => $project->id,
+                    'url' => Storage::url($newPath),
+                    'type' => $type,
+                    'filename' => $filename,
+                    'mime_type' => $mimeType
+                ]);
+
+                $processedFiles[] = $media;
+            }
+        }
+
+        return response()->json(['files' => $processedFiles]);
+    }
+
+    public function destroyMedia(Project_image $id)
+    {
+        $media = $id;
+        $path = str_replace('/storage', 'public', $media->url);
+        if (Storage::exists($path)) {
+            \Log::info("file deleted", [$path]);
+            Storage::delete($path);
+        }
+        $media->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $filter = $request->input('filter');
+
+        $projectsQuery = Project::query()
+            ->where('title', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%");
+
+        // Appliquer le filtre
+        switch ($filter) {
+            case 'fonds_leves':
+                $projectsQuery->orderBy('donation_collected', 'desc');
+                break;
+            case 'les_plus_proches_du_but':
+                // For this filter, you need to calculate the progress dynamically.
+                // Instead of getting the projects early, we will handle progress calculation after fetching the results.
+                break;
+            case 'les_plus_recents':
+                $projectsQuery->orderBy('created_at', 'desc');
+                break;
+            default:
+            case 'pertinence':
+                $projectsQuery->orderByRaw('
+                CASE
+                    WHEN date_start IS NOT NULL AND date_end IS NOT NULL AND NOW() BETWEEN date_start AND date_end THEN 1
+                    ELSE 2
+                END ASC
+            ')
+                    ->orderBy('id', 'asc');
+                break;
+        }
+
+        // Fetch the projects after applying filters
+        $projects = $projectsQuery->get();
+
+        // Apply progress calculation
+        $projects = $projects->map(function ($project) {
+            $project->progress = $project->getProgress();
+            $project->objectives = $project->project_objectives->pluck('objective');
+            return $project;
+        });
+
+
+        return response()->json($projects);
+    }
+
+
 }

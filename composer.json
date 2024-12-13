@@ -7,9 +7,13 @@
     "require": {
         "php": "^8.2",
         "ext-curl": "*",
+        "diglactic/laravel-breadcrumbs": "^9.0",
+        "guzzlehttp/guzzle": "^7.9",
+        "intervention/image": "^3.9",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "paypal/rest-api-sdk-php": "^1.6",
+        "laravel/ui": "^4.5",
+        "scssphp/scssphp": "^1.13",
         "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "^15.10"
     },

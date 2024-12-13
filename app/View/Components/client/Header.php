@@ -2,24 +2,21 @@
 
 namespace App\View\Components\client;
 
+use App\Models\Page;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Header extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+    public $page_elements;
+
     public function __construct()
     {
-        //
+        $this->page_elements = Page::find(1)->get_page_elements();
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render()
     {
         return view('client.layouts.partials.header');
     }

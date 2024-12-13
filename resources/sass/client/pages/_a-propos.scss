@@ -1,7 +1,14 @@
 .a-propos-image-container {
     background-size: cover;
     background-position: center;
-    background-image: url('../images/jumbotron-bg.jpg');
+}
+
+.contact-content {
+    strong {
+        font-weight: unset !important;
+        font-family: "Joly Headline", serif;
+        color: $primary-color;
+    }
 }
 
 @media (max-width: 769px) {
