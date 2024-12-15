@@ -4,6 +4,7 @@
 
 @push('scripts_head')
     <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 @endpush
 
 @section('content')
@@ -12,22 +13,89 @@
             <h1 class="grand-titre">Nos projets d'<span>évangélisation</span></h1>
         </div>
 
-        <div class="reveal-2 row project-filtre align-items-center mb-5">
-            <div class="col-md-6 text-md-start text-center">
-                <input type="text" class="project-search form-control d-inline-block w-auto" placeholder="Rechercher"/>
-                <button class="ms-2 btn btn-primary search-button">Rechercher</button>
-            </div>
+        <div class="reveal-2 d-flex justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="advanced-search-container">
+                    <!-- Main Search Bar -->
+                    <div class="input-group mb-3">
+                        <input
+                            type="text"
+                            class="form-control project-search"
+                            id="mainSearchInput"
+                            placeholder="Search..."
+                        />
+                        <button
+                            class="btn btn-outline-secondary filter-btn"
+                            type="button"
+                            id="toggleAdvancedSearch"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="filter-icon">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                        </button>
+                        <button class="ms-2 btn btn-primary search-button">Rechercher</button>
+                    </div>
 
-            <div class="col-md-6 text-md-end text-center mt-4 mt-md-0">
-                <p class="mb-0">
-                    <span class="me-2">Trier par</span>
-                    <select class="form-select select-filtre" name="filtre">
-                        <option value="pertinence">Pertinence</option>
-                        <option value="fonds_leves">Fonds levés</option>
-                        <option value="les_plus_proches_du_but">Les plus proches du but</option>
-                        <option value="les_plus_recents">Les plus récents</option>
-                    </select>
-                </p>
+                    <!-- Advanced Search Filters -->
+                    <div class="advanced-filters" id="advancedFilters">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <select class="form-select" id="categorySelect">
+                                    <option value="">Select Category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="books">Books</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="minPrice"
+                                        placeholder="Min Price"
+                                    />
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="maxPrice"
+                                        placeholder="Max Price"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="dateFrom"
+                                    placeholder="From Date"
+                                />
+                            </div>
+                            <div class="col-md-6">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="dateTo"
+                                    placeholder="To Date"
+                                />
+                            </div>
+                            <div class="col-12 d-flex justify-content-between">
+                                <button
+                                    class="btn btn-secondary"
+                                    id="clearFilters"
+                                >
+                                    Clear Filters
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    id="searchButton"
+                                >
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -98,7 +166,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.querySelector('.project-search');
             const searchButton = document.querySelector('.search-button');
-            const filterSelect = document.querySelector('.select-filtre');
+            // const filterSelect = document.querySelector('.select-filtre');
             const projectContainer = document.querySelector('.projects-container');
             const searchPillContainer = document.querySelector('.search-pill-container');
             const loadingContainer = document.querySelector('.loading-container');
@@ -284,25 +352,25 @@
                 toggleLoading(false);
             }
 
-            searchInput.addEventListener("keypress", function (e) {
-                if (e.key === "Enter") {
-                    toggleLoading(true);
-                    currentQuery = searchInput.value.trim();
-                    fetchProjects(searchInput.value, filterSelect.value); // Appeler la fonction quand l'utilisateur appuie sur Entrée
-                    showSearchPill(currentQuery);
-                }
-            });
-            searchButton.addEventListener("click", function () {
-                toggleLoading(true);
-                currentQuery = searchInput.value.trim();
-                fetchProjects(searchInput.value, filterSelect.value); // Appeler la fonction quand le bouton est cliqué
-                showSearchPill(currentQuery);
-            });
-
-            filterSelect.addEventListener('change', () => {
-                toggleLoading(true);
-                fetchProjects(searchInput.value, filterSelect.value);
-            });
+            // searchInput.addEventListener("keypress", function (e) {
+            //     if (e.key === "Enter") {
+            //         toggleLoading(true);
+            //         currentQuery = searchInput.value.trim();
+            //         fetchProjects(searchInput.value, filterSelect.value); // Appeler la fonction quand l'utilisateur appuie sur Entrée
+            //         showSearchPill(currentQuery);
+            //     }
+            // });
+            // searchButton.addEventListener("click", function () {
+            //     toggleLoading(true);
+            //     currentQuery = searchInput.value.trim();
+            //     fetchProjects(searchInput.value, filterSelect.value); // Appeler la fonction quand le bouton est cliqué
+            //     showSearchPill(currentQuery);
+            // });
+            //
+            // filterSelect.addEventListener('change', () => {
+            //     toggleLoading(true);
+            //     fetchProjects(searchInput.value, filterSelect.value);
+            // });
 
             // Chargement initial
             fetchProjects();
@@ -331,6 +399,71 @@
         ScrollReveal().reveal('.reveal-3', option3);
 
 
+        //advanced search pop
+        (function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                var toggleAdvancedSearch = document.getElementById('toggleAdvancedSearch');
+                var advancedFilters = document.getElementById('advancedFilters');
+                var clearFiltersBtn = document.getElementById('clearFilters');
+                var searchButton = document.getElementById('searchButton');
+
+                // Elements to track for active filters
+                var filterInputs = [
+                    'mainSearchInput',
+                    'categorySelect',
+                    'minPrice',
+                    'maxPrice',
+                    'dateFrom',
+                    'dateTo'
+                ];
+
+                function checkActiveFilters() {
+                    var hasActiveFilters = filterInputs.some(function(id) {
+                        var element = document.getElementById(id);
+                        return element.value.trim() !== '';
+                    });
+
+                    toggleAdvancedSearch.classList.toggle('active', hasActiveFilters);
+                }
+
+                // Toggle Advanced Search
+                toggleAdvancedSearch.addEventListener('click', function() {
+                    advancedFilters.classList.toggle('show');
+                    checkActiveFilters();
+                });
+
+                // Clear Filters
+                clearFiltersBtn.addEventListener('click', function() {
+                    filterInputs.forEach(function(id) {
+                        var element = document.getElementById(id);
+                        element.value = '';
+                    });
+                    advancedFilters.classList.remove('show');
+                    checkActiveFilters();
+                });
+
+                // Search Button
+                searchButton.addEventListener('click', function() {
+                    var searchData = {
+                        keyword: document.getElementById('mainSearchInput').value,
+                        category: document.getElementById('categorySelect').value,
+                        minPrice: document.getElementById('minPrice').value,
+                        maxPrice: document.getElementById('maxPrice').value,
+                        dateFrom: document.getElementById('dateFrom').value,
+                        dateTo: document.getElementById('dateTo').value
+                    };
+
+                    console.log('Search Data:', searchData);
+                    // Implement your search logic here
+                    alert('Search functionality to be implemented');
+                });
+
+                // Check filters on input change
+                filterInputs.forEach(function(id) {
+                    document.getElementById(id).addEventListener('input', checkActiveFilters);
+                });
+            });
+        })();
 
 
     </script>
