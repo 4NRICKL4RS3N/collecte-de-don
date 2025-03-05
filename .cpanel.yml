@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/cmjassoc/collecte-de-don/
+    - /bin/cp -R * $DEPLOYPATH
