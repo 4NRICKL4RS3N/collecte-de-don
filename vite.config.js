@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+    publicDir: '/home/cmjassoc/public_html',
     plugins: [
         laravel({
             input: ['resources/sass/client/app.scss',

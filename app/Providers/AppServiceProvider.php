@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->app->usePublicPath('/home/cmjassoc/public_html');
         Blade::componentNamespace('App\\View\\Components\\Client', 'client');
         Carbon::setLocale('fr');
         if(config('app.env') === 'production') {
