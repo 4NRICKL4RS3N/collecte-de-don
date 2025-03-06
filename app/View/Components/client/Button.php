@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Client;
+namespace App\View\Components\client;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
