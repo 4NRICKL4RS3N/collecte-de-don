@@ -28,7 +28,7 @@
                         <img class="img-fluid w-100 rounded-3"
                              src="{{ asset($page_elements['accueil.hero.bgImage']->content) }}"
                              alt="" style="object-fit:cover;
-                             max-height:35vh">
+                             max-height:55vh">
                     </div>
                 </div>
             </div>
@@ -63,13 +63,14 @@
         </div>
 
         {{--  section 3  --}}
-        <div class="section-3 container mb-5">
-            <div class="row mb-4">
-                <div class="col-sm-6 col-md-5 col-lg-4 offset-md-1 offset-lg-1">
-                    <h1 class="petit-titre">Les impactes</h1>
+        @if($impacts->isNotEmpty())
+            <div class="section-3 container mb-5">
+                <div class="row mb-4">
+                    <div class="col-sm-6 col-md-5 col-lg-4 offset-md-1 offset-lg-1">
+                        <h1 class="petit-titre">Les impactes</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                 {{--  card  --}}
                 @foreach($impacts as $impact)
                     <div class="col d-flex">
@@ -81,47 +82,50 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-        </div>
-
-        {{--  section 4  --}}
-        <div class="section-4 container pt-2 mb-5">
-            <div class="row">
-                <div class="col">
-                    <h1 class="grand-titre">Nos <span>témoignages</span></h1>
                 </div>
             </div>
-            <div class="row slide-container">
-                <section class="splide" aria-label="Splide">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            {{--  slide/témoignage  --}}
-                            @foreach($temoignages as $temoignage)
+        @endif
+
+        @if($temoignages->isNotEmpty())
+            {{--  section 4  --}}
+            <div class="section-4 container pt-2 mb-5">
+                <div class="row">
+                    <div class="col">
+                        <h1 class="grand-titre">Nos <span>témoignages</span></h1>
+                    </div>
+                </div>
+                <div class="row slide-container">
+                    <section class="splide" aria-label="Splide">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                {{--  slide/témoignage  --}}
+                                @foreach($temoignages as $temoignage)
                                 <li class="splide__slide">
                                     <div class="card mb-3 slide-card " style="max-width: 540px;">
                                         <div class="row g-0 ">
                                             <div class="col-md-4 ">
                                                 <img src="{{ asset($temoignage->image_url) }}" class="img-fluid"
-                                                     alt="...">
+                                                alt="...">
                                             </div>
                                             <div class="col-md-8" style="position: relative">
                                                 <h5 class="quote">“</h5>
                                                 <div class="card-body pt-4">
                                                     <p class="card-text quote-text">{{ $temoignage->statement }}</p>
                                                     <p class="card-text"><small
-                                                            class="text-muted">{{ $temoignage->testifier_name }}</small>
+                                                        class="text-muted">{{ $temoignage->testifier_name }}</small>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </section>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </section>
+                </div>
             </div>
-        </div>
+        @endif
 
         {{--  section cta  --}}
         <div class="container mb-5">
