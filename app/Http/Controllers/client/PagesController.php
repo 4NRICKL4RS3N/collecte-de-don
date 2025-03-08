@@ -44,6 +44,18 @@ class PagesController extends Controller
         return view('client.pages.a-propos', ['page' => $page, 'page_elements' => $page_elements]);
     }
 
+    public function donate()
+    {
+        $page = Page::find(5);
+        $page_elements = $page->get_page_elements();
+        return view('client.pages.donate', ['page' => $page, 'page_elements' => $page_elements]);
+    }
+
+    public function remerciement()
+    {
+        return view('client.pages.remerciement');
+    }
+
     public function mail() {
         try {
             $response = \Mail::to("contact.anrick@gmail.com")->send(new MailTest("anrick"));

@@ -133,21 +133,31 @@ class CMSController extends Controller
 
         return response()->json(['success' => true]);
     }
+    public function header_footer()
+    {
+        $header_element = Page::find(1)->get_page_elements();
+        $footer_element = Page::find(2)->get_page_elements();
+        return view('admin.pages.cms_header-footer', ['header_element' => $header_element, 'footer_element' => $footer_element]);
+    }
+
     public function accueil()
     {
         $accueil = Page::find(3);
         $accueil_element = $accueil->get_page_elements();
-        $header_element = Page::find(1)->get_page_elements();
-        $footer_element = Page::find(2)->get_page_elements();
-        return view('admin.pages.cms_accueil', ['accueil' => $accueil, 'accueil_element' => $accueil_element, 'header_element' => $header_element, 'footer_element' => $footer_element]);
+        return view('admin.pages.cms_accueil', ['accueil' => $accueil, 'accueil_element' => $accueil_element]);
     }
 
     public function a_propos()
     {
         $a_propos = Page::find(4);
         $a_propos_element = $a_propos->get_page_elements();
-        $header_element = Page::find(1)->get_page_elements();
-        $footer_element = Page::find(2)->get_page_elements();
-        return view('admin.pages.cms_a-propos', ['a_propos' => $a_propos, 'a_propos_element' => $a_propos_element, 'header_element' => $header_element, 'footer_element' => $footer_element]);
+        return view('admin.pages.cms_a-propos', ['a_propos' => $a_propos, 'a_propos_element' => $a_propos_element]);
+    }
+
+    public function donate()
+    {
+        $donate = Page::find(5);
+        $donate_element = $donate->get_page_elements();
+        return view('admin.pages.cms_donate', ['donate' => $donate, 'donate_element' => $donate_element]);
     }
 }

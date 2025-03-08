@@ -19,22 +19,9 @@ use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
 use Stripe\Webhook;
-use GuzzleHttp\Client;
 
 class DonationController extends Controller
 {
-    public function index(Request $request)
-    {
-        $cb_svg = File::files(public_path('svg/cb'));
-
-        return view('client.pages.donate', compact('cb_svg'));
-    }
-
-    public function remerciement(Request $request)
-    {
-        return view('client.pages.remerciement');
-    }
-
     public function createPaymentIntent(Request $request)
     {
         $validatedData = $request->validate([
@@ -60,6 +47,7 @@ class DonationController extends Controller
                 'is_admin' => 0,
             ]);
         }
+
         $donation = $user->createDonation($request->project, $validatedData['amount']);
         try {
             $paymentIntent = $user->createPaymentIntent($request->project, $validatedData['amount']);

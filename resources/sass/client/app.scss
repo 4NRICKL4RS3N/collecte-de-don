@@ -124,6 +124,12 @@ body {
         font-size: calc($big-title-size + 5px);
         font-weight: lighter;
     }
+    strong {
+        color: $primary-color;
+        font-family: "Joly Headline", serif;
+        font-size: calc($big-title-size + 5px);
+        font-weight: lighter;
+    }
 }
 
 .petit-titre {

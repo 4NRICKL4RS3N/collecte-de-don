@@ -43,6 +43,14 @@
     </li>
     <li class="nav-title">Pages</li>
     <li class="nav-group">
+        <a class="nav-link" href="{{ route('admin.cms.header-footer') }}">
+            <svg class="nav-icon">
+                <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
+            </svg>
+            Header & Footer
+        </a>
+    </li>
+    <li class="nav-group">
         <a class="nav-link" href="{{ route('admin.cms.accueil') }}">
             <svg class="nav-icon">
                 <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
@@ -51,7 +59,7 @@
         </a>
     </li>
     <li class="nav-group">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('admin.cms.a-propos') }}">
             <svg class="nav-icon">
                 <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
             </svg>
@@ -75,7 +83,7 @@
         </a>
     </li>
     <li class="nav-group">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('admin.cms.donate') }}">
             <svg class="nav-icon">
                 <use xlink:href="/svg/coreui/free.svg#cil-file"></use>
             </svg>

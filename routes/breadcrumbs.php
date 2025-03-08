@@ -26,6 +26,10 @@ Breadcrumbs::for('admin.impacts', function ($trail) {
     $trail->push('Impacts', route('admin.impacts'));
 });
 
+Breadcrumbs::for('admin.cms.header-footer', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('CMS Header & Footer', route('admin.cms.header-footer'));
+});
 Breadcrumbs::for('admin.cms.accueil', function ($trail) {
     $trail->parent('admin');
     $trail->push('CMS Accueil', route('admin.cms.accueil'));
@@ -33,4 +37,8 @@ Breadcrumbs::for('admin.cms.accueil', function ($trail) {
 Breadcrumbs::for('admin.cms.a-propos', function ($trail) {
     $trail->parent('admin');
     $trail->push('CMS À propos', route('admin.cms.a-propos'));
+});
+Breadcrumbs::for('admin.cms.donate', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('CMS Faire un don', route('admin.cms.donate'));
 });

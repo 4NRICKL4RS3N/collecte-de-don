@@ -21,15 +21,6 @@
                         <x-client.button add-class="btn-primary" lien="{{ route('client.projets') }}" content="{{ $page_elements['accueil.hero.button']->content }}"/>
                     </div>
                 </div>
-                {{--RIGHT TEXT
-                <div class="col-12 col-md-6 col-xl-5">
-                    <div class="lc-block px-md-4 px-lg-5 lh-lg">
-                        <div editable="rich">
-                            <p class="rfs-7"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et metus id
-                                ligula malesuada placerat sit amet quis enim.</p>
-                        </div>
-                    </div>
-                </div>--}}
             </div>
             <div class="row">
                 <div class="col-md-12 g-0">
@@ -142,10 +133,10 @@
                                 class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                                 <div>
                                     <h1 class="fw-medium text-white mb-3">
-                                        Votre <span class="fw-bolder">générosité</span> fait la différence.
+                                        {{ $page_elements['accueil.sectionCta.titre']->content }}
                                     </h1>
                                     <x-client.button add-class="btn-light" lien="/donate"
-                                                     content="Faire un don maintenant"/>
+                                                     content="{{ $page_elements['accueil.sectionCta.button']->content }}"/>
                                 </div>
                             </div>
                         </div>

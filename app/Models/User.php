@@ -3,8 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,19 +63,6 @@ class User extends Authenticatable
         return $this->is_admin == 0;
     }
 
-    /**
-     * @throws GuzzleException
-     */
-    function convertMGAtoUSD($amountMGA): float|int
-    {
-        $client = new Client();
-        $endpoint = "https://v6.exchangerate-api.com/v6/".config('services.exchangerate_api.key')."/latest/MGA";
-        $response = $client->get($endpoint);
-        $data = json_decode($response->getBody(), true);
-        $rate = $data['conversion_rates']['USD'];
-        return $amountMGA * $rate;
-    }
-
     public function createDonation($project_id, $donation_amount): Donation {
         return Donation::create([
             'project_id' => $project_id,
@@ -87,16 +72,11 @@ class User extends Authenticatable
         ]);
     }
 
-    /**
-     * @throws ApiErrorException
-     * @throws GuzzleException
-     */
     public function createPaymentIntent($project_id, $donation_amount) {
         $donation = $this->createDonation($project_id, $donation_amount);
-        $exchanged_amount = $this->convertMGAtoUSD($donation_amount);
         return PaymentIntent::create([
-            'amount' => round($exchanged_amount * 100), // Convert to cents
-            'currency' => 'usd',
+            'amount' => $donation_amount,
+            'currency' => 'eu',
             'payment_method_types' => ['card', 'paypal'],
             'metadata' => [
                 'name' => $this->name,
@@ -104,7 +84,7 @@ class User extends Authenticatable
                 'donation_id' => $donation->id,
             ],
         ], [
-            'locale' => 'fr', // Add locale here
+            'locale' => 'fr',
         ]);
     }
 }

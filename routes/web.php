@@ -26,9 +26,9 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('client.contac
 
 Route::get('/a-propos', [PagesController::class, 'a_propos'])->name('client.a-propos');
 
-Route::get('/donate', [DonationController::class, 'index'])->name('donate.afficher');
+Route::get('/donate', [PagesController::class, 'donate'])->name('donate.afficher');
 Route::post('/create-payment-intent', [DonationController::class, 'createPaymentIntent'])->name('createPaymentIntent');
-Route::get('/donate/remerciement', [DonationController::class, 'remerciement'])->name('donate.thank-you');
+Route::get('/donate/remerciement', [PagesController::class, 'remerciement'])->name('donate.thank-you');
 Route::post('/donate/failed/{id}', [DonationController::class, 'donationFailed'])->name('donate.failed');
 Route::delete('/donate/delete/{id}', [DonationController::class, 'donationDestroy'])->name('donate.destroy');
 Route::post('/stripe-webhook', [DonationController::class, 'handleWebhook']);
@@ -61,8 +61,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
         });
         Route::prefix('cms')->group(function () {
             Route::post('/save', [CMSController::class, 'save'])->name('admin.cms.save');
+            Route::get('/header-footer', [CMSController::class, 'header_footer'])->name('admin.cms.header-footer');
             Route::get('/accueil', [CMSController::class, 'accueil'])->name('admin.cms.accueil');
             Route::get('/a-propos', [CMSController::class, 'a_propos'])->name('admin.cms.a-propos');
+            Route::get('/donate', [CMSController::class, 'donate'])->name('admin.cms.donate');
         });
     });
 });

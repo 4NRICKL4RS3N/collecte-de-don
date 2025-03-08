@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row my-5">
             <div class="reveal-1 col-lg-7 col-md-6 ">
-                <h1 class="grand-titre">Votre générosité est sur le point de <span>créer un impact !</span></h1>
+                <h1 class="grand-titre">{!! $page_elements['donate.titre']->content !!}</h1>
             </div>
             <div class="reveal-2 col-lg-5 col-md-6 col-sm-8 mx-sm-auto">
                 <div class="container p-4 border-0 rounded-4 donation_container">
@@ -20,7 +20,7 @@
                     <form id="donation-form">
                         <div class="form-group mb-3">
                             <label for="name" class="mb-0 form-label">Nom</label>
-                            <input name="name" class="form-control form-input" type="text" id="name" placeholder="Jean Rakoto"
+                            <input name="name" class="form-control form-input" type="text" id="name" placeholder="Jean Michel"
                                    required>
                         </div>
                         <div class="form-group mb-3">
@@ -31,23 +31,16 @@
                         </div>
                         <label for="amount" class="mb-0 form-label">Montant</label>
                         <div id="select-amount" class="mb-1">
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="3000">
-                                3k MGA
-                            </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="5000">
-                                5k MGA
-                            </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="10000">
-                                10k MGA
-                            </button>
-                            <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="20000">
-                                20k MGA
-                            </button>
+                            @foreach(explode(',', $page_elements['donate.amounts']->content) as $amount)
+                                <button type="button" class="mb-1 me-1 btn btn-outline-primary amount-btn" data-amount="{{ $amount * 100 }}">
+                                    {{ $amount }} €
+                                </button>
+                            @endforeach
                         </div>
                         <div class="mb-3">
                             <input class="form-control form-input" name="custom-amount" type="number" id="custom-amount"
                                    placeholder="Spécifiez le montant" min="2400" required>
-                            <p class="fs-6 fw-light">*Montant minimum <span class="min-amount">&#8212; 2400 MGA</span></p>
+                            <p class="fs-6 fw-light"><span class="min-amount">*Montant minimum</span> &#8212; 1 €</p>
                         </div>
                         <input type="hidden" name="amount" id="amount">
                         <button class="btn btn-primary my-2 my-lg-0" type="submit" id="continue-btn">
@@ -85,7 +78,7 @@
         });
 
         {{--    stripe    --}}
-        const stripe = Stripe('pk_test_51Q2owfB3dTrJX9EwFg8HTocUFxsOjtBgXzsh2OUofv08XonDpoyM7K858o0x7lIKIlZbafVtSWe7He8KFw6gGNvU00Q8ovekhT');
+        const stripe = Stripe('pk_test_51R0MR1EFgSebdHUzmh6ATApcQptPuJDhQ9QYIqIQHZvhawPLhapz6Os4LN2BkTMlxGGtJ3yErXm8Bo7Ui2n4CuaX00IwdxX1gz');
         let elements;
         let paymentIntentId;
         const name_input = document.getElementById('name');
