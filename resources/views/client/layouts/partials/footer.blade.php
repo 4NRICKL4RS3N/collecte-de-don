@@ -1,10 +1,10 @@
 <div class="container py-4 py-lg-5 footer">
     <div class="row justify-content-center">
-        <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-            <h3 class="fs-6">Nous contacter</h3>
-            <ul class="list-unstyled">
+        <div class="col-sm-4 col-md-4 text-center text-lg-start d-flex flex-column item">
+            <x-client.button add-class="btn-primary w-fit-content" lien="/contact" content="{{ $page_elements['footer.button']->content }}"/>
+            <ul class="list-unstyled mt-3">
                 @foreach(explode(',', $page_elements['footer.contacts']->content) as $contact)
-                    @if(substr($contact, 0, 1) === '0')
+                    @if(substr($contact, 0, 1) === '0' || substr($contact, 0, 1) === '+')
                         <li class="text-secondary">{{ $contact }}</li>
                     @else
                         <li><a class="link-secondary" href="mailto: {{ $contact }}">{{ $contact }}</a></li>
@@ -12,28 +12,25 @@
                 @endforeach
             </ul>
         </div>
-        <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-            <h3 class="fs-6">Explorer</h3>
+        <div class="col-sm-4 col-md-4 text-center text-lg-start d-flex flex-column item">
             <ul class="list-unstyled">
                 <li><a class="link-secondary" href="{{ route('client.a-propos') }}">À propos</a></li>
                 <li><a class="link-secondary" href="{{ route('client.projets') }}">Projets</a></li>
                 <li><a class="link-secondary" href="{{ route('client.contact') }}">Contact</a></li>
             </ul>
         </div>
-        <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
+        <div class="col-sm-4 col-md-4 text-center text-lg-start d-flex flex-column item">
             <ul class="list-unstyled">
-                <li><a class="link-secondary" data-bs-toggle="modal" data-bs-target="#pcModal">Politique de
-                        confidentialité</a></li>
-                <li><a class="link-secondary" data-bs-toggle="modal" data-bs-target="#cguModal">Conditions
-                        d'utilisation</a></li>
-                <li><a class="link-secondary" data-bs-toggle="modal" data-bs-target="#faqModal">FAQ</a></li>
+                @if ($page_elements['footer.politique']->content != "")
+                    <li><a class="link-secondary" data-bs-toggle="modal" data-bs-target="#pcModal">Politique de confidentialité</a></li>
+                @endif
+                @if ($page_elements['footer.condition']->content != "")
+                    <li><a class="link-secondary" data-bs-toggle="modal" data-bs-target="#cguModal">Conditions d'utilisation</a></li>
+                @endif
+                @if ($page_elements['footer.faq']->content != "")
+                    <li><a class="link-secondary" data-bs-toggle="modal" data-bs-target="#faqModal">FAQ</a></li>
+                @endif
             </ul>
-        </div>
-        <div
-            class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
-            <div class="fw-bold d-flex align-items-center mb-2">
-                <x-client.button add-class="btn-primary" lien="/donate" content="{{ $page_elements['footer.button']->content }}"/>
-            </div>
         </div>
     </div>
     <hr>
@@ -64,27 +61,29 @@
             <div class="modal-body">
                 <!-- FAQ Content Goes Here -->
                 <div class="accordion" id="faqAccordion">
-                    @foreach(explode("|||", $page_elements['footer.faq']->content) as $faq)
-                        <div class="accordion-item">
-                            @php
-                                $exploded = explode("||", $faq);
-                                $question = $exploded[0];
-                                $response = $exploded[1];
-                            @endphp
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse{{ $loop->index }}" aria-expanded="true" aria-controls="collapseOne">
-                                    {{ $question }}
-                                </button>
-                            </h2>
-                            <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                 data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    {{ $response }}
+                    @if ($page_elements['footer.faq']->content != "")
+                        @foreach(explode("|||", $page_elements['footer.faq']->content) as $faq)
+                            <div class="accordion-item">
+                                @php
+                                    $exploded = explode("||", $faq);
+                                    $question = $exploded[0];
+                                    $response = $exploded[1];
+                                @endphp
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse{{ $loop->index }}" aria-expanded="true" aria-controls="collapseOne">
+                                        {{ $question }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        {{ $response }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div class="modal-footer">
